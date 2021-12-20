@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-// ~~~~~~~~~~~~~~~~~~~~~~~|-IMPORT USER-|~~~~~~~~~~~~~~~~~~~~~~~ //
+
 import MyProfile from '@/components/views/MyProfile.vue'
-// ~~~~~~~~~~~~~~~~~~~~~|-IMPORT STUDENT-|~~~~~~~~~~~~~~~~~~~~~ //
 import MyCompany from '@/components/views/MyCompany.vue'
-// ~~~~~~~~~~~~~~~~~~~|-IMPORT PERMISSIION-|~~~~~~~~~~~~~~~~~~~~ /
+import ExplorAlumni from '@/components/views/ExplorAlumni.vue'
+import Event from '@/components/views/Event.vue'
+import ManageUser from '@/components/views/ManageUser.vue'
+
 
 Vue.use(VueRouter)
 
@@ -16,6 +18,18 @@ const routes = [{
   {
     path: '/company-view',
     component: MyCompany
+  },
+  {
+    path: '/explor-view',
+    component: ExplorAlumni
+  },
+  {
+    path: '/event-view',
+    component: Event
+  },
+  {
+    path: '/manage-view',
+    component: ManageUser
   },
 
 ]

@@ -14,7 +14,7 @@
 
         </router-link>
       </v-toolbar-title>
-      <v-toolbar-items class="btn">
+      <v-toolbar-items class="btn ml-16">
                 <v-btn
                     active-class="grey-5 white--text" class="profile white--text"
                     text
@@ -30,12 +30,37 @@
                     >
                     My Company
                 </v-btn>
+
+                <v-btn
+                    active-class="grey-5 white--text" 
+                    text
+                    :to="{ path: '/explor-view' }" class="explor white--text"
+                    >
+                    Explor Alumni
+                </v-btn>
+
+                <v-btn
+                    active-class="grey-5 white--text" 
+                    text
+                    :to="{ path: '/event-view' }" class="event white--text"
+                    >
+                    Event
+                </v-btn>
+
+                <v-btn
+                    active-class="grey-5 white--text" 
+                    text
+                    :to="{ path: '/manage-view' }" class="manage white--text"
+                    >
+                    Manage User
+                </v-btn>
             
         </v-toolbar-items>
 
       <v-spacer></v-spacer>
       
-      <v-btn active-class="grey-5 blue--text" text :to="{ path: '/sign_in' }" class="logout blue--text">Sign Out</v-btn>
+      <v-btn active-class="grey-5 blue--text" text 
+      :to="{ path: '/sign_in' }" class="logout blue--text">Sign Out</v-btn>
         
     
       
@@ -73,17 +98,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn{
-margin-left: 35%;  
-}
 
-.company{
-    margin-left: 35%;
-}
-
-.avatar{
-    margin-left: 2px;
-}
 
 .logout{
     margin-left: 5px;
