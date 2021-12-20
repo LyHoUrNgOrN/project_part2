@@ -14,7 +14,7 @@
 
         </router-link>
       </v-toolbar-title>
-      <v-toolbar-items class="btn ml-16">
+      <v-toolbar-items class="btn">
                 <v-btn
                     active-class="grey-5 white--text" class="profile white--text"
                     text
@@ -99,6 +99,17 @@ export default {
 
 <style lang="scss" scoped>
 
+.btn{
+  margin-left: 18%;
+}
+
+
+.company,
+.event,
+.manage,
+.explor{
+  margin-left: 4%;
+}
 
 .logout{
     margin-left: 5px;
