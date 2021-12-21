@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+// use App\Models\User_detail;
 
 class UsersContoller extends Controller
 {
@@ -40,10 +41,8 @@ class UsersContoller extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->role = $request->role;
-        
         $user->password = bcrypt($request->password);
         // $user->profile = $request->file('profile')->hashName();
-        
         $user->save();
         
         
@@ -72,7 +71,6 @@ class UsersContoller extends Controller
     }
     public function signout(Request $request)
     {
-        //
         auth()->user()->tokens()->delete();
         return response()->json(['message'=>'signout']);
     }
