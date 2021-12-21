@@ -53,6 +53,29 @@ class UsersContoller extends Controller
             'token'=> $token
         ]); 
     }
+    public function signin(Request $request)
+    {
+        // singin function
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)){
+            return response()->json(['message' => 'Invalid email or password'], 401);
+        }
+
+        $token = $user->createToken('mytoken')->plainTextToken;
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token
+        ]);
+        //signout function
+    }
+    public function signout(Request $request)
+    {
+        //
+        auth()->user()->tokens()->delete();
+        return response()->json(['message'=>'signout']);
+    }
 
 
 
