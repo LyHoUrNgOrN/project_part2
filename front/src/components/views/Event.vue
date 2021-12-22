@@ -1,5 +1,5 @@
 <template>
-<h5>Hello</h5>
+<h1>Informaion about Event</h1>
 </template>
 
 <script>

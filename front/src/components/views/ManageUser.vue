@@ -1,5 +1,5 @@
 <template>
-<h2>Hello</h2>
+<h1>Only Admin manage users</h1>
 </template>
 
 <script>
