@@ -1,18 +1,27 @@
 <template>
   <v-app>
+    <Navbar />
     <v-main>
-      <router-view/>
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
-
+import Navbar from "@/components/nav/Menubar";
 export default {
-  name: 'App',
-
-  data: () => ({
-    //
-  }),
+  components: {
+    Navbar,
+  },
+  data() {
+    return {};
+  },
 };
 </script>
+
+
+<style>
+ #app {
+   background: #EFEFEF;
+ }
+</style>

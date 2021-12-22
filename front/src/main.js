@@ -4,7 +4,9 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 import base_form from '@/components/ui/base-form.vue'
 Vue.config.productionTip = false
-Vue.component('Base-form', base_form )
+Vue.component('Base-form', base_form)
+
+
 new Vue({
   router,
   vuetify,

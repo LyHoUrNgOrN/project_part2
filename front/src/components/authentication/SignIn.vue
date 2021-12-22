@@ -1,34 +1,45 @@
 <template>
-
   <Base-form>
-  <router-link to="/signupone" class="btn signin">Sign up </router-link>
+    <router-link to="/signupone" class="btn signin">Sign up </router-link>
     <template #signup class="signin">
-            <h1 class="text-center ma-3">Sign In Account</h1>
-            <form action="#" @submit.prevent>
-                <p>
-                    <label>Please input your email<span class="red--text"> *</span></label>
-                    <input type="text" placeholder="Email Address" v-model="email">
-                    <small v-if="emailError != ''" style="color : red">{{emailError}}</small>
-                </p>
-                <p>
-                    <label>Please input your password<span class="red--text"> *</span></label>
-                    <input type="password" placeholder="Password" v-model="password" minlength="8">
-                    <small v-if="passwordError != ''" style="color : red">{{passwordError}}</small>
-                </p>
-                <p v-if="messageAlert != ''">
-                    <label for="#">{{messageAlert}}</label>
-                </p>
-                <p>
-                    <button class="next" @click="signIn">Sign In</button>
-                     <!-- <input class="next" type="submit" value="Next" click="signIn"/> -->
-                </p>
-                <p>
-                    <!-- <a href="">Forget password?</a> -->
-                </p>
-            </form>
+      <h1 class="text-center ma-3">Sign In Account</h1>
+      <form action="#" @submit.prevent>
+        <p>
+          <label
+            >Please input your email<span class="red--text"> *</span></label
+          >
+          <input type="text" placeholder="Email Address" v-model="email" />
+          <small v-if="emailError != ''" style="color: red">{{
+            emailError
+          }}</small>
+        </p>
+        <p>
+          <label
+            >Please input your password<span class="red--text"> *</span></label
+          >
+          <input
+            type="password"
+            placeholder="Password"
+            v-model="password"
+            minlength="8"
+          />
+          <small v-if="passwordError != ''" style="color: red">{{
+            passwordError
+          }}</small>
+        </p>
+        <p v-if="messageAlert != ''">
+          <label for="#">{{ messageAlert }}</label>
+        </p>
+        <p>
+          <button class="next" @click="signIn">Sign In</button>
+          <!-- <input class="next" type="submit" value="Next" click="signIn"/> -->
+        </p>
+        <p>
+          <!-- <a href="">Forget password?</a> -->
+        </p>
+      </form>
     </template>
   </Base-form>
-
 </template>
 
 <script>
@@ -74,16 +85,17 @@ import axios from "@/api/api.js";
             }
         }
     },
-}
+  }
 </script>
 
 <style scoped>
 form input {
-    width: 100%;
-    margin: 10px;
+  width: 100%;
+  margin-top: 15px;
 }
 .next {
   width: 100%;
+  margin-top: 10px;
   border: 1px solid #44c7f5;
   padding: 5px;
   border-radius: 40px;
@@ -95,8 +107,8 @@ form input {
   background: #44c7f5;
   color: #fff;
 }
-label{
-  margin-left: 20px;
+.signin {
+  margin-top: -20px;
 }
 </style>
 
