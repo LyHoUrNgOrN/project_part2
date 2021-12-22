@@ -7,11 +7,13 @@
             <form action="#" @submit.prevent>
                 <p>
                     <label>Please input your email<span class="red--text"> *</span></label>
-                    <input type="text" placeholder="Email Address" v-model="email" required>
+                    <input type="text" placeholder="Email Address" v-model="email">
+                    <small v-if="emailError != ''" style="color : red">{{emailError}}</small>
                 </p>
                 <p>
                     <label>Please input your password<span class="red--text"> *</span></label>
-                    <input type="password" placeholder="Password" v-model="password" minlength="8" required>
+                    <input type="password" placeholder="Password" v-model="password" minlength="8">
+                    <small v-if="passwordError != ''" style="color : red">{{passwordError}}</small>
                 </p>
                 <p v-if="messageAlert != ''">
                     <label for="#">{{messageAlert}}</label>
@@ -35,33 +37,41 @@ import axios from "@/api/api.js";
       data() {
           return {
              messageAlert : '',
+             emailError : '',
+             passwordError : '',
              email : "",
-             password : "",
+             password : '',
           }
       },
       methods: {
         signIn(){
-            let user = new FormData();
-            user.append("email",this.email);
-            user.append("password",this.password);
-            // axios.post('/signin',user).then(res=>{
-            //     if(res.data == 'Invalid email or password'){
-            //         this.messageAlert = res.data  
-            //     }else {
-            //         this.$router.push('/home');
-            //     }
-            // })
+                        
+            if (this.email !== '' && this.password !== ''){
+                event.preventDefault();
+                let user = {
+                    email:this.email,
+                    password:this.password,
+                }
                 axios.post('/signin',user).then(res=>{
                     let user = res.data.user;
-                    console.log(user);
-                    // this.$emit("sign-in",user);
-                    this.$router.push('/');
+                    this.$emit("sign-in",user);
+                    this.$router.push('/signupone');
                 }).catch(error=>{
                     if (error.response) {
-                        this.messageError = error.response.data.message;
-                        console.log(error.response.data.message);
+                        this.passwordError = error.response.data.message;      
                     }
                 });
+                this.email = '';
+                this.password = '';
+            }else{
+                if(this.email === '' ){
+                    this.emailError = 'Email should not be empty!';
+                }
+                if(this.passwordError == '' ){
+                    this.passwordError = 'Password should not be empty!';
+                }
+                
+            }
         }
     },
 }
@@ -79,10 +89,14 @@ form input {
   border-radius: 40px;
   color: #44c7f5;
   margin-bottom: 20px;
+  margin-left: 10px;
 }
 .next:hover {
   background: #44c7f5;
   color: #fff;
+}
+label{
+  margin-left: 20px;
 }
 </style>
 
