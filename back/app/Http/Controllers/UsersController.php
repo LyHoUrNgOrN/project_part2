@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 // use App\Models\User_detail;
 
-class UsersContoller extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -46,10 +46,10 @@ class UsersContoller extends Controller
         $user->save();
         
         
-        $token = $user->createToken('mytoken')->plainTextToken;
+        // $token = $user->createToken('mytoken')->plainTextToken;
         return response()->json([
             'user' => $user,
-            'token'=> $token
+            // 'token'=> $token
         ]); 
     }
     public function signin(Request $request)
@@ -58,14 +58,14 @@ class UsersContoller extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)){
-            return response()->json(['message' => 'Invalid email or password'], 401);
+            return response()->json(['message' => "Email or password in valid. Please contact to Admin!!"], 401);
         }
 
-        $token = $user->createToken('mytoken')->plainTextToken;
+        // $token = $user->createToken('mytoken')->plainTextToken;
 
         return response()->json([
             'user' => $user,
-            'token' => $token
+            // 'token' => $token
         ]);
         //signout function
     }

@@ -8,12 +8,10 @@
           <label
             >Please input your email<span class="red--text"> *</span></label
           >
-          <input
-            type="text"
-            placeholder="Email Address"
-            v-model="email"
-            required
-          />
+          <input type="text" placeholder="Email Address" v-model="email" />
+          <small v-if="emailError != ''" style="color: red">{{
+            emailError
+          }}</small>
         </p>
         <p>
           <label
@@ -24,16 +22,16 @@
             placeholder="Password"
             v-model="password"
             minlength="8"
-            required
           />
+          <small v-if="passwordError != ''" style="color: red">{{
+            passwordError
+          }}</small>
         </p>
         <p v-if="messageAlert != ''">
           <label for="#">{{ messageAlert }}</label>
         </p>
         <p>
-          <router-link to="/profile-view">
-            <button class="next" @click="signIn">Sign In</button>
-          </router-link>
+          <button class="next" @click="signIn">Sign In</button>
           <!-- <input class="next" type="submit" value="Next" click="signIn"/> -->
         </p>
         <p>
@@ -46,43 +44,48 @@
 
 <script>
 import axios from "@/api/api.js";
-export default {
-  data() {
-    return {
-      messageAlert: "",
-      email: "",
-      password: "",
-    };
-  },
-  methods: {
-    signIn() {
-      let user = new FormData();
-      user.append("email", this.email);
-      user.append("password", this.password);
-      // axios.post('/signin',user).then(res=>{
-      //     if(res.data == 'Invalid email or password'){
-      //         this.messageAlert = res.data
-      //     }else {
-      //         this.$router.push('/home');
-      //     }
-      // })
-      axios
-        .post("/signin", user)
-        .then((res) => {
-          let user = res.data.user;
-          console.log(user);
-          // this.$emit("sign-in",user);
-          this.$router.push("/");
-        })
-        .catch((error) => {
-          if (error.response) {
-            this.messageError = error.response.data.message;
-            console.log(error.response.data.message);
+  export default {
+      data() {
+          return {
+             messageAlert : '',
+             emailError : '',
+             passwordError : '',
+             email : "",
+             password : '',
           }
-        });
+      },
+      methods: {
+        signIn(){
+                        
+            if (this.email !== '' && this.password !== ''){
+                event.preventDefault();
+                let user = {
+                    email:this.email,
+                    password:this.password,
+                }
+                axios.post('/signin',user).then(res=>{
+                    let user = res.data.user;
+                    this.$emit("sign-in",user);
+                    this.$router.push('/signupone');
+                }).catch(error=>{
+                    if (error.response) {
+                        this.passwordError = error.response.data.message;      
+                    }
+                });
+                this.email = '';
+                this.password = '';
+            }else{
+                if(this.email === '' ){
+                    this.emailError = 'Email should not be empty!';
+                }
+                if(this.passwordError == '' ){
+                    this.passwordError = 'Password should not be empty!';
+                }
+                
+            }
+        }
     },
-  },
-};
+  }
 </script>
 
 <style scoped>
@@ -98,6 +101,7 @@ form input {
   border-radius: 40px;
   color: #44c7f5;
   margin-bottom: 20px;
+  margin-left: 10px;
 }
 .next:hover {
   background: #44c7f5;
