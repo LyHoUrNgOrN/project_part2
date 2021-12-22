@@ -18,3 +18,10 @@ export default {
   },
 };
 </script>
+
+
+<style>
+ #app {
+   background: #EFEFEF;
+ }
+</style>

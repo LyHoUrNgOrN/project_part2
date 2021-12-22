@@ -44,7 +44,7 @@
                 </div>
               </div>
               <p>
-                <router-link to="/signupthree">
+                <router-link to="/profile-view">
                   <input class="next" type="submit" value="Sign Up" />
                 </router-link>
               </p>

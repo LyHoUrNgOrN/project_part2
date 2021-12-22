@@ -20,7 +20,10 @@
             <input v-model="last_name" type="text" placeholder="Last name ..." required />
           </p>
           <p>
+            <router-link to="/signuptwo">
               <input @click="signup_one" class="next" type="submit" value="Next" />
+    
+            </router-link>
            
           </p>
         </form>
