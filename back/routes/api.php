@@ -29,8 +29,8 @@ Route::post('/user_details', [User_detailController::class, 'store']);
 Route::get('/user_details/{id}', [User_detailController::class, 'show']);
 Route::put('/user_details/{id}', [User_detailController::class, 'update']);
 Route::delete('/user_details/{id}', [User_detailController::class, 'destroy']);
-Route::post('/signin', [UserController::class, 'signin']);
+Route::post('/signin', [UsersController::class, 'signin']);
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::post('/signout', [UserController::class, 'signout']);
+    Route::post('/signout', [UsersController::class, 'signout']);
 });
