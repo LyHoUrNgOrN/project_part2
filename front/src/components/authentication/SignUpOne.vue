@@ -10,7 +10,8 @@
               Please input your first name
               <span class="red--text">*</span>
             </label>
-            <input v-model="first_name" type="text" placeholder="First name ..." required />
+             <input v-model="first_name" type="text" placeholder="First name ..." required />
+             <!-- <small v-if="emailError != ''" style="color : red">{{emailError}}</small> -->
           </p>
           <p>
             <label for>
@@ -18,10 +19,10 @@
               <span class="red--text">*</span>
             </label>
             <input v-model="last_name" type="text" placeholder="Last name ..." required />
+            
           </p>
           <p>
-              <input @click="signup_one" class="next" type="submit" value="Next" />
-           
+            <input @click="signup_one" class="next" type="submit" value="Next" />
           </p>
         </form>
       </div>
@@ -29,41 +30,37 @@
   </Base-form>
 </template>
 <script>
-import axios from '@/axios-http.js'
+import axios from "@/api/api.js";
 export default {
   data() {
     return {
+      name : '',
+      success : false,
       first_name:'',
       last_name: '',
     }
   },
   methods: {
-    getUser(){
-      axios.get("http://127.0.0.1:8000/api/user")
-            .then(res=>{
-              res.data.forEach(element => {
-                if(element.first_name === this.first_name && element.last_name === this.last_name){
-                  console.log(element);
-                }
-              });
-            })
-    },
     signup_one(){
-      let signup = {
-        'first_name':this.first_name.toLowerCase(),
-        'last_name':this.last_name.toLowerCase(),
-        'email': "a@gami.com",
-        'role':"ERO"
+      let name = this.first_name + ' ' + this.last_name;
+      for(let alu of this.name){
+        if(alu.name.toLowerCase() === name.toLowerCase()){
+          this.success = true;
+          localStorage.setItem('user',JSON.stringify(alu));
+        }
       }
-      this.getUser()
-      axios.post("http://127.0.0.1:8000/api/signup",signup)
-            .then(res=>{
-              console.log(res.data);
-            })
+      if(this.success == true){
+        this.$router.push('/signuptwo')
+      }else{
+        console.log('ÁH JKJ')
+      }
     }
   },
   mounted() {
-    this.getUser()
+    localStorage.clear()
+    axios.get('/alumini').then(res=>{
+      this.name = res.data;
+    })
   },
 };
 </script>

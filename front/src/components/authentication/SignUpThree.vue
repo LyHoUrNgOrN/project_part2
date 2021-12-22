@@ -12,30 +12,30 @@
           <form action>
             <h1 class="one text-center mt-3">Sign Up Account</h1>
             <p>
-              <input type="text" placeholder="Phone ..." required />
+              <input type="text" placeholder="Phone ..." v-model="phone" required />
             </p>
             <p>
-              <input type="text" placeholder="Date of Birth ..." required />
+              <input type="text" placeholder="Date of Birth ..." v-model="dateofbirth" required />
             </p>
 
             <p>
-              <v-select :items="provinces" label=" Select Province " class="select" dense outlined></v-select>
+              <v-select :items="allProvinces" label=" Select Province " class="select" v-model="province" dense outlined></v-select>
             </p>
 
             <div class="formall">
               <p>
-                <input type="text" class="email" placeholder="Email ..." required />
+                <input type="text" class="email" placeholder="Email ..." v-model="email" required />
               </p>
               <p>
-                <input type="text" placeholder="Password ..." required />
+                <input type="text" placeholder="Password ..." v-model="password" required />
               </p>
               <p>
-                <input type="text" placeholder="Current Position ..." required />
+                <input type="text" placeholder="Current Position ..."  v-model="position" required />
               </p>
               <div class="gender">
                 <div class="d-flex">
                   <span class="mt-7 me-5">Gender:</span>
-                  <v-radio-group>
+                  <v-radio-group v-model="gender">
                     <div class="d-flex">
                       <v-radio label="Male" class="mt-2 me-3" color="#44c7f5" value="Male"></v-radio>
                       <v-radio label="Female" color="#44c7f5" value="Female"></v-radio>
@@ -44,8 +44,9 @@
                 </div>
               </div>
               <p>
+
                 <router-link to="/signupthree">
-                  <input class="next" type="submit" value="Sign Up" />
+                  <input @click="signuptwo" class="next" type="submit" value="Sign Up" />
                 </router-link>
               </p>
             </div>
@@ -59,21 +60,60 @@
 
 
 <script>
-import province from "@/files/canbodia.json";
+// import province from "@//canbodia.json";
+import axios from "@/api/api.js";
 
 export default {
   data() {
     return {
-      provinces: []
-    };
-  },
-  methods: {},
-  mounted() {
-    for (let pro of province) {
-      this.provinces.push(pro.name);
+      phone:'',
+      id : '',
+      allProvinces : [],
+      dateofbirth: '',
+      province: '',
+      email: '',
+      password: '',
+      position: '',
+      gender: '',
     }
-  }
-};
+  },
+  methods: {
+    signuptwo(){
+      let user = JSON.parse(localStorage.getItem("user"));
+      let name = user.name.split(" ");
+      let userCreate = new FormData();
+      userCreate.append('first_name',name[0]);
+      userCreate.append('last_name',name[1]);
+      userCreate.append('role','ALUMINI');
+      userCreate.append('email',this.email);
+      userCreate.append('password',this.password);
+      axios.post('/signup',userCreate).then(res=>{
+        this.id = res.data.user.id;
+      })
+      let userDetail = new FormData();
+      userDetail.append('user_id',this.id);
+      userDetail.append('phone',this.phone);
+      userDetail.append('date_of_birth',this.dateofbirth);
+      userDetail.append('province',this.province);
+      userDetail.append('batch',user.batch);
+      userDetail.append('major',user.major);
+      // userDetail.append('picture',null);
+      userDetail.append('current_position',this.position);
+      userDetail.append('gender',this.gender);
+      axios.post('/user_details',userDetail).then(res=>{
+        console.log(res.data);
+      })
+    },
+  },
+  mounted() {
+    axios.get('/countries').then(res=>{
+      for(let province of res.data){
+        this.allProvinces.push(province.name)
+      }
+    })
+  },
+}
+
 </script>
 
 
