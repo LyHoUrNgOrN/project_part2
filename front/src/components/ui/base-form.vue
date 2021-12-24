@@ -15,7 +15,6 @@
           <slot ></slot>
         </div>
       </div>
-
       <div class="col-right">
         <div class="login-form">
           <section action>
@@ -26,9 +25,6 @@
     </div>
   </div>
 </template>
-
-
-
 <script>
 </script>
 

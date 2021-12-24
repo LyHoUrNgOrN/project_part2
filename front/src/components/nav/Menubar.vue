@@ -1,6 +1,10 @@
 <template>
-  <nav>
-    <v-toolbar color="#44C7F5">
+  <div>
+
+
+  </div>
+
+  <!-- <nav>
       <span class="hidden-sm-and-up">
         <v-app-bar-nav-icon @click="showSideBar"> </v-app-bar-nav-icon>
       </span>
@@ -36,8 +40,8 @@
           active-class="grey-5 white--text"
           text
           :to="{ path: '/explor-view' }"
-          class="explor white--text"
           v-if="role == 'ERO' || role == 'ADMIN'"
+          class="explor white--text"
         >
           Explor Alumni
         </v-btn>
@@ -72,8 +76,7 @@
         class="logout blue--text"
         >Sign Out</v-btn
       >
-    </v-toolbar>
-  </nav>
+  </nav> -->
 </template>
 
 <script>
@@ -113,23 +116,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
-.logout{
-    margin-left: 5px;
-    border-radius: 20px;
-    background: #fff;
-    
+.logout {
+  margin-left: 5px;
+  border-radius: 20px;
+  background: #fff;
 }
 
-.image{
+.image {
   width: 55px;
   height: 55px;
 }
-
-
-
-
 
 .btn {
   margin-left: 18%;
