@@ -23,9 +23,6 @@
           </p>
           <p>
             <input @click="signup_one" class="next" type="submit" value="Next" />
-
-
-
           </p>
         </form>
       </div>

@@ -70,9 +70,7 @@
 
               <v-list-item-title v-text="name"></v-list-item-title>
               <v-list-item-icon>
-                <!-- <v-btn class="mx-2" fab dark small color="cyan">
-                  <v-icon dark> mdi-pencil </v-icon>
-                </v-btn> -->
+      
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>
@@ -87,16 +85,6 @@ export default {
   data() {
     return {
       show_details: true,
-      // user_details:{
-      //   first_name:"chum",
-      //   last_name:"chum",
-      //   gender:"chum",
-      //   date_of_birth:"chum",
-      //   province:"chum",
-      //   email:"chum",
-      //   pnc_batc:"chum",
-      //   pnc_major:"chum",
-      // }
       cruds: [
         ["First name", "Chum"],
         ["Last name", "YOEURN"],

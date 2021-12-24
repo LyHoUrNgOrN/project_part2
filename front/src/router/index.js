@@ -55,7 +55,6 @@ const routes = [{
       path: '/manage-view',
       component: ManageUser
     },
-
   ]
 
 const router = new VueRouter({

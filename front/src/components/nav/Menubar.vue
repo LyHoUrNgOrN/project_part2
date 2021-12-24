@@ -34,7 +34,7 @@
           v-if="role != 'ERO'"
         >
           My Company
-        </v-btn>
+        </v-btn>  
 
         <v-btn
           active-class="grey-5 white--text"

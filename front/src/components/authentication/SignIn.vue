@@ -31,8 +31,14 @@
           <label for="#">{{ messageAlert }}</label>
         </p>
         <p>
-          <button class="next" @click="signIn">Sign In</button>
-          <!-- <input class="next" type="submit" value="Next" click="signIn"/> -->
+          <!-- <button class="next" @click="signIn">Sign In</button> -->
+          <input
+            class="next"
+            @click="signIn"
+            type="submit"
+            value="Sign in"
+            
+          />
         </p>
         <p>
           <!-- <a href="">Forget password?</a> -->
@@ -44,49 +50,49 @@
 
 <script>
 import axios from "@/api/api.js";
-  export default {
-    $emits: ['login'],
-      data() {
-          return {
-             messageAlert : '',
-             emailError : '',
-             passwordError : '',
-             email : "",
-             password : '',
-          }
-      },
-      methods: {
-        signIn(){
-            if (this.email !== '' && this.password !== ''){
-                event.preventDefault();
-                let user = {
-                    email:this.email,
-                    password:this.password,
-                }
-                axios.post('/signin',user).then(res=>{
-                    let user = res.data.user;
-                    localStorage.setItem("role",user.role);
-                    this.$emit('login',true)
-                    this.$router.push('/profileView')
-                }).catch(error=>{
-                    if (error.response) {
-                        this.passwordError = error.response.data.message;      
-                    }
-                });
-                this.email = '';
-                this.password = '';
-            }else{
-                if(this.email === '' ){
-                    this.emailError = 'Email should not be empty!';
-                }
-                if(this.passwordError == '' ){
-                    this.passwordError = 'Password should not be empty!';
-                }
-                
+export default {
+  $emits: ["login"],
+  data() {
+    return {
+      messageAlert: "",
+      emailError: "",
+      passwordError: "",
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    signIn() {
+      console.log('dd');
+      if (this.email !== "" && this.password !== "") {
+        let user = {
+          email: this.email,
+          password: this.password,
+        };
+        axios
+          .post("/signin", user)
+          .then((res) => {
+            let user = res.data.user;
+            localStorage.setItem("role", user.role);
+            this.$emit("login", true);
+            this.$router.push("/profileView");
+          })
+          .catch((error) => {
+            if (error.response) {
+              this.passwordError = error.response.data.message;
             }
+          });
+      } else {
+        if (this.email === "") {
+          this.emailError = "Email should not be empty!";
         }
+        if (this.passwordError == "") {
+          this.passwordError = "Password should not be empty!";
+        }
+      }
     },
-  }
+  },
+};
 </script>
 
 <style scoped>

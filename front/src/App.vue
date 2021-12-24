@@ -1,11 +1,10 @@
 <template>
   <v-app>
-    <v-navigation-drawer app v-model="showNavigation" absolute temporary>
-      <Sidebar />
-    </v-navigation-drawer>
-
     <v-app-bar app color="#44C7F5">
       <div class="hidden-sm-and-up">
+        <v-navigation-drawer app v-model="showNavigation" absolute temporary>
+          <Sidebar />
+        </v-navigation-drawer>
         <v-app-bar-nav-icon
           dark
           @click.prevent="showNavigation = !showNavigation"
@@ -19,12 +18,14 @@
         />
 
         <div>
-          <v-tabs dark class="border">
+          <v-tabs dark>
             <v-tab class="white--text active" :to="{ path: '/profile-view' }"
               >My profile</v-tab
             >
-            <v-tab class="white--text active" :to="{ path: '/company-view' }"
-            v-if="role == 'ALUMNI'"
+            <v-tab
+              class="white--text active"
+              :to="{ path: '/company-view' }"
+              v-if="role == 'ALUMNI'"
               >Company</v-tab
             >
             <v-tab
@@ -36,14 +37,16 @@
             <v-tab class="white--text active" :to="{ path: '/event-view' }"
               >Events</v-tab
             >
-            <v-tab class="white--text active" v-if="role == 'ADMIN'"
-          :to="{ path: '/manage-view' }"
+            <v-tab
+              class="white--text active"
+              v-if="role == 'ADMIN'"
+              :to="{ path: '/manage-view' }"
               >Manage user</v-tab
             >
           </v-tabs>
         </div>
 
-        <v-btn depressed color="white" class="rounded-lg pa-5 mt-2 cyan--text">
+        <v-btn depressed @click="logout" color="white" class="rounded-lg pa-5 mt-2 cyan--text">
           Sign out
         </v-btn>
       </ul>
@@ -56,7 +59,7 @@
     </v-app-bar>
     <v-main>
       <v-container fluid>
-        <router-view></router-view>
+        <router-view @login="signin"></router-view>
       </v-container>
     </v-main>
   </v-app>
@@ -72,7 +75,19 @@ export default {
     return {
       role: "",
       showNavigation: false,
+      login: false,
     };
+  },
+
+  methods: {
+    signin() {
+      console.log('dd');
+      
+    },
+    logout() {
+      this.login = false
+      console.log(this.login);
+    },
   },
   mounted() {
     this.role = localStorage.getItem("role");
