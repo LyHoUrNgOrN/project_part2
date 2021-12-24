@@ -45,6 +45,7 @@
 <script>
 import axios from "@/api/api.js";
   export default {
+    $emits: ['login'],
       data() {
           return {
              messageAlert : '',
@@ -56,7 +57,6 @@ import axios from "@/api/api.js";
       },
       methods: {
         signIn(){
-                        
             if (this.email !== '' && this.password !== ''){
                 event.preventDefault();
                 let user = {
@@ -65,8 +65,9 @@ import axios from "@/api/api.js";
                 }
                 axios.post('/signin',user).then(res=>{
                     let user = res.data.user;
-                    this.$emit("sign-in",user);
-                    this.$router.push('/signupone');
+                    localStorage.setItem("role",user.role);
+                    this.$emit('login',true)
+                    this.$router.push('/profileView')
                 }).catch(error=>{
                     if (error.response) {
                         this.passwordError = error.response.data.message;      
@@ -101,7 +102,6 @@ form input {
   border-radius: 40px;
   color: #44c7f5;
   margin-bottom: 20px;
-  margin-left: 10px;
 }
 .next:hover {
   background: #44c7f5;

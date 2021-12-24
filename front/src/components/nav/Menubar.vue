@@ -17,7 +17,7 @@
           active-class="grey-5 white--text"
           class="profile white--text"
           text
-          :to="{ path: '/profile-view' }"
+          :to="{ path: '/profileView' }"
         >
           My Profile
         </v-btn>
@@ -67,7 +67,8 @@
       <v-btn
         active-class="grey-5 blue--text"
         text
-        :to="{ path: '/signin' }"
+        @click="signout" 
+
         class="logout blue--text"
         >Sign Out</v-btn
       >
@@ -83,7 +84,7 @@ export default {
       default: () => ({}),
     },
   },
-
+  emits: ['log-out'],
   data() {
     return {
       sidebar: false,
@@ -95,6 +96,11 @@ export default {
   methods: {
     showSideBar() {
       this.sidebar = !this.sidebar;
+    },
+    signout(){
+      localStorage.clear();
+      this.$emit('log-out',false)
+      this.$router.push('/');
     },
   },
   mounted() {

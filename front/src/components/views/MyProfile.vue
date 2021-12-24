@@ -87,6 +87,13 @@ export default {
       console.log(e.target.files[0]);
     },
   },
+  mounted() {
+    // console.log(localStorage.getItem('reload'))
+    // if(localStorage.getItem('reload') == false){
+      // localStorage.setItem('reload',true);
+      // window.location.reload();
+    // }
+  },
 };
 </script>
 

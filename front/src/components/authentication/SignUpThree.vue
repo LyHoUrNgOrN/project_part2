@@ -64,6 +64,7 @@
 import axios from "@/api/api.js";
 
 export default {
+  emits:['login'],
   data() {
     return {
       phone:'',
@@ -88,20 +89,24 @@ export default {
       userCreate.append('email',this.email);
       userCreate.append('password',this.password);
       axios.post('/signup',userCreate).then(res=>{
-        this.id = res.data.user.id;
-      })
-      let userDetail = new FormData();
-      userDetail.append('user_id',this.id);
-      userDetail.append('phone',this.phone);
-      userDetail.append('date_of_birth',this.dateofbirth);
-      userDetail.append('province',this.province);
-      userDetail.append('batch',user.batch);
-      userDetail.append('major',user.major);
-      // userDetail.append('picture',null);
-      userDetail.append('current_position',this.position);
-      userDetail.append('gender',this.gender);
-      axios.post('/user_details',userDetail).then(res=>{
-        console.log(res.data);
+        localStorage.setItem('userid',res.data.user.id);
+        localStorage.setItem('role',res.data.user.role.toUpperCase());
+        let userDetail = new FormData();
+        userDetail.append('user_id',localStorage.getItem('userid'));
+        userDetail.append('phone',this.phone);
+        userDetail.append('date_of_birth',this.dateofbirth);
+        userDetail.append('province',this.province);
+        userDetail.append('batch',user.batch);
+        userDetail.append('major',user.major);
+        // userDetail.append('picture',null);
+        userDetail.append('current_position',this.position);
+        userDetail.append('gender',this.gender);
+        axios.post('/user_details',userDetail).then(res=>{
+          localStorage.setItem("login",true);
+          localStorage.setItem("detail",res.data);
+          this.$emit('login',true)
+          this.$router.push('/profileView');
+        })
       })
     },
   },

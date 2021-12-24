@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <Navbar />
+    <Navbar v-if="login" @log-out="logout"/>
     <v-main>
-      <router-view />
+      <router-view @login="Login"/>
     </v-main>
   </v-app>
 </template>
@@ -14,7 +14,18 @@ export default {
     Navbar,
   },
   data() {
-    return {};
+    return {
+      login : false,
+    };
+  },
+  
+  methods: {
+    Login(isTrue){
+      this.login = isTrue;
+    },
+    logout(isFalse){
+      this.login = isFalse;
+    }
   },
 };
 </script>
