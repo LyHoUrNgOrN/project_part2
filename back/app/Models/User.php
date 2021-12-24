@@ -23,7 +23,6 @@ class User extends Authenticatable
         'role',
         'email',
         'password',
-
     ];
     public function user_detail()
     {

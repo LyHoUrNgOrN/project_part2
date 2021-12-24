@@ -15,7 +15,6 @@ class User_detailController extends Controller
     {
         //
         return User_detail::with('user')->get();
-        
     }
 
     /**
@@ -32,26 +31,27 @@ class User_detailController extends Controller
             'date_of_birth' => "required",
             'province' => "required",
             'batch' => "required",
+            'picture' => "nullable",
             'major' => "required",
             'current_position' => "required",
-            'gender' => "required"
-            
-              
+            'gender' => "required"  
         ]);
 
-        $User_detail = new User_detail();
-        $User_detail->user_id = $request->user_id;
-        $User_detail->phone = $request->phone;
-        $User_detail->date_of_birth = $request->date_of_birth;
-        $User_detail->province = $request->province;
-        $User_detail->batch = $request->batch;
-        $User_detail->major = $request->major;
-        $User_detail->current_position = $request->current_position;
-        $User_detail->gender = $request->gender;
-      
-        
-        $User_detail->save();
-        return response()->json(['message' => 'create','data'=>$User_detail, 'user_detalis'=>$this->index()], 201);
+                //move image to storage
+            // $request->file('picture')->store('public/profiles');
+            $User_detail = new User_detail();
+            $User_detail->user_id = $request->user_id;
+            $User_detail->phone = $request->phone;
+            $User_detail->date_of_birth = $request->date_of_birth;
+            $User_detail->province = $request->province;
+            $User_detail->picture = "picture.png";
+            $User_detail->batch = $request->batch;
+            $User_detail->major = $request->major;
+            $User_detail->current_position = $request->current_position;
+            $User_detail->gender = $request->gender;
+            $User_detail->save();
+
+        return response()->json(['message' => 'create','data'=>$User_detail], 201);
     }
 
     /**
@@ -76,11 +76,27 @@ class User_detailController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'phone' => "required",
+            'date_of_birth' => "required",
+            'province' => "required",
+            'batch' => "required",
+            'role' => "nullable",
+            'picture' => "nullable",
+            'major' => "required",
+            'current_position' => "required",
+            'gender' => "required"
+            
+              
+        ]);
+                        //move image to storage
+        $request->file('profile')->store('public/profiles');
         $User_detail = User_detail::findOrFail($id);
         $User_detail->user_id = $request->user_id;
         $User_detail->phone = $request->phone;
         $User_detail->date_of_birth = $request->date_of_birth;
         $User_detail->province = $request->province;
+        $User_detail->picture = $request->file('picture')->hashName();
         $User_detail->batch = $request->batch;
         $User_detail->major = $request->major;
         $User_detail->current_position = $request->current_position;

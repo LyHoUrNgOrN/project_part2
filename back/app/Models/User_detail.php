@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class User_detail extends Model
 {
     use HasFactory;
-    protected $fillable=['phone','date_of_birth','province','batch','major','current_position','gender'];
+    protected $fillable=['phone','date_of_birth','province','batch','major','current_position','gender','picture'];
     protected $hidden = [
         'created_at',
         'updated_at',

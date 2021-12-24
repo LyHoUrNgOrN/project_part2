@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+// use App\Models\User_detail;
 
-class UsersContoller extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,18 +41,38 @@ class UsersContoller extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->role = $request->role;
-        
         $user->password = bcrypt($request->password);
         // $user->profile = $request->file('profile')->hashName();
-        
         $user->save();
         
         
-        $token = $user->createToken('mytoken')->plainTextToken;
+        // $token = $user->createToken('mytoken')->plainTextToken;
         return response()->json([
             'user' => $user,
-            'token'=> $token
+            // 'token'=> $token
         ]); 
+    }
+    public function signin(Request $request)
+    {
+        // singin function
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)){
+            return response()->json(['message' => "Email or password in valid. Please contact to Admin!!"], 401);
+        }
+
+        // $token = $user->createToken('mytoken')->plainTextToken;
+
+        return response()->json([
+            'user' => $user,
+            // 'token' => $token
+        ]);
+        //signout function
+    }
+    public function signout(Request $request)
+    {
+        auth()->user()->tokens()->delete();
+        return response()->json(['message'=>'signout']);
     }
 
 
