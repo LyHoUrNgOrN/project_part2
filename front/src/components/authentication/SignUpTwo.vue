@@ -1,7 +1,6 @@
 <template>
   <div>
     <Base-form>
-<<<<<<< HEAD
       <template #back>
         <router-link to="/signupone">
           <a href class="btn">&#x2B05;Back</a>
@@ -43,40 +42,6 @@
           </form>
         </div>
       </template>
-=======
-        <template #back>
-          <router-link to="/signupone">
-            <a href class="btn">&#x2B05;Back</a>
-          </router-link>
-        </template>
-        <router-link to="/signin" class="btn signin">Sign In</router-link>
-        <template #signup>
-          <div class="form">
-            <form action="" class="mb-10">
-            <h1 class="one text-center">Sign Up Account</h1>
-            <p>
-              <label for>
-                Please input your PNC Batch
-                <span class="red--text">*</span>
-              </label>
-              <input type="text" placeholder="PNC Batch ..." required />
-            </p>
-            <p>
-              <label for>
-                Please input your PNC Major
-                <span class="red--text">*</span>
-              </label>
-              <input type="text" placeholder="PNC Major ..." required />
-            </p>
-            <p>
-              <router-link to="/signupthree">
-                <input class="next" type="submit" value="Next" />
-              </router-link>
-            </p>
-            </form>
-          </div>
-        </template>
->>>>>>> c676fd81567f2128375faecfd88c8dade6ec9fb3
     </Base-form>
   </div>
 </template>
