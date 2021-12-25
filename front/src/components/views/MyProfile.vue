@@ -35,7 +35,11 @@
             </div>
           </v-card-text>
         </v-container>
-
+        <router-link to="/info-company">
+          <v-btn>
+            +Add Information about company
+          </v-btn>
+        </router-link>
         <v-list >
           <v-list-group @click="details" :value="false" rounded prepend-icon="mdi-account-circle" style="background : #EFEFEF">
             <template v-slot:activator>
@@ -44,8 +48,7 @@
 
             <v-list-item  v-for="([title, name], i) in cruds" :key="i" style="background : #fff" link>
               <v-list-item-title class="ml-16" width="auto" v-text="title"></v-list-item-title>
-
-                <v-list-item-title v-text="name"></v-list-item-title>
+              <v-list-item-title v-text="name"></v-list-item-title>
               <v-list-item-icon >
                 <!-- <v-btn class="mx-2" fab dark small color="cyan">
                   <v-icon dark> mdi-pencil </v-icon>
