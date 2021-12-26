@@ -1,10 +1,5 @@
 <template>
   <div>
-    <Base-warning>
-      <router-link to="/signupone">
-        <v-btn class="cyan float-end white--text pa-2"> &#x2B05;Back </v-btn>
-      </router-link>
-    </Base-warning>
     <Base-form>
       <router-link to="/signin" class="btn">Sign In</router-link>
       <template #signup>
@@ -73,12 +68,13 @@ export default {
       if (this.success == true) {
         this.$router.push("/signuptwo");
       } else {
-        console.log("ÁH JKJ");
+        this.$router.push("/warning");
       }
     },
   },
   mounted() {
     localStorage.clear();
+    localStorage.setItem('path','/signupone');
     axios.get("/alumini").then((res) => {
       this.name = res.data;
     });
