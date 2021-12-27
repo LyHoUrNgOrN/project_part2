@@ -15,7 +15,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return User::with('user_detail')->get();
+        return User::with(['user_detail'])->get();
     }
 
     /**
@@ -32,7 +32,6 @@ class UsersController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'role' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8'],
-            
         ]);
         // $request->file('profile')->store('public/UserProfile');
         

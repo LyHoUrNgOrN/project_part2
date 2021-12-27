@@ -1,38 +1,67 @@
 <template>
   <v-app>
-    <Navbar v-if="login" @log-out="logout"/>
+    
+    <Menubar v-if="showNavigation" @log-out="signOut"/>
     <v-main>
-      <router-view @login="Login"/>
+      <v-container fluid>
+        <router-view @login="Login"></router-view>
+      </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Navbar from "@/components/nav/Menubar";
+// import Sidebar from "@/components/nav/Sidebar.vue";
+import Menubar from './components/nav/Menubar.vue';
 export default {
   components: {
-    Navbar,
+
+    Menubar,
   },
   data() {
     return {
-      login : false,
+      role: "",
+      showNavigation: false,
     };
   },
-  
   methods: {
-    Login(isTrue){
-      this.login = isTrue;
+    signOut(isSignOut){
+      this.showNavigation = isSignOut;
     },
-    logout(isFalse){
-      this.login = isFalse;
+    Login(isSignIn){
+      this.showNavigation = isSignIn;
+    }
+  },
+  mounted() {
+    this.role = localStorage.getItem("role");
+    if(localStorage.getItem('role') != null) {
+      this.showNavigation = true;
     }
   },
 };
 </script>
 
-
+ 
 <style>
- #app {
-   background: #EFEFEF;
- }
+#app {
+  background: #f1f2f7;
+}
+.active {
+  background: #44c7f5;
+}
+ul {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+@media (max-width: 600px) {
+  ul {
+    display: none;
+  }
+  .img {
+    position: absolute;
+    right: 0;
+    margin: 8px 10px 0px 0px;
+  }
+}
 </style>

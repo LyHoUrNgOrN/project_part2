@@ -6,6 +6,7 @@ use App\Http\Controllers\User_detailController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\AluminiController;
+use App\Http\Controllers\CompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,13 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 Route::get('/countries', [CountryController::class, 'getCountries']);
 // all alumini
 Route::get('/alumini', [AluminiController::class, 'getAlu']);
+
+
+
+//Companies
+Route::get('/companies', [CompanyController::class, 'index']);
+Route::post('/companies', [CompanyController::class, 'store']);
+Route::get('/companies/{id}', [CompanyController::class, 'show']);
+Route::put('/companies/{id}', [CompanyController::class, 'update']);
+Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
+

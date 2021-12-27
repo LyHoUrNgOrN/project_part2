@@ -9,8 +9,9 @@
               alt=""
               width="190"
             />
+
             <input type="file" id="myFileInput" @change="image" hidden/>
-            <v-btn rounded color="cyan white--text"  width="200" onclick="document.getElementById('myFileInput').click()">Change Profile</v-btn>
+            <v-btn rounded color="cyan white--text"  width="200" onclick="document.getElementById('myFileInput').click()">Change Logo</v-btn>
           </div>
           <v-card-text class="text-h5 mt-10">
             <div class="txt">
@@ -48,13 +49,14 @@
   </div>
 </template>
 
+
 <script>
 export default {
   data() {
      return {
      show_details: true,
       cruds: [
-        ["Company name", "Advanced Bank of Asia Ltd. (ABA Bank"],
+        ["Company name", "Advanced Bank of Asia Ltd. (ABA Bank)"],
         ["Phone", "+855 23 235 333"],
         ["Email", "aba@gmail.com"],
         ["Website", "https://www.ababank.com"],
@@ -86,3 +88,36 @@ export default {
 };
 
 </script>
+
+<style scoped>
+.container,
+.txt {
+  margin-top: 20px;
+}
+.sub-txt {
+  font-weight: bolder;
+  width: 250px;
+}
+.txt span {
+  margin: 5px;
+}
+
+@media (max-width: 960px) {
+  .sub-txt {
+    width: 100px;
+  }
+}
+@media (max-width: 600px) {
+  .container,
+  .txt,
+  .txt div {
+    display: block;
+  }
+  .txt div span {
+    margin: 10px;
+  }
+  .dote {
+    display: none;
+  }
+}
+</style>

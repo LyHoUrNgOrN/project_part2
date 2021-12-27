@@ -103,9 +103,9 @@ export default {
         userDetail.append('gender',this.gender);
         axios.post('/user_details',userDetail).then(res=>{
           localStorage.setItem("login",true);
-          localStorage.setItem("detail",res.data);
+          localStorage.setItem("userDetail",JSON.stringify(res.data));
           this.$emit('login',true)
-          this.$router.push('/profileView');
+          this.$router.push('/profile-view');
         })
       })
     },

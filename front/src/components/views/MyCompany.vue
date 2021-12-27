@@ -6,12 +6,22 @@
         <p>Companies<span class="red--text">*</span></p>
         <v-text-field
           class="rounded-pill"
-          label="Comapany name ..."
+          label="Current position ..."
           :rules="rules"
           hide-details="auto"
           outlined
           dense
           v-model="name"
+        ></v-text-field>
+
+        <v-text-field
+          class="rounded-pill"
+          label="Comapany name ..."
+          :rules="rules"
+          hide-details="auto"
+          outlined
+          dense
+          v-model="phone"
         ></v-text-field>
 
         <v-text-field
@@ -75,6 +85,16 @@
 
         <v-text-field
           class="rounded-pill"
+          label="HR email ..."
+          :rules="rules"
+          hide-details="auto"
+          outlined
+          dense
+          v-model="hrname"
+        ></v-text-field>
+
+        <v-text-field
+          class="rounded-pill"
           label="HR phone ..."
           :rules="rules"
           hide-details="auto"
@@ -116,9 +136,6 @@ export default {
     }
   },
 };
-
-
-
 </script>
 
 <style scoped>

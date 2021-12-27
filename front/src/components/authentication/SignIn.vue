@@ -66,8 +66,13 @@ import axios from "@/api/api.js";
                 axios.post('/signin',user).then(res=>{
                     let user = res.data.user;
                     localStorage.setItem("role",user.role);
+                    localStorage.setItem("id",user.id);
+                    localStorage.setItem("user",JSON.stringify(user));
                     this.$emit('login',true)
-                    this.$router.push('/profileView')
+                    axios.get('/user_details/'+user.id).then(res=>{
+                      localStorage.setItem('userDetail',JSON.stringify(res.data[0]))
+                    })
+                    this.$router.push('/profile-view')
                 }).catch(error=>{
                     if (error.response) {
                         this.passwordError = error.response.data.message;      

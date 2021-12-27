@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User_detail;
+
 class User_detailController extends Controller
 {
     /**
@@ -63,7 +64,7 @@ class User_detailController extends Controller
     public function show($id)
     {
         //
-        return User_detail::findOrFail($id);
+        return User_detail::where('user_id','like','%'.$id.'%')->get();
     }
 
     /**

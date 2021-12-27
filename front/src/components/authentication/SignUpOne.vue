@@ -55,7 +55,7 @@ export default {
       if(this.success == true){
         this.$router.push('/signuptwo')
       }else{
-        console.log('ÁH JKJ')
+        console.log('AH JKJ')
       }
     }
   },
