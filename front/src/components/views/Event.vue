@@ -1,13 +1,13 @@
 <template>
-<h1>Informaion about Event</h1>
+  <h1>Informaion about Event</h1>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      
-    };
-  },
-};
+  export default {
+    data() {
+      return {
+        
+      };
+    },
+  };
 </script>
