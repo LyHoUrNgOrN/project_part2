@@ -1,69 +1,83 @@
 <template>
-  <Base-form>
-    <router-link to="/signin" class="btn">Sign In</router-link>
-    <template #signup>
-      <div class="form">
-        <form action="#" class="mb-10" @submit.prevent>
-          <h1 class="one text-center">Sign Up Account</h1>
-          <p>
-            <label for>
-              Please input your first name
-              <span class="red--text">*</span>
-            </label>
-             <input v-model="first_name" type="text" placeholder="First name ..." required />
-             <!-- <small v-if="emailError != ''" style="color : red">{{emailError}}</small> -->
-          </p>
-          <p>
-            <label for>
-              Please input your last name
-              <span class="red--text">*</span>
-            </label>
-            <input v-model="last_name" type="text" placeholder="Last name ..." required />
-            
-          </p>
-          <p>
-            <input @click="signup_one" class="next" type="submit" value="Next" />
-
-
-
-          </p>
-        </form>
-      </div>
-    </template>
-  </Base-form>
+  <div>
+    <Base-form>
+      <router-link to="/signin" class="btn">Sign In</router-link>
+      <template #signup>
+        <div class="form">
+          <form action="#" class="mb-10" @submit.prevent>
+            <h1 class="one text-center">Sign Up Account</h1>
+            <p>
+              <label for>
+                Please input your first name
+                <span class="red--text">*</span>
+              </label>
+              <input
+                v-model="first_name"
+                type="text"
+                placeholder="First name ..."
+                required
+              />
+              <!-- <small v-if="emailError != ''" style="color : red">{{emailError}}</small> -->
+            </p>
+            <p>
+              <label for>
+                Please input your last name
+                <span class="red--text">*</span>
+              </label>
+              <input
+                v-model="last_name"
+                type="text"
+                placeholder="Last name ..."
+                required
+              />
+            </p>
+            <p>
+              <input
+                @click="signup_one"
+                class="next"
+                type="submit"
+                value="Next"
+              />
+            </p>
+          </form>
+        </div>
+      </template>
+    </Base-form>
+  </div>
 </template>
 <script>
 import axios from "@/api/api.js";
 export default {
   data() {
     return {
-      name : '',
-      success : false,
-      first_name:'',
-      last_name: '',
-    }
+      name: "",
+      success: false,
+      first_name: "",
+      last_name: "",
+    };
   },
   methods: {
-    signup_one(){
-      let name = this.first_name + ' ' + this.last_name;
-      for(let alu of this.name){
-        if(alu.name.toLowerCase() === name.toLowerCase()){
+    signup_one() {
+      let name = this.first_name + " " + this.last_name;
+      for (let alu of this.name) {
+        if (alu.name.toLowerCase() === name.toLowerCase()) {
           this.success = true;
-          localStorage.setItem('user',JSON.stringify(alu));
+          localStorage.setItem("user", JSON.stringify(alu));
         }
       }
-      if(this.success == true){
-        this.$router.push('/signuptwo')
-      }else{
-        console.log('ÁH JKJ')
+      if (this.success == true) {
+        this.$router.push("/signuptwo");
+      } else {
+        this.$router.push("/warning");
       }
-    }
+    },
   },
   mounted() {
-    localStorage.clear()
-    axios.get('/alumini').then(res=>{
+    localStorage.clear();
+    localStorage.setItem('path','/signupone');
+    axios.get("/alumini").then((res) => {
       this.name = res.data;
-    })
+    });
   },
 };
 </script>

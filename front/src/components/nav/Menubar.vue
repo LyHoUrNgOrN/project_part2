@@ -1,10 +1,6 @@
 <template>
-  <div>
-
-
-  </div>
-
-  <!-- <nav>
+  <nav>
+    <v-toolbar color="#44C7F5">
       <span class="hidden-sm-and-up">
         <v-app-bar-nav-icon @click="showSideBar"> </v-app-bar-nav-icon>
       </span>
@@ -41,8 +37,8 @@
           active-class="grey-5 white--text"
           text
           :to="{ path: '/explor-view' }"
-          v-if="role == 'ERO' || role == 'ADMIN'"
           class="explor white--text"
+          v-if="role == 'ERO' || role == 'ADMIN'"
         >
           Explor Alumni
         </v-btn>
@@ -73,10 +69,12 @@
         active-class="grey-5 blue--text"
         text
         :to="{ path: '/signin' }"
+        @click="signout"
         class="logout blue--text"
         >Sign Out</v-btn
       >
-  </nav> -->
+    </v-toolbar>
+  </nav>
 </template>
 
 <script>
@@ -87,7 +85,7 @@ export default {
       default: () => ({}),
     },
   },
-
+  emits : ['log-out'],
   data() {
     return {
       sidebar: false,
@@ -100,6 +98,11 @@ export default {
     showSideBar() {
       this.sidebar = !this.sidebar;
     },
+    signout(){
+      localStorage.clear();
+      this.$emit('log-out',false)
+      this.$router.push('/');
+    }
   },
   mounted() {
     this.role = localStorage.getItem("role");
@@ -111,16 +114,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.logout {
-  margin-left: 5px;
-  border-radius: 20px;
-  background: #fff;
+
+
+.logout{
+    margin-left: 5px;
+    border-radius: 20px;
+    background: #fff;
+    
 }
 
-.image {
+.image{
   width: 55px;
   height: 55px;
 }
+
+
+
+
 
 .btn {
   margin-left: 18%;
