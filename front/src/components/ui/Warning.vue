@@ -47,7 +47,9 @@
             <span>: XXXXX.XXXXXX@ero.passerellesnumeriques.org</span>
           </div> 
           <slot></slot>
-         
+          <router-link :to="path">
+            <v-btn class="cyan float-end white--text pa-2"> &#x2B05;Back </v-btn>
+          </router-link>
         </v-card-text>
       </v-container>
     </v-card>
@@ -58,6 +60,7 @@
 export default {
   data() {
     return {
+      path : '',
       show_details: true,
       cruds: [],
     };
@@ -70,6 +73,9 @@ export default {
     image(e) {
       console.log(e.target.files[0]);
     },
+  },
+  mounted() {
+    this.path = localStorage.getItem('path');
   },
 };
 </script>

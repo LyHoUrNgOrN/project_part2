@@ -84,19 +84,16 @@
 export default {
   data() {
     return {
-      show_details: true,
-      cruds: [
-        ["First name", "Chum"],
-        ["Last name", "YOEURN"],
-        ["Gender", "Male"],
-        ["Date of brith", "22/02/2005"],
-        ["Province", "Prey Veng"],
-        ["Phone", "+885 67 12 123"],
-        ["Email", "chum.yoeurn@student.passerellesnumeriques.org"],
-        ["PNC Batch", "2021"],
-        ["PNC Major", "WEP"],
-        ["Current position", "Student at PNC"],
-      ],
+    show_details: true,
+    user : [],
+    userDetail : '',
+    first_name : '',
+    last_name : '',
+    phone : '',
+    email : '',
+    isReload : 0,
+    province : '',
+    cruds: [],
     };
   },
   methods: {
@@ -107,13 +104,12 @@ export default {
       console.log(e.target.files[0]);
     },
   },
-  mounted() {
-
+  mounted(){
+      // console.log(JSON.parse(localStorage.getItem("userDetail")))
       this.user = JSON.parse(localStorage.getItem('user'));
       this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
       this.first_name = this.user.first_name;
       this.last_name = this.user.last_name;
-      
       this.phone = this.userDetail.phone;
       this.email = this.user.email;
       this.province = this.userDetail.province;
