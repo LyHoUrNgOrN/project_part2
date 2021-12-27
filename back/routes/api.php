@@ -3,7 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User_detailController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UsersContoller;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\AluminiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +37,9 @@ Route::post('/signin', [UsersContoller::class, 'signin']);
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/signout', [UsersController::class, 'signout']);
 });
+
+
+// get country from storage
+Route::get('/countries', [CountryController::class, 'getCountries']);
+// all alumini
+Route::get('/alumini', [AluminiController::class, 'getAlu']);

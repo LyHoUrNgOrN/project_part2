@@ -21,7 +21,7 @@ class CreateUserDetailsTable extends Migration
             $table->string('province');
             $table->string('batch');
             $table->string('major');
-            $table->string('picture');
+            $table->string('picture')->nullable();
             $table->string('current_position');
             $table->string('gender');
             $table->timestamps();

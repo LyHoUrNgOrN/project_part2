@@ -1,4 +1,8 @@
 <template>
+<div>
+  <h1>Only Admin manage users</h1>
+  <Base-search>
+  </Base-search>
   <div>
     <v-row justify="space-around">
       <v-col cols="auto">
@@ -112,11 +116,16 @@
       </template>
     </v-simple-table>
   </div>
+
+</div>
+
 </template>
+
 <script>
 import axios from "@/axios-http.js";
 export default {
   data() {
+ 
     return {
        dialog: false,
       todos: [],
