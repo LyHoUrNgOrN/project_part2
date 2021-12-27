@@ -9,7 +9,7 @@
       <router-link to="/signin" class="btn signin">Sign In</router-link>
       <template #signup>
         <div class="form">
-          <form action>
+          <form action @submit.prevent>
             <h1 class="one text-center mt-3">Sign Up Account</h1>
             <p>
               <input type="text" placeholder="Phone ..." v-model="phone" required />
@@ -44,10 +44,7 @@
                 </div>
               </div>
               <p>
-
-                <router-link to="/signupthree">
-                  <input @click="signuptwo" class="next" type="submit" value="Sign Up" />
-                </router-link>
+                <button class="next" @click="signUpThree">Sign Up</button>
               </p>
             </div>
           </form>
@@ -79,7 +76,7 @@ export default {
     }
   },
   methods: {
-    signuptwo(){
+    signUpThree(){
       let user = JSON.parse(localStorage.getItem("user"));
       let name = user.name.split(" ");
       let userCreate = new FormData();
@@ -89,6 +86,7 @@ export default {
       userCreate.append('email',this.email);
       userCreate.append('password',this.password);
       axios.post('/signup',userCreate).then(res=>{
+        localStorage.setItem("user",JSON.stringify(res.data));
         localStorage.setItem('userid',res.data.user.id);
         localStorage.setItem('role',res.data.user.role.toUpperCase());
         let userDetail = new FormData();
@@ -103,7 +101,7 @@ export default {
         userDetail.append('gender',this.gender);
         axios.post('/user_details',userDetail).then(res=>{
           localStorage.setItem("login",true);
-          localStorage.setItem("userDetail",JSON.stringify(res.data));
+          localStorage.setItem("userDetail",JSON.stringify(res.data.data));
           this.$emit('login',true)
           this.$router.push('/profile-view');
         })

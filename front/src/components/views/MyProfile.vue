@@ -17,7 +17,6 @@
               onclick="document.getElementById('myFileInput').click()"
               >Change Profile</v-btn
             ><br><br>
-            <button to="/my_company">Add Information Company</button>
           </div>
           <v-card-text>
             <div class="txt">
@@ -105,13 +104,12 @@ export default {
       console.log(e.target.files[0]);
     },
   },
-  mounted() {
-
+  mounted(){
+      // console.log(JSON.parse(localStorage.getItem("userDetail")))
       this.user = JSON.parse(localStorage.getItem('user'));
       this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
       this.first_name = this.user.first_name;
       this.last_name = this.user.last_name;
-      
       this.phone = this.userDetail.phone;
       this.email = this.user.email;
       this.province = this.userDetail.province;
