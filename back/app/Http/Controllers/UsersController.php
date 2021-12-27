@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
-// use App\Models\User_detail;
+
 
 class UsersController extends Controller
 {
@@ -87,7 +87,12 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
-
-
+    }
+    public function searchName($name)
+    {
+        return User::where('first_name','LIKE','%'. $name .'%')
+                        ->orWhere('last_name', 'LIKE', '%'. $name . '%')
+                        ->orWhere('role', 'LIKE', '%'. $name . '%')
+                        ->get();
     }
 }

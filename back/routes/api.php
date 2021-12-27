@@ -32,14 +32,21 @@ Route::post('/user_details', [User_detailController::class, 'store']);
 Route::get('/user_details/{id}', [User_detailController::class, 'show']);
 Route::put('/user_details/{id}', [User_detailController::class, 'update']);
 Route::delete('/user_details/{id}', [User_detailController::class, 'destroy']);
+<<<<<<< HEAD
 Route::post('/signin', [UsersController::class, 'signin']);
+=======
+
+//signin
+Route::post('/signin', [UsersContoller::class, 'signin']);
+>>>>>>> df7b79171dc8809324bdc3351613e2ef5e30156c
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/signout', [UsersController::class, 'signout']);
 });
 
-
 // get country from storage
 Route::get('/countries', [CountryController::class, 'getCountries']);
 // all alumini
 Route::get('/alumini', [AluminiController::class, 'getAlu']);
+//search
+Route::get('/user/search/{name}', [UsersController::class, 'searchName']);
