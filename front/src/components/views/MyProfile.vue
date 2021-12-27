@@ -21,25 +21,25 @@
           <v-card-text>
             <div class="txt">
               <span class="sub-txt">First name</span>
-              <div><span class="dote">:</span > <span> Chum</span></div>
+              <div><span class="dote">:</span > <span> {{first_name}}</span></div>
             </div>
             <div class="txt">
               <span class="sub-txt">Last name</span>
-              <div><span class="dote">:</span><span> YOEURN</span></div>
+              <div><span class="dote">:</span><span> {{last_name}}</span></div>
             </div>
             <div class="txt">
               <span class="sub-txt">Phone</span>
-              <div><span class="dote">:</span><span> +855 54 12 123</span></div>
+              <div><span class="dote">:</span><span> {{phone}}</span></div>
             </div>
             <div class="txt">
               <span class="sub-txt">Email</span>
               <div>
-                <span class="dote">:</span><span> chum.yoeurn@gmail.com</span>
+                <span class="dote">:</span><span> {{email}}</span>
               </div>
             </div>
             <div class="txt">
               <span class="sub-txt">Province</span>
-              <div><span class="dote">:</span><span> Prey Veng</span></div>
+              <div><span class="dote">:</span><span> {{province}}</span></div>
             </div>
           </v-card-text>
         </v-container>
@@ -50,7 +50,7 @@
             :value="false"
             rounded
             prepend-icon="mdi-account-circle"
-            style="background: #efefef"
+            style="background: #efefef;"
           >
             <template v-slot:activator>
               <v-list-item-title>Users Detail</v-list-item-title>
@@ -59,7 +59,7 @@
             <v-list-item
               v-for="([title, name], i) in cruds"
               :key="i"
-              style="background: #fff"
+              style="background: #fff;cursor : default"
               link
             >
               <v-list-item-title
@@ -70,7 +70,7 @@
 
               <v-list-item-title v-text="name"></v-list-item-title>
               <v-list-item-icon>
-      
+                <v-icon color="dark darken-2" style="cursor : pointer"> mdi-pencil </v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>
@@ -101,7 +101,6 @@ export default {
   },
   methods: {
     details() {
-      console.log("dd");
       this.show_details = !this.show_details;
     },
     image(e) {
@@ -109,11 +108,28 @@ export default {
     },
   },
   mounted() {
-    // console.log(localStorage.getItem('reload'))
-    // if(localStorage.getItem('reload') == false){
-      // localStorage.setItem('reload',true);
-      // window.location.reload();
-    // }
+
+      this.user = JSON.parse(localStorage.getItem('user'));
+      this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
+      this.first_name = this.user.first_name;
+      this.last_name = this.user.last_name;
+      
+      this.phone = this.userDetail.phone;
+      this.email = this.user.email;
+      this.province = this.userDetail.province;
+      this.cruds = [
+          ["First name", this.first_name],
+          ["Last name", this.last_name],
+          ["Gender", this.userDetail.gender],
+          ["Date of brith", this.userDetail.date_of_birth],
+          ["Province", this.province],
+          ["Phone", this.phone],
+          ["Email", this.user.email],
+          ["PNC Batch", this.userDetail.batch],
+          ["PNC Major", this.userDetail.major],
+          ["Current position", this.userDetail.current_position],
+        ];
+
   },
 };
 </script>

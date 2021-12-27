@@ -1,51 +1,49 @@
 <template>
-  <Base-form>
-    <router-link to="/signupone" class="btn signin">Sign up </router-link>
-    <template #signup class="signin">
-      <h1 class="text-center ma-3">Sign In Account</h1>
-      <form action="#" @submit.prevent>
-        <p>
-          <label
-            >Please input your email<span class="red--text"> *</span></label
-          >
-          <input type="text" placeholder="Email Address" v-model="email" />
-          <small v-if="emailError != ''" style="color: red">{{
-            emailError
-          }}</small>
-        </p>
-        <p>
-          <label
-            >Please input your password<span class="red--text"> *</span></label
-          >
-          <input
-            type="password"
-            placeholder="Password"
-            v-model="password"
-            minlength="8"
-          />
-          <small v-if="passwordError != ''" style="color: red">{{
-            passwordError
-          }}</small>
-        </p>
-        <p v-if="messageAlert != ''">
-          <label for="#">{{ messageAlert }}</label>
-        </p>
-        <p>
-          <!-- <button class="next" @click="signIn">Sign In</button> -->
-          <input
-            class="next"
-            @click="signIn"
-            type="submit"
-            value="Sign in"
-            
-          />
-        </p>
-        <p>
-          <!-- <a href="">Forget password?</a> -->
-        </p>
-      </form>
-    </template>
-  </Base-form>
+  <div>
+    <Base-form>
+      <router-link to="/signupone" class="btn signin">Sign up </router-link>
+      <template #signup class="signin">
+        <h1 class="text-center ma-3">Sign In Account</h1>
+        <form action="#" @submit.prevent>
+          <p>
+            <label
+              >Please input your email<span class="red--text"> *</span></label
+            >
+            <input type="text" placeholder="Email Address" v-model="email" />
+            <small v-if="emailError != ''" style="color: red">{{
+              emailError
+            }}</small>
+          </p>
+          <p>
+            <label
+              >Please input your password<span class="red--text">
+                *</span
+              ></label
+            >
+            <input
+              type="password"
+              placeholder="Password"
+              v-model="password"
+              minlength="8"
+            />
+            <small v-if="passwordError != ''" style="color: red">{{
+              passwordError
+            }}</small>
+          </p>
+          <p v-if="messageAlert != ''">
+            <label for="#">{{ messageAlert }}</label>
+          </p>
+          <p>
+            <button class="next" @click="signIn">Sign In</button>
+            <!-- <input class="next" type="submit" value="Next" click="signIn"/> -->
+          </p>
+          <p>
+            <!-- <a href="">Forget password?</a> -->
+          </p>
+        </form>
+      </template>
+    </Base-form>
+  </div>
 </template>
 
 <script>
@@ -62,9 +60,10 @@ export default {
     };
   },
   methods: {
+    
     signIn() {
-      console.log('dd');
       if (this.email !== "" && this.password !== "") {
+        event.preventDefault();
         let user = {
           email: this.email,
           password: this.password,
@@ -74,8 +73,13 @@ export default {
           .then((res) => {
             let user = res.data.user;
             localStorage.setItem("role", user.role);
+            localStorage.setItem("id", user.id);
+            localStorage.setItem("user", JSON.stringify(user));
             this.$emit("login", true);
-            this.$router.push("/profileView");
+            axios.get("/user_details/" + user.id).then((res) => {
+              localStorage.setItem("userDetail", JSON.stringify(res.data[0]));
+            });
+            this.$router.push("/profile-view");
           })
           .catch((error) => {
             if (error.response) {
@@ -83,6 +87,7 @@ export default {
             }
           });
       } else {
+        
         if (this.email === "") {
           this.emailError = "Email should not be empty!";
         }

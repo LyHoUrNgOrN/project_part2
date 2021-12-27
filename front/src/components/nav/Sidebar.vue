@@ -20,6 +20,7 @@
       <v-btn
         depressed
         color="cyan"
+        @click="signout"
         class="signout rounded-lg pa-5 white--text mt-16"
       >
         Sign out
