@@ -15,7 +15,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return User::with('user_detail')->get();
+        return User::with('user_detail')->latest()->get();
     }
 
     /**
@@ -31,7 +31,7 @@ class UsersController extends Controller
             'last_name' => ['required', 'string', 'max:255'], 
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'role' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:6'],
             
         ]);
         // $request->file('profile')->store('public/UserProfile');
@@ -87,6 +87,11 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::destroy($id);
+        if($user ===1){
+            return response(['message'=>'deleted','user'=>$this->index()]);
+        }
+
     }
     public function searchName($name)
     {
