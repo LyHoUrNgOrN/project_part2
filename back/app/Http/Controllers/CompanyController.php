@@ -16,7 +16,7 @@ class CompanyController extends Controller
     {
         //
         // return Company::with('user')->get();
-        return Company::all();
+        return Company::with('user')->get();
     }
 
     /**

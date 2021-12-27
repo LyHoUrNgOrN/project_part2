@@ -10,14 +10,11 @@
               >Please input your email<span class="red--text"> *</span></label
             >
             <input type="text" placeholder="Email Address" v-model="email" />
-            <small v-if="emailError != ''" style="color: red">{{
-              emailError
-            }}</small>
+            <small v-if="emailError != ''" style="color: red">{{emailError}}</small>
           </p>
           <p>
             <label
-              >Please input your password<span class="red--text">
-                *</span
+              >Please input your password<span class="red--text">*</span
               ></label
             >
             <input
@@ -26,9 +23,7 @@
               v-model="password"
               minlength="8"
             />
-            <small v-if="passwordError != ''" style="color: red">{{
-              passwordError
-            }}</small>
+            <small v-if="passwordError != ''" style="color: red">{{passwordError}}</small>
           </p>
           <p v-if="messageAlert != ''">
             <label for="#">{{ messageAlert }}</label>
