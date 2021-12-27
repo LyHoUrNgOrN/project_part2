@@ -48,7 +48,7 @@ class UsersController extends Controller
         
         // $token = $user->createToken('mytoken')->plainTextToken;
         return response()->json([
-            'user' => $user,
+            'user' => $this->index(),
             // 'token'=> $token
         ]); 
     }
