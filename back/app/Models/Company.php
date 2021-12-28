@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends Model
 {
     use HasFactory;
-    protected $fillable=[
+    protected $fillable = [
         'user_id',
+        'user_detail_id',
         'current_postition',
         'hr_name',
         'company_name',
@@ -20,9 +21,16 @@ class Company extends Model
         'company_address',
         'company_website'
     ];
-    protected $hidden = ['updated_at','created_at'];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function user_detail()
+    {
+        return $this->belongsTo(User_detail::class);
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\AluminiController;
 use App\Http\Controllers\CompanyController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,10 +25,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+
 Route::post('/signup', [UsersController::class, 'signup']);
 Route::delete('/signup/{id}', [UsersController::class, 'destroy']);
 Route::get('/user', [UsersController::class, 'index']);
 
+Route::get('/search',[UsersController::class, 'search']);
 
 
 //User_detail
