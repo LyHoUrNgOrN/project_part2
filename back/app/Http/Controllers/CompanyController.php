@@ -41,6 +41,7 @@ class CompanyController extends Controller
     ]);
 
     $Companies = new Company();
+    $Companies->user_id = $request->user_id;
     $Companies->current_position = $request->current_position;
     $Companies->hr_name = $request->hr_name;
     $Companies->company_name = $request->company_name;
