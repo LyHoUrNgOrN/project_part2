@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/signup', [UsersController::class, 'signup']);
+Route::delete('/signup/{id}', [UsersController::class, 'destroy']);
 Route::get('/user', [UsersController::class, 'index']);
 
 
@@ -40,8 +41,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/signout', [UsersController::class, 'signout']);
 });
 
-
 // get country from storage
 Route::get('/countries', [CountryController::class, 'getCountries']);
 // all alumini
 Route::get('/alumini', [AluminiController::class, 'getAlu']);
+//search
+Route::get('/user/search/{name}', [UsersController::class, 'searchName']);

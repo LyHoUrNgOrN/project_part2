@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
-// use App\Models\User_detail;
+
 
 class UsersController extends Controller
 {
@@ -15,7 +15,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return User::with('user_detail')->get();
+        return User::with('user_detail')->latest()->get();
     }
 
     /**
@@ -31,7 +31,7 @@ class UsersController extends Controller
             'last_name' => ['required', 'string', 'max:255'], 
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'role' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:6'],
             
         ]);
         // $request->file('profile')->store('public/UserProfile');
@@ -48,7 +48,7 @@ class UsersController extends Controller
         
         // $token = $user->createToken('mytoken')->plainTextToken;
         return response()->json([
-            'user' => $user,
+            'user' => $this->index(),
             // 'token'=> $token
         ]); 
     }
@@ -87,8 +87,18 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::destroy($id);
+        if($user ===1){
+            return response(['message'=>'deleted','user'=>$this->index()]);
+        }
 
-
+    }
+    public function searchName($name)
+    {
+        return User::where('first_name','LIKE','%'. $name .'%')
+                        ->orWhere('last_name', 'LIKE', '%'. $name . '%')
+                        ->orWhere('role', 'LIKE', '%'. $name . '%')
+                        ->get();
     }
 
         /**
