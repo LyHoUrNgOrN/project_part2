@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     details() {
-      this.show_details = !this.show_details;
+      this.show_details =!this.show_details;
     },
     image(e) {
       console.log(e.target.files[0]);
