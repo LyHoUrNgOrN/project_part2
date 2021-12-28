@@ -100,11 +100,4 @@ class UsersController extends Controller
             ->orWhere('role', 'LIKE', '%' . $name . '%')
             ->get();
     }
-
-    /**
-     * search the specified resource from storage.
-     *
-     * @param  int  $name
-     * @return \Illuminate\Http\Response
-     */
 }
