@@ -34,8 +34,9 @@ export default {
   },
   mounted() {
     this.role = localStorage.getItem("role");
-    if(localStorage.getItem('role') != null) {
+    if(localStorage.getItem('role') != null || this.$router === '/profile-view') {
       this.showNavigation = true;
+      this.$router.push('/profile-view')
     }
   },
 };

@@ -63,7 +63,8 @@ export default {
         user.major = this.marjor;
         localStorage.setItem("user",JSON.stringify(user));
       }else{
-        console.log(user);
+        localStorage.setItem('path','/signuptwo');
+        this.$router.push("/warning");
       }
     }
   },
