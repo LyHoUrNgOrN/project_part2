@@ -34,9 +34,11 @@
                 <td>{{ info.current_position }}</td>
                 <td>{{ info.company }}</td>
                 <td>
-                  <v-icon color="red" @click="deleteItem(user.id)">
-                    mdi-delete
-                  </v-icon>
+                  <v-icon color="yellow">mdi-grease-pencil</v-icon>
+                  <v-icon color="red" @click="deleteItem(user.id)">mdi-delete</v-icon>
+
+                  
+
                 </td>
               </tr>
             </tbody>
@@ -50,53 +52,40 @@
 </template>
 
 <script>
+import axios from "@/api/api.js"
 export default {
   data() {
     return {
-      Info:[
-        {
-          firstName: 'chum',
-          lastName: 'Phea',
-          batch: '2021',
-          current_position: 'WEB',
-          company: 'JPJ'
-        },
-        {
-          firstName: 'chum',
-          lastName: 'Phea',
-          batch: '2021',
-          current_position: 'WEB',
-          company: 'JPJ'
-        },
-        {
-          firstName: 'chum',
-          lastName: 'Phea',
-          batch: '2021',
-          current_position: 'WEB',
-          company: 'JPJ'
-        },
-        
-      ]
-     
-
-      
+      Info:[]
     };
   },
   methods: {
-    // getUser() {
-    //   axios
-    //     .get("http://127.0.0.1:8000/api/user")
-    //     .then((result) => {
-    //       this.users = result.data;
-    //     })
-    //     .catch((err) => {
-    //       console.log(err.response.data.message);
-    //     });
-    // },
+    getUser() {
+
+    },
   },
   mounted() {
-    
-  },
+    axios
+      .get("/user")
+      .then(result => {
+        
+        for(let user of result.data){
+          axios.get('/user_details/'+ user.id).then(res=> {
+            let eachUser = {
+              firstName: user.first_name,
+              lastName: user.last_name,
+              batch: res.data[0].batch,
+              current_position: res.data[0].current_position,
+              company: "NONE",
+            };
+            this.Info.push(eachUser);
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+    },
 };
 </script>
 <style scoped>

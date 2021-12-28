@@ -46,7 +46,7 @@
             <td>{{ user.last_name }}</td>
             <td>{{ user.type }}</td>
             <td>
-              <v-icon class="" small @click="deleteItem(item)">
+              <v-icon class="" small @click="deleteItem(item)" color='red'>
                 mdi-delete
               </v-icon>
             </td>
