@@ -59,28 +59,23 @@ export default {
   methods: {
     signup_one() {
       let name = this.first_name + " " + this.last_name;
-      console.log(name.toLocaleUpperCase());
-        for (let alu of this.name) {
-          if (alu.name !== undefined){
-            if (alu.name.toLowerCase() === name.toLowerCase()) {
-              this.success = true;
-              localStorage.setItem("user", JSON.stringify(alu));
-            }
+      name = name.toLowerCase().trim();
+      for (let alu of this.name) {
+        if(alu.name != undefined){
+          if (alu.name.toLowerCase() == name) {
+            this.success = true;
+            localStorage.setItem("user", JSON.stringify(alu));
           }
         }
-        if (this.success == true) {
-          this.$router.push("/signuptwo");
-        } else {
-          this.$router.push("/warning");
-        }
+
+      }
     },
   },
   mounted() {
     localStorage.clear();
-    localStorage.setItem('path','/signupone');
+    localStorage.setItem("path", "/signupone");
     axios.get("/alumini").then((res) => {
       this.name = res.data;
-      
     });
   },
 };
