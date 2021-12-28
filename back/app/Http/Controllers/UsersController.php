@@ -90,4 +90,12 @@ class UsersController extends Controller
 
 
     }
+
+        /**
+     * search the specified resource from storage.
+     *
+     * @param  int  $name
+     * @return \Illuminate\Http\Response
+     */
+    
 }
