@@ -27,7 +27,7 @@
                 <input type="text" class="email" placeholder="Email ..." v-model="email" required />
               </p>
               <p>
-                <input type="text" placeholder="Password ..." v-model="password" required />
+                <input type="password" placeholder="Password ..." v-model="password" required />
               </p>
               <div class="gender">
                 <div class="d-flex">

@@ -6,11 +6,22 @@
         <p>Companies<span class="red--text">*</span></p>
         <v-text-field
           class="rounded-pill"
+          label="Current position ..."
+          :rules="rules"
+          hide-details="auto"
+          outlined
+          dense
+          v-model="name"
+        ></v-text-field>
+
+        <v-text-field
+          class="rounded-pill"
           label="Comapany name ..."
           :rules="rules"
           hide-details="auto"
           outlined
           dense
+          v-model="phone"
         ></v-text-field>
 
         <v-text-field
@@ -20,6 +31,7 @@
           hide-details="auto"
           outlined
           dense
+          v-model="phone"
         ></v-text-field>
 
         <p class="text">
@@ -30,6 +42,7 @@
             hide-details="auto"
             outlined
             dense
+            v-model="email"
           ></v-text-field>
         </p>
 
@@ -41,6 +54,7 @@
             hide-details="auto"
             outlined
             dense
+            v-model="address"
           ></v-text-field>
         </p>
 
@@ -52,6 +66,7 @@
             hide-details="auto"
             outlined
             dense
+            v-model="website"
           ></v-text-field>
         </p>
       </v-col>
@@ -65,6 +80,17 @@
           hide-details="auto"
           outlined
           dense
+          v-model="hrname"
+        ></v-text-field>
+
+        <v-text-field
+          class="rounded-pill"
+          label="HR email ..."
+          :rules="rules"
+          hide-details="auto"
+          outlined
+          dense
+          v-model="hrname"
         ></v-text-field>
 
         <v-text-field
@@ -74,17 +100,15 @@
           hide-details="auto"
           outlined
           dense
+          v-model="hrphone"
         ></v-text-field>
       </v-col> 
     </v-row>
     
     <div class="btn">
       <button class="one">Cancel</button>
-      <button class="two">Save</button>
-    </div>
-
-
-        
+      <button class="two" @click="my_company">Save</button>
+    </div>    
   </div>
   
 </template>
@@ -93,9 +117,24 @@
 export default {
   data() {
     return {
-      rules: [value => !!value || "Required."]
+      rules: [value => !!value || "Required."],
+      name:'',
+      phone : '',
+      email: '',
+      address: '',
+      website: '',
+      hrname: '',
+      hrphone: '',
+      infoCompany:[]
     };
-  }
+  },
+  methods: {
+    my_company(){
+      this.infoCompany.push(this.name, this.phone, this.email,this.address, this.website, this.hrname, this.hrphone);
+
+      console.log(this.infoCompany)
+    }
+  },
 };
 </script>
 
