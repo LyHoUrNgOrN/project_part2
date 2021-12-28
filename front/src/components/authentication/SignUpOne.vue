@@ -59,8 +59,10 @@ export default {
   methods: {
     signup_one() {
       let name = this.first_name + " " + this.last_name;
+      name = name.toLowerCase().trim();
       for (let alu of this.name) {
-        if (alu.name.toLowerCase() === name.toLowerCase()) {
+        console.log(alu);
+        if (alu.name.toLowerCase() == name && alu.name != undefined) {
           this.success = true;
           localStorage.setItem("user", JSON.stringify(alu));
         }
