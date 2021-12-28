@@ -9,10 +9,10 @@
             transition="dialog-top-transition"
             max-width="600"
             v-model="dialog"
-          >  
+          >
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                Create New ERO 
+                Create New ERO
               </v-btn>
             </template>
             <template>
@@ -103,40 +103,40 @@
         </v-card>
       </v-dialog>
       <div class="form-user">
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr class="text-center">
-              <th>Profile</th>
-              <th>First name</th>
-              <th>Last name</th>
-              <th>Role</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="user in users" :key="user.type">
-              <td>
-                <!-- <img :src="user.profile" alt="" width="50" class="ma-2" /> -->
-                <img
-                  src="https://www.passerellesnumeriques.org/wp-content/uploads/2016/03/pn-logo.png"
-                  alt=""
-                  width="50"
-                  class="ma-2"
-                />
-              </td>
-              <td>{{ user.first_name }}</td>
-              <td>{{ user.last_name }}</td>
-              <td>{{ user.role }}</td>
-              <td>
-                <v-icon class="" @click="deleteItem(user.id)">
-                  mdi-delete
-                </v-icon>
-              </td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr class="text-center">
+                <th>Profile</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Role</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="user in users" :key="user.type">
+                <td>
+                  <!-- <img :src="user.profile" alt="" width="50" class="ma-2" /> -->
+                  <img
+                    src="https://www.passerellesnumeriques.org/wp-content/uploads/2016/03/pn-logo.png"
+                    alt=""
+                    width="50"
+                    class="ma-2"
+                  />
+                </td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                  <v-icon class="" @click="deleteItem(user.id)">
+                    mdi-delete
+                  </v-icon>
+                </td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
       </div>
     </div>
   </div>
@@ -176,30 +176,32 @@ export default {
   },
   methods: {
     deleteItemConfirm() {
-      console.log('delete ', this.id);
-      axios.delete("http://127.0.0.1:8000/api/signup/"+this.id)
-          .then(() => {
-          this.getUser()
-          this.closeDelete()
-          }).catch((err) => {
-            console.log(err.response.data.message);
-          });
-
+      console.log("delete ", this.id);
+      axios
+        .delete("http://127.0.0.1:8000/api/signup/" + this.id)
+        .then(() => {
+          this.getUser();
+          this.closeDelete();
+        })
+        .catch((err) => {
+          console.log(err.response.data.message);
+        });
     },
 
     deleteItem(item) {
       // this.editedIndex = this.desserts.indexOf(item)
 
       this.dialogDelete = true;
-    
-      this.id = item
+
+      this.id = item;
     },
     closeDelete() {
-      this.getUser()
+      this.getUser();
       this.dialogDelete = false;
     },
+
     close() {
-      this.getUser()
+      this.getUser();
       this.dialog = false;
     },
     save() {
@@ -216,10 +218,10 @@ export default {
           this.users = result.data;
           this.close();
           this.getUser();
-          this.first_name = ''
-          this.email = ''
-          this.last_name = ''
-          this.password = ''
+          this.first_name = "";
+          this.email = "";
+          this.last_name = "";
+          this.password = "";
         })
         .catch((err) => {
           console.log(err.response.data.errors.email[0]);
@@ -250,13 +252,12 @@ export default {
 };
 </script>
 <style scoped>
-  .mb-2{
-    margin-left: 283%;
-  }
-  .form-user{
-    width: 1100px;
-    margin:auto;
-  }
-  
+.mb-2 {
+  margin-left: 283%;
+}
+.form-user {
+  width: 1100px;
+  margin: auto;
+}
 </style>
 
