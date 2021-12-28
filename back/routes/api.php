@@ -24,7 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/signup', [UsersController::class, 'signup']);
+Route::delete('/signup/{id}', [UsersController::class, 'destroy']);
 Route::get('/user', [UsersController::class, 'index']);
+
+
 
 //User_detail
 Route::get('/user_details', [User_detailController::class, 'index']);
@@ -32,13 +35,7 @@ Route::post('/user_details', [User_detailController::class, 'store']);
 Route::get('/user_details/{id}', [User_detailController::class, 'show']);
 Route::put('/user_details/{id}', [User_detailController::class, 'update']);
 Route::delete('/user_details/{id}', [User_detailController::class, 'destroy']);
-<<<<<<< HEAD
 Route::post('/signin', [UsersController::class, 'signin']);
-=======
-
-//signin
-Route::post('/signin', [UsersContoller::class, 'signin']);
->>>>>>> df7b79171dc8809324bdc3351613e2ef5e30156c
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/signout', [UsersController::class, 'signout']);
