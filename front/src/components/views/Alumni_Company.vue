@@ -2,7 +2,6 @@
   <div>
     <v-main>
       <v-card class="mx-auto mt-10 pa-8">
-        <!-- <h1>Current employment</h1> -->
         <v-container fluid class="d-flex" v-if="show_details">
           <div class="profile me-16">
             <img
@@ -21,16 +20,16 @@
           </div>
           <v-card-text class="text-h5 mt-10">
             <div class="txt">
-              <span class="sub-txt">Company Name: </span>
-              <span >: Advanced Bank of Asia Ltd. (ABA Bank)</span>
+              <span class="sub-txt">Company name </span>
+              <div><span>: <span></span>{{view_company_name}}</span></div>
             </div>
             <div class="txt">
-              <span class="sub-txt">Company Phone: </span>
-              <span>088 34 52 939</span>
+              <span class="sub-txt">Company phone</span>
+              <div><span>: <span></span>{{view_company_phone}}</span></div>
             </div>
             <div class="txt">
-              <span class="sub-txt">Company Email: </span>
-              <span>aba@gmail.com</span>
+              <span class="sub-txt">Company email </span>
+              <div><span>: <span></span>{{view_company_email}}</span></div>
             </div>
           </v-card-text>
         </v-container>
@@ -121,7 +120,7 @@
                         <v-text-field
                           class="rounded-pill"
                           label="HR email ..."
-                          :rules="rules"
+                          :rules="HrEmail"
                           hide-details="auto"
                           outlined
                           dense
@@ -155,7 +154,7 @@
                         <v-text-field
                           class="rounded-pill"
                           label="Company email ..."
-                          :rules="rules"
+                          :rules="CompanyEmail"
                           hide-details="auto"
                           outlined
                           dense
@@ -207,6 +206,17 @@ import axios from "@/api/api.js";
 export default {
   data() {
     return {
+
+      HrEmail: [
+        (v) => !!v || "E-mail is required",
+        (v) => /.+@.+/.test(v) || "E-mail must be valid",
+      ],
+      CompanyEmail: [
+        (v) => !!v || "E-mail is required",
+        (v) => /.+@.+/.test(v) || "E-mail must be valid",
+      ],
+      
+      
       dialog: false,
 
       rules: [value => !!value || "Required."],
@@ -219,9 +229,13 @@ export default {
       company_email: "",
       company_address: "",
       company_website: "",
-      cruds :[],
+      view_company_name: "",
+      view_company_email: "",
+      view_company_phone: "",
+      id: 0,
+      cruds: [],
 
-      show_details: true,
+      show_details: true
     };
   },
   methods: {
@@ -229,27 +243,27 @@ export default {
       this.dialog = false;
     },
     details() {
-      console.log('hello');
+      console.log("hello");
     },
     close() {
       this.getUser();
       this.dialog = false;
     },
     my_company() {
+      let user_id = JSON.parse(localStorage.getItem("user"));
+      this.id = user_id.id;
+      console.log(this.id);
       let info = {
-
-        "user_id": 2,
-        "current_position": this.current_position,
-        "company_name": this.company_name,
-        "company_phone": this.company_phone,
-        "company_email": this.company_email,
-        "company_address": this.company_address,
-        "company_website": this.company_website,
-        "hr_name": this.hr_name,
-        "hr_email": this.hr_email,
-        "hr_phone": this.hr_phone,
-        
-        
+        user_id: this.id,
+        current_position: this.current_position,
+        company_name: this.company_name,
+        company_phone: this.company_phone,
+        company_email: this.company_email,
+        company_address: this.company_address,
+        company_website: this.company_website,
+        hr_name: this.hr_name,
+        hr_email: this.hr_email,
+        hr_phone: this.hr_phone
       };
       axios.post("http://127.0.0.1:8000/api/companies", info).then(res => {
         console.log(res.data);
@@ -274,18 +288,23 @@ export default {
         .then(result => {
           result.data.forEach(element => {
             if (element.user_id === user.id) {
-              this.cruds =[
+              this.view_company_name = element.company_name;
+
+              this.view_company_email = element.company_email;
+
+              this.view_company_phone = element.company_phone;
+              this.cruds = [
                 ["Company name", element.company_name],
                 ["Current Position", element.current_position],
                 ["Company Email", element.company_email],
                 ["Company Phone", element.company_phone],
                 ["Company Website", element.company_website],
                 ["Company Address", element.company_address],
-                ["Human Resources", ],
+                ["Human Resources"],
                 ["HR Name", element.hr_name],
                 ["HR Email", element.hr_email],
-                ["HR Phone", element.hr_phone ],
-              ]
+                ["HR Phone", element.hr_phone]
+              ];
             }
           });
         })
@@ -301,20 +320,30 @@ export default {
 </script>
 
 <style scoped>
-.container,
-.txt {
-  margin-top: 20px;
-}
-@media (max-width: 960px) {
-  .sub-txt {
-    width: 100px;
-  }
-}
-@media (max-width: 600px) {
   .container,
-  .txt,
-  .txt div {
-    display: block;
-  }
-}
+    .txt {
+      display: flex;
+    }
+    .sub-txt {
+      font-weight: bolder;
+      width: 250px;
+    }
+    .txt span {
+      margin: 5px;
+    }
+    @media (max-width: 960px) {
+      .sub-txt {
+        width: 100px;
+      }
+    }
+    @media (max-width: 600px) {
+      .container,
+      .txt,
+      .txt div {
+        display: block;
+      }
+      .txt div span {
+        margin: 10px;
+      }
+    }
 </style>

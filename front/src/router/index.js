@@ -5,7 +5,7 @@ import signin from "@/components/authentication/SignIn.vue";
 import signupone from "@/components/authentication/SignUpOne.vue";
 import signuptwo from "@/components/authentication/SignUpTwo.vue";
 import signupthree from "@/components/authentication/SignUpThree.vue";
-import alumnicompany from "@/components/views/Alumni_Company.vue";
+
 
 import MyProfile from '@/components/views/MyProfile.vue'
 import Mycompany from '@/components/views/Alumni_Company.vue'
@@ -35,10 +35,7 @@ const routes = [{
       component: signupthree
     },
 
-    {
-      path: "/my_company",
-      component: alumnicompany
-    },
+
     {
       path: '/profile-view',
       component: MyProfile
