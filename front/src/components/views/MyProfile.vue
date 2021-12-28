@@ -129,7 +129,7 @@
           ["PNC Batch", this.userDetail.batch],
           ["PNC Major", this.userDetail.major],
           ["Current position", this.userDetail.current_position],
-        ];
+      ];
     },
   };
 </script>
@@ -172,4 +172,5 @@
     height: 35px;
     color: white;
   }
+
 </style>
