@@ -27,15 +27,15 @@ Route::post('/signup', [UsersController::class, 'signup']);
 Route::delete('/signup/{id}', [UsersController::class, 'destroy']);
 Route::get('/user', [UsersController::class, 'index']);
 
+
+
 //User_detail
 Route::get('/user_details', [User_detailController::class, 'index']);
 Route::post('/user_details', [User_detailController::class, 'store']);
 Route::get('/user_details/{id}', [User_detailController::class, 'show']);
 Route::put('/user_details/{id}', [User_detailController::class, 'update']);
 Route::delete('/user_details/{id}', [User_detailController::class, 'destroy']);
-
-//signin
-Route::post('/signin', [UsersContoller::class, 'signin']);
+Route::post('/signin', [UsersController::class, 'signin']);
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/signout', [UsersController::class, 'signout']);

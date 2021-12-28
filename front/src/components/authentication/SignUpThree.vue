@@ -9,7 +9,7 @@
       <router-link to="/signin" class="btn signin">Sign In</router-link>
       <template #signup>
         <div class="form">
-          <form action>
+          <form action @submit.prevent>
             <h1 class="one text-center mt-3">Sign Up Account</h1>
             <p>
               <input type="text" placeholder="Phone ..." v-model="phone" required />
@@ -29,9 +29,6 @@
               <p>
                 <input type="text" placeholder="Password ..." v-model="password" required />
               </p>
-              <p>
-                <input type="text" placeholder="Current Position ..."  v-model="position" required />
-              </p>
               <div class="gender">
                 <div class="d-flex">
                   <span class="mt-7 me-5">Gender:</span>
@@ -44,10 +41,7 @@
                 </div>
               </div>
               <p>
-
-                <router-link to="/signupthree">
-                  <input @click="signuptwo" class="next" type="submit" value="Sign Up" />
-                </router-link>
+                <button class="next" @click="signUpThree">Sign Up</button>
               </p>
             </div>
           </form>
@@ -64,6 +58,7 @@
 import axios from "@/api/api.js";
 
 export default {
+  emits:['login'],
   data() {
     return {
       phone:'',
@@ -73,12 +68,11 @@ export default {
       province: '',
       email: '',
       password: '',
-      position: '',
       gender: '',
     }
   },
   methods: {
-    signuptwo(){
+    signUpThree(){
       let user = JSON.parse(localStorage.getItem("user"));
       let name = user.name.split(" ");
       let userCreate = new FormData();
@@ -88,20 +82,25 @@ export default {
       userCreate.append('email',this.email);
       userCreate.append('password',this.password);
       axios.post('/signup',userCreate).then(res=>{
-        this.id = res.data.user.id;
-      })
-      let userDetail = new FormData();
-      userDetail.append('user_id',this.id);
-      userDetail.append('phone',this.phone);
-      userDetail.append('date_of_birth',this.dateofbirth);
-      userDetail.append('province',this.province);
-      userDetail.append('batch',user.batch);
-      userDetail.append('major',user.major);
-      // userDetail.append('picture',null);
-      userDetail.append('current_position',this.position);
-      userDetail.append('gender',this.gender);
-      axios.post('/user_details',userDetail).then(res=>{
-        console.log(res.data);
+        localStorage.setItem("user",JSON.stringify(res.data.user));
+        localStorage.setItem('id',res.data.user.id);
+        localStorage.setItem('role',res.data.user.role.toUpperCase());
+        let userDetail = new FormData();
+        userDetail.append('user_id',localStorage.getItem('id'));
+        userDetail.append('phone',this.phone);
+        userDetail.append('date_of_birth',this.dateofbirth);
+        userDetail.append('province',this.province);
+        userDetail.append('batch',user.batch);
+        userDetail.append('major',user.major);
+        // userDetail.append('picture',null);
+        userDetail.append('current_position',"NONE");
+        userDetail.append('gender',this.gender);
+        axios.post('/user_details',userDetail).then(res=>{
+          localStorage.setItem("login",true);
+          localStorage.setItem("userDetail",JSON.stringify(res.data.data));
+          this.$emit('login',true)
+          this.$router.push('/profile-view');
+        })
       })
     },
   },
@@ -166,4 +165,4 @@ export default {
 .signin {
   margin: 10px;
 }
-</style>
+</style>9

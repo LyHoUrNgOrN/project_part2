@@ -8,9 +8,10 @@ import signupthree from "@/components/authentication/SignUpThree.vue";
 
 import MyProfile from '@/components/views/MyProfile.vue'
 import MyCompany from '@/components/views/MyCompany.vue'
-import ExplorAlumni from '@/components/views/ExplorAlumni.vue'
+import ExplorAlumni from '@/components/views/Alumni_Company.vue'
 import Event from '@/components/views/Event.vue'
 import ManageUser from '@/components/views/ManageUser.vue'
+import Warning from '@/components/ui/Warning.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -54,6 +55,10 @@ const routes = [{
     {
       path: '/manage-view',
       component: ManageUser
+    },
+    {
+      path: '/warning',
+      component: Warning
     },
 
   ]

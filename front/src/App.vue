@@ -1,72 +1,22 @@
 <template>
   <v-app>
-    <v-navigation-drawer app v-model="showNavigation" absolute temporary>
-      <Sidebar />
-    </v-navigation-drawer>
-
-    <v-app-bar app color="#44C7F5">
-      <div class="hidden-sm-and-up">
-        <v-app-bar-nav-icon
-          dark
-          @click.prevent="showNavigation = !showNavigation"
-        ></v-app-bar-nav-icon>
-      </div>
-      <ul>
-        <img
-          width="50"
-          class=""
-          src="https://www.passerellesnumeriques.org/wp-content/uploads/2016/03/pn-logo.png"
-        />
-
-        <div>
-          <v-tabs dark class="border">
-            <v-tab class="white--text active" :to="{ path: '/profile-view' }"
-              >My profile</v-tab
-            >
-            <v-tab class="white--text active" :to="{ path: '/company-view' }"
-            v-if="role == 'ALUMNI'"
-              >Company</v-tab
-            >
-            <v-tab
-              class="white--text active"
-              :to="{ path: '/explor-view' }"
-              v-if="role == 'ERO' || role == 'ADMIN'"
-              >Explor Alumni</v-tab
-            >
-            <v-tab class="white--text active" :to="{ path: '/event-view' }"
-              >Events</v-tab
-            >
-            <v-tab class="white--text active" v-if="role == 'ADMIN'"
-          :to="{ path: '/manage-view' }"
-              >Manage user</v-tab
-            >
-          </v-tabs>
-        </div>
-
-        <v-btn depressed color="white" class="rounded-lg pa-5 mt-2 cyan--text">
-          Sign out
-        </v-btn>
-      </ul>
-      <div class="img hidden-sm-and-up">
-        <img
-          width="45"
-          src="https://www.passerellesnumeriques.org/wp-content/uploads/2016/03/pn-logo.png"
-        />
-      </div>
-    </v-app-bar>
+    
+    <Menubar v-if="showNavigation" @log-out="signOut"/>
     <v-main>
       <v-container fluid>
-        <router-view></router-view>
+        <router-view @login="Login"></router-view>
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Sidebar from "@/components/nav/Sidebar.vue";
+// import Sidebar from "@/components/nav/Sidebar.vue";
+import Menubar from './components/nav/Menubar.vue';
 export default {
   components: {
-    Sidebar,
+
+    Menubar,
   },
   data() {
     return {
@@ -74,8 +24,20 @@ export default {
       showNavigation: false,
     };
   },
+  methods: {
+    signOut(isSignOut){
+      this.showNavigation = isSignOut;
+    },
+    Login(isSignIn){
+      this.showNavigation = isSignIn;
+    }
+  },
   mounted() {
     this.role = localStorage.getItem("role");
+    if(localStorage.getItem('role') != null || this.$router === '/profile-view') {
+      this.showNavigation = true;
+      this.$router.push('/profile-view')
+    }
   },
 };
 </script>
