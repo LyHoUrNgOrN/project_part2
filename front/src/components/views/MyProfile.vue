@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import axios from "@/api/api.js"
 export default {
   data() {
     return {
@@ -107,24 +108,25 @@ export default {
   mounted(){
       // console.log(JSON.parse(localStorage.getItem("userDetail")))
       this.user = JSON.parse(localStorage.getItem('user'));
-      this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
-      this.first_name = this.user.first_name;
-      this.last_name = this.user.last_name;
-      this.phone = this.userDetail.phone;
-      this.email = this.user.email;
-      this.province = this.userDetail.province;
-      this.cruds = [
-          ["First name", this.first_name],
-          ["Last name", this.last_name],
-          ["Gender", this.userDetail.gender],
-          ["Date of brith", this.userDetail.date_of_birth],
-          ["Province", this.province],
-          ["Phone", this.phone],
-          ["Email", this.user.email],
-          ["PNC Batch", this.userDetail.batch],
-          ["PNC Major", this.userDetail.major],
-          ["Current position", this.userDetail.current_position],
-        ];
+      axios.get('/user_details/'+ this.user.id).then(res=> {
+        this.userDetail = res.data[0];
+        this.first_name = this.user.first_name;
+        this.last_name = this.user.last_name;
+        this.phone = this.userDetail.phone;
+        this.email = this.user.email;
+        this.province = this.userDetail.province;
+        this.cruds = [
+            ["First name", this.first_name],
+            ["Last name", this.last_name],
+            ["Gender", this.userDetail.gender],
+            ["Date of brith", this.userDetail.date_of_birth],
+            ["Province", this.province],
+            ["Phone", this.phone],
+            ["Email", this.user.email],
+            ["PNC Batch", this.userDetail.batch],
+            ["PNC Major", this.userDetail.major],
+          ];
+      })
 
   },
 };

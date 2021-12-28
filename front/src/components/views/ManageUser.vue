@@ -30,16 +30,40 @@
             </template>
         </v-dialog>
       </v-col>
-    </v-card-title>
-    <v-data-table 
-      color="error"
-      :headers="headers"
-      :items="users"
-      :search="search"
-    ></v-data-table>
     
-  </v-card>
+
+    <v-simple-table>
+      <template v-slot:default>
+        <thead>
+          <tr class="text-center">
+            <th>Profile</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Role</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="user in users" :key="user.type">
+            <td>
+              <img :src="user.profile" alt="" width="50" class="ma-2" />
+            </td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.type }}</td>
+            <td>
+              <v-icon class="" small @click="deleteItem(item)" color='red'>
+                mdi-delete
+              </v-icon>
+            </td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
   
+
+
+
 </template>
 
 <script>

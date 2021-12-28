@@ -81,8 +81,7 @@ class User_detailController extends Controller
             'date_of_birth' => "required",
             'province' => "required",
             'batch' => "required",
-            'role' => "nullable",
-            'picture' => "nullable",
+            'picture' => 'image|mimes:jpg,jpeg,png,gif|max:1999',
             'major' => "required",
             'current_position' => "required",
             'gender' => "required"
