@@ -2,7 +2,6 @@
   <div>
     <v-main>
       <v-card class="mx-auto pa-2 rounded-lg" width="80%">
-
         <v-container fluid class="container" v-if="show_details">
           <div class="profile me-16">
             <img
@@ -11,16 +10,14 @@
               width="190"
             />
             <input type="file" id="myFileInput" @change="image" hidden />
-
             <v-btn
               rounded
               color="cyan white--text"
               width="200"
               onclick="document.getElementById('myFileInput').click()"
               >Change Profile</v-btn
-            ><br><br>
+            >
           </div>
-          
           <v-card-text>
             <div class="txt">
               <span class="sub-txt">First name</span>
@@ -78,98 +75,93 @@
             </v-list-item>
           </v-list-group>
         </v-list>
-
       </v-card>
     </v-main>
   </div>
 </template>
 
-
 <script>
-  export default {
-    data() {
-      return {
-      show_details: true,
-      user : [],
-      userDetail : '',
-      first_name : '',
-      last_name : '',
-      phone : '',
-      email : '',
-      isReload : 0,
-      province : '',
-      cruds: [],
-      };
+import axios from "@/api/api.js"
+export default {
+  data() {
+    return {
+    show_details: true,
+    user : [],
+    userDetail : '',
+    first_name : '',
+    last_name : '',
+    phone : '',
+    email : '',
+    isReload : 0,
+    province : '',
+    cruds: [],
+    };
+  },
+  methods: {
+    details() {
+      this.show_details = !this.show_details;
     },
-    methods: {
-      details() {
-        this.show_details = !this.show_details;
-      },
-      image(e) {
-        console.log(e.target.files[0]);
-      },
+    image(e) {
+      console.log(e.target.files[0]);
     },
-    mounted(){
+  },
+  mounted(){
       // console.log(JSON.parse(localStorage.getItem("userDetail")))
       this.user = JSON.parse(localStorage.getItem('user'));
-      this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
-      this.first_name = this.user.first_name;
-      this.last_name = this.user.last_name;
-      this.phone = this.userDetail.phone;
-      this.email = this.user.email;
-      this.province = this.userDetail.province;
-      this.cruds = [
-          ["First name", this.first_name],
-          ["Last name", this.last_name],
-          ["Gender", this.userDetail.gender],
-          ["Date of brith", this.userDetail.date_of_birth],
-          ["Province", this.province],
-          ["Phone", this.phone],
-          ["Email", this.user.email],
-          ["PNC Batch", this.userDetail.batch],
-          ["PNC Major", this.userDetail.major],
-          ["Current position", this.userDetail.current_position],
-        ];
-    },
-  };
+      axios.get('/user_details/'+ this.user.id).then(res=> {
+        this.userDetail = res.data[0];
+        this.first_name = this.user.first_name;
+        this.last_name = this.user.last_name;
+        this.phone = this.userDetail.phone;
+        this.email = this.user.email;
+        this.province = this.userDetail.province;
+        this.cruds = [
+            ["First name", this.first_name],
+            ["Last name", this.last_name],
+            ["Gender", this.userDetail.gender],
+            ["Date of brith", this.userDetail.date_of_birth],
+            ["Province", this.province],
+            ["Phone", this.phone],
+            ["Email", this.user.email],
+            ["PNC Batch", this.userDetail.batch],
+            ["PNC Major", this.userDetail.major],
+          ];
+      })
+
+  },
+};
 </script>
 
 
 <style scoped>
-  .container,
-  .txt {
-    display: flex;
-  }
+.container,
+.txt {
+  display: flex;
+}
+.sub-txt {
+  font-weight: bolder;
+  width: 250px;
+}
+.txt span {
+  margin: 5px;
+}
+
+@media (max-width: 960px) {
   .sub-txt {
-    font-weight: bolder;
-    width: 250px;
+    width: 100px;
   }
-  .txt span {
-    margin: 5px;
+}
+@media (max-width: 600px) {
+  .container,
+  .txt,
+  .txt div {
+    display: block;
   }
-  @media (max-width: 960px) {
-    .sub-txt {
-      width: 100px;
-    }
+  .txt div span {
+    margin: 10px;
   }
-  @media (max-width: 600px) {
-    .container,
-    .txt,
-    .txt div {
-      display: block;
-    }
-    .txt div span {
-      margin: 10px;
-    }
-    .dote {
-      display: none;
-    }
+  .dote {
+    display: none;
   }
-  button{
-    background: rgb(61, 162, 230);
-    border-radius: 10px;
-    width: 200px;
-    height: 35px;
-    color: white;
-  }
+}
 </style>
