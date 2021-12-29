@@ -13,7 +13,7 @@
           <v-icon large class="text-h2 red--text">mdi-alert</v-icon>
         </span>
         <h2 class="red--text">
-          Failed create account, you are not PNC alumni.
+          Failed create account.
         </h2>
       </div>
 
@@ -66,7 +66,6 @@ export default {
     };
   },
   methods: {
-    dd(){console.log('dd');},
     details() {
       this.show_details = !this.show_details;
     },

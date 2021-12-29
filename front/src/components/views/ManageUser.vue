@@ -1,36 +1,30 @@
 <template>
-  <v-card>
-    <v-card-title>
-      
-      <v-text-field class="rounded-pill pa-10"
-        v-model="search"
-        color="#44C7F5"
-        append-icon="mdi-magnify"
-        label="Search by alumni, company and batch..."
-        single-line
-        hide-details
-        outlined
-        
-      ></v-text-field>
-      <v-col cols="2">
+<div>
+  <h1>Only Admin manage users</h1>
+  <Base-search>
+  </Base-search>
+  <div>
+    <v-row justify="space-around">
+      <v-col cols="auto">
         <v-dialog transition="dialog-top-transition" max-width="600">
-             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="#44C7F5" dark class="ma-10 pa-7 rounded-pill" width="60%" v-bind="attrs" v-on="on">
-                Create ERO
-              </v-btn>
-            </template>
-            <template v-slot:default="dialog">
-              <v-card>
-                <v-toolbar color="primary" dark>Define ERO Account</v-toolbar>
-                  <v-card-actions class="justify-start">
-                  <v-btn text @click="dialog.value = false">Save</v-btn>
-                  <v-btn text @click="dialog.value = false">Close</v-btn>
-                </v-card-actions>
-              </v-card>
-            </template>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+              New Item
+            </v-btn>
+          </template>
+          <template v-slot:default="dialog">
+            <v-card>
+              <v-toolbar color="primary" dark>Define ERO Account</v-toolbar>
+                
+                <v-card-actions class="justify-start">
+                <v-btn text @click="dialog.value = false">Save</v-btn>
+                <v-btn text @click="dialog.value = false">Close</v-btn>
+              </v-card-actions>
+            </v-card>
+          </template>
         </v-dialog>
       </v-col>
-    
+    </v-row>
 
     <v-simple-table>
       <template v-slot:default>
@@ -60,59 +54,52 @@
         </tbody>
       </template>
     </v-simple-table>
-  
+  </div>
 
-
+</div>
 
 </template>
 
 <script>
-export default{
-  data () {
+export default {
+  data() {
+ 
     return {
-      search: '',
-      headers: [
-        // {
-        //   filterable: false,
-          
-        // },
-        { text: 'Profile', value: 'profile'},
-        { text: 'First name', value: 'first_name' },
-        { text: 'Last name', value: 'last_name' },
-        { text: 'Role', value: 'type' },
-        { text: 'Delete', value: 'delete'},
-      ],
+      picker: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
       users: [
         {
-          profile: 'PNC',
-          first_name : 'Frozen',
-          last_name: 'sare',
-          type: 'admin',
-          delete: 'mi'
-          
+          profile:
+            "https://www.passerellesnumeriques.org/wp-content/uploads/2016/03/pn-logo.png",
+          first_name: "Sara",
+          last_name: "Hun",
+          type: "admin",
         },
         {
-          profile: 'PNC',
-          first_name : 'Phea',
-          last_name: 'mean',
-          type: 'alumni',
-          
+          profile:
+            "https://www.passerellesnumeriques.org/wp-content/uploads/2016/03/pn-logo.png",
+          first_name: "Sara",
+          last_name: "Hun",
+          type: "admin",
         },
         {
-          profile: 'PNC',
-          first_name : 'thin',
-          last_name: 'mey',
-          type: 'Ero',
+          profile:
+            "https://www.passerellesnumeriques.org/wp-content/uploads/2016/03/pn-logo.png",
+          first_name: "Sara",
+          last_name: "Hun",
+          type: "admin",
         },
       ],
-    }
+    };
   },
-}
+};
 </script>
-
 <style scoped>
-.head{
-  background-color: red;
+.mb-2 {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  margin-left: 92%;
 }
-</style>
 
+</style>

@@ -26,7 +26,7 @@ class User extends Authenticatable
     ];
     public function user_detail()
     {
-        return $this->belongsTo(User_detail::class);
+        return $this->hasOne(User_detail::class);
     }
 
     /**
