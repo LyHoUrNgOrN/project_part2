@@ -24,11 +24,14 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-    public function user_detail()
+    public function user_details()
     {
         return $this->hasOne(User_detail::class);
     }
-
+    public function company()
+    {
+        return $this->hasOne(Company::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

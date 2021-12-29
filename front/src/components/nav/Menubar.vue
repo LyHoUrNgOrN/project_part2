@@ -18,7 +18,7 @@
           class="profile white--text"
           text
           :to="{ path: '/profile-view' }"
-          v-if="role != 'ERO' && role != 'ADMIN'"
+          
         >
           My Profile
         </v-btn>

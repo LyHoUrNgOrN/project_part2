@@ -77,10 +77,9 @@ export default {
   },
   mounted() {
     localStorage.clear();
-    localStorage.setItem('path','/signupone');
+    localStorage.setItem("path", "/signupone");
     axios.get("/alumini").then((res) => {
       this.name = res.data;
-      
     });
   },
 };
