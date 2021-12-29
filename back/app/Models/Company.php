@@ -21,6 +21,7 @@ class Company extends Model
         'company_address',
         'company_website'
     ];
+    
     protected $hidden = [
         'created_at',
         'updated_at',

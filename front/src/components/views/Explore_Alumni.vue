@@ -41,16 +41,11 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-    
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template>
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
     </template>
-
-
-
-    
   </v-data-table>
 </template>
 
@@ -76,7 +71,7 @@ export default {
     ],
     desserts: [],
     defaultItem: {
-      id:0,
+      id: 0,
       profile: "",
       first_name: "",
       last_name: "",
@@ -85,7 +80,6 @@ export default {
       company: "",
     },
   }),
-
 
   watch: {
     dialog(val) {
@@ -108,9 +102,9 @@ export default {
         .then((result) => {
           result.data.forEach((element) => {
             if (element.role === "ALUMNI") {
-              if (element.company == null){
+              if (element.company == null) {
                 let explore = {
-                  id:element.id,
+                  id: element.id,
                   profile: element.user_details.picture,
                   first_name: element.first_name,
                   last_name: element.last_name,
@@ -118,11 +112,10 @@ export default {
                   current_position: "Alumni not yet complete!",
                   company: "Alumni not yet complete!",
                 };
-              this.desserts.push(explore);
-              }
-              else{
+                this.desserts.push(explore);
+              } else {
                 let explore = {
-                  id:element.id,
+                  id: element.id,
                   profile: element.user_details.picture,
                   first_name: element.first_name,
                   last_name: element.last_name,
@@ -138,20 +131,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      this.desserts = [
-        {
-          id:0,
-          profile: "xxx",
-          first_name: "Vanna",
-          last_name: "Heng",
-          pnc_batch: 2007,
-          current_position: "Network at ABA",
-          company: "ABA",
-        },
-      ];
     },
-
-
 
     deleteItem(item) {
       console.log(item);
