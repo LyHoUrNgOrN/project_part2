@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 // use App\Models\User_detail;
 
 class UsersController extends Controller
@@ -15,7 +16,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return User::with(['user_detail'])->get();
+        return User::with(['user_details','company'])->latest()->get();
     }
 
     /**
@@ -32,6 +33,7 @@ class UsersController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'role' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8'],
+            
         ]);
         // $request->file('profile')->store('public/UserProfile');
         

@@ -29,9 +29,6 @@
               <p>
                 <input type="password" placeholder="Password ..." v-model="password" required />
               </p>
-              <p>
-                <input type="text" placeholder="Current Position ..."  v-model="position" required />
-              </p>
               <div class="gender">
                 <div class="d-flex">
                   <span class="mt-7 me-5">Gender:</span>
@@ -71,7 +68,6 @@ export default {
       province: '',
       email: '',
       password: '',
-      position: '',
       gender: '',
     }
   },
@@ -82,22 +78,22 @@ export default {
       let userCreate = new FormData();
       userCreate.append('first_name',name[0]);
       userCreate.append('last_name',name[1]);
-      userCreate.append('role','ALUMINI');
+      userCreate.append('role','ALUMNI');
       userCreate.append('email',this.email);
       userCreate.append('password',this.password);
       axios.post('/signup',userCreate).then(res=>{
-        localStorage.setItem("user",JSON.stringify(res.data));
-        localStorage.setItem('userid',res.data.user.id);
+        localStorage.setItem("user",JSON.stringify(res.data.user));
+        localStorage.setItem('id',res.data.user.id);
         localStorage.setItem('role',res.data.user.role.toUpperCase());
         let userDetail = new FormData();
-        userDetail.append('user_id',localStorage.getItem('userid'));
+        userDetail.append('user_id',localStorage.getItem('id'));
         userDetail.append('phone',this.phone);
         userDetail.append('date_of_birth',this.dateofbirth);
         userDetail.append('province',this.province);
         userDetail.append('batch',user.batch);
         userDetail.append('major',user.major);
         // userDetail.append('picture',null);
-        userDetail.append('current_position',this.position);
+        userDetail.append('current_position',"NONE");
         userDetail.append('gender',this.gender);
         axios.post('/user_details',userDetail).then(res=>{
           localStorage.setItem("login",true);
@@ -169,4 +165,4 @@ export default {
 .signin {
   margin: 10px;
 }
-</style>
+</style>9

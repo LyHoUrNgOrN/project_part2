@@ -18,6 +18,7 @@
           class="profile white--text"
           text
           :to="{ path: '/profile-view' }"
+          
         >
           My Profile
         </v-btn>
@@ -27,7 +28,7 @@
           text
           :to="{ path: '/company-view' }"
           class="company white--text"
-          v-if="role != 'ERO'"
+          v-if="role != 'ERO' && role != 'ADMIN'"
         >
           My Company
         </v-btn>

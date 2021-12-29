@@ -8,6 +8,7 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\AluminiController;
 use App\Http\Controllers\CompanyController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,21 +25,26 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+
 Route::post('/signup', [UsersController::class, 'signup']);
+Route::delete('/signup/{id}', [UsersController::class, 'destroy']);
 Route::get('/user', [UsersController::class, 'index']);
+Route::get('/signup', [UsersController::class, 'index']);
+
+Route::get('/search',[UsersController::class, 'search']);
+
 
 //User_detail
 Route::get('/user_details', [User_detailController::class, 'index']);
 Route::post('/user_details', [User_detailController::class, 'store']);
 Route::get('/user_details/{id}', [User_detailController::class, 'show']);
 Route::put('/user_details/{id}', [User_detailController::class, 'update']);
-Route::delete('/user_details/{id}', [User_detailController::class, 'destroy']);
+Route::put('/updateProfile/{id}', [User_detailController::class, 'updateProfile']);
 Route::post('/signin', [UsersController::class, 'signin']);
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/signout', [UsersController::class, 'signout']);
 });
-
 
 // get country from storage
 Route::get('/countries', [CountryController::class, 'getCountries']);
