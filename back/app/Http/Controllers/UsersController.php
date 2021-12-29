@@ -74,9 +74,6 @@ class UsersController extends Controller
         return response()->json(['message'=>'signout']);
     }
 
-
-
-
     /**
      * Remove the specified resource from storage.
      *
@@ -86,7 +83,6 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
-
 
     }
 }

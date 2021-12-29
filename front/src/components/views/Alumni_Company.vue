@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-main>
-      <v-card class="mx-auto mt-10 pa-8">
+      <v-card class="mx-auto pa-2 rounded-lg" width="80%">
         <v-container fluid class="d-flex" v-if="show_details">
           <div class="profile me-16">
             <img
@@ -18,18 +18,18 @@
               onclick="document.getElementById('myFileInput').click()"
             >Change Logo</v-btn>
           </div>
-          <v-card-text class="text-h5 mt-10">
+          <v-card-text>
             <div class="txt">
               <span class="sub-txt">Company name </span>
-              <div><span>: <span></span>{{view_company_name}}</span></div>
+              <div><span  class="dote">: <span></span>{{view_company_name}}</span></div>
             </div>
             <div class="txt">
               <span class="sub-txt">Company phone</span>
-              <div><span>: <span></span>{{view_company_phone}}</span></div>
+              <div><span  class="dote">: <span></span>{{view_company_phone}}</span></div>
             </div>
             <div class="txt">
               <span class="sub-txt">Company email </span>
-              <div><span>: <span></span>{{view_company_email}}</span></div>
+              <div><span class="dote">: <span></span>{{view_company_email}}</span></div>
             </div>
           </v-card-text>
         </v-container>
@@ -43,7 +43,7 @@
             style="background : #EFEFEF"
           >
             <template v-slot:activator>
-              <v-list-item-title>Users Detail</v-list-item-title>
+              <v-list-item-title class="sub-txt">Users Detail</v-list-item-title>
             </template>
 
             <v-list-item
@@ -52,7 +52,7 @@
               style="background : #fff"
               link
             >
-              <v-list-item-title class="ml-16" width="auto" v-text="title"></v-list-item-title>
+              <v-list-item-title class="ml-16 sub-txt" width="auto" v-text="title"></v-list-item-title>
 
               <v-list-item-title v-text="name"></v-list-item-title>
               <v-list-item-icon></v-list-item-icon>
@@ -65,8 +65,8 @@
           <v-col cols="auto">
             <v-dialog transition="dialog-top-transition" max-width="600" v-model="dialog">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn class="white--text" color="#44C7F5" v-bind="attrs" v-on="on">+Add Information</v-btn>
-                <v-btn class="green lighten-1 white--text ml-4">Edit Information</v-btn>
+                <v-btn v-if="ifHaveInfo" class="white--text" color="#44C7F5" v-bind="attrs" v-on="on">+Add Information</v-btn>
+                <v-btn v-else class="green lighten-1 white--text ml-4">Edit Information</v-btn>
               </template>
 
               <template>
@@ -75,10 +75,7 @@
                   <v-card-text>
                     <v-row>
                       <v-col cols="6">
-                        <p>
-                          Companies
-                          <span class="red--text">*</span>
-                        </p>
+                        <p>Companies<span class="red--text">*</span></p>
                         <v-text-field
                           class="rounded-pill"
                           label="Current position ..."
@@ -89,11 +86,8 @@
                           v-model="current_position"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="6">
-                        <p>
-                          Human Resources
-                          <span class="red--text">*</span>
-                        </p>
+                      <v-col cols="6" >
+                        <p>Companies<span class="red--text">*</span></p>
                         <v-text-field
                           class="rounded-pill"
                           label="HR name ..."
@@ -216,12 +210,12 @@ export default {
         (v) => /.+@.+/.test(v) || "E-mail must be valid",
       ],
       
-      
       dialog: false,
 
       rules: [value => !!value || "Required."],
       current_position: "",
       hr_name: "",
+      ifHaveInfo : true,
       company_name: "",
       hr_email: "",
       company_phone: "",
@@ -241,9 +235,6 @@ export default {
   methods: {
     cancle() {
       this.dialog = false;
-    },
-    details() {
-      console.log("hello");
     },
     close() {
       this.getUser();
@@ -265,52 +256,45 @@ export default {
         hr_email: this.hr_email,
         hr_phone: this.hr_phone
       };
-      axios.post("http://127.0.0.1:8000/api/companies", info).then(res => {
+      axios.post("/companies", info).then(res => {
         console.log(res.data);
+        
         this.cancle();
         this.companies = res.data;
-        this.current_position = "";
-        this.hr_name = "";
-        this.company_name = "";
-        this.hr_email = "";
-        this.company_phone = "";
-        this.hr_phone = "";
-        this.company_email = "";
-        this.company_address = "";
-        this.company_website = "";
       });
     },
 
     getUser() {
       let user = JSON.parse(localStorage.getItem("user"));
       axios
-        .get("http://127.0.0.1:8000/api/companies")
+        .get("/companies/" + user.id)
         .then(result => {
-          result.data.forEach(element => {
-            if (element.user_id === user.id) {
-              this.view_company_name = element.company_name;
-
-              this.view_company_email = element.company_email;
-
-              this.view_company_phone = element.company_phone;
-              this.cruds = [
-                ["Company name", element.company_name],
-                ["Current Position", element.current_position],
-                ["Company Email", element.company_email],
-                ["Company Phone", element.company_phone],
-                ["Company Website", element.company_website],
-                ["Company Address", element.company_address],
-                ["Human Resources"],
-                ["HR Name", element.hr_name],
-                ["HR Email", element.hr_email],
-                ["HR Phone", element.hr_phone]
-              ];
-            }
-          });
+          if(result.data[0].company_name == undefined){
+            this.ifHaveInfo = true;
+            console.log(result.data)
+          }else{
+            this.ifHaveInfo = false;
+          }
+          this.view_company_name = result.data[0].company_name;
+          this.view_company_email = result.data[0].company_email;
+          this.view_company_phone = result.data[0].company_phone;
+          this.cruds = [
+            ["About Company *"],
+            ["Current Position", result.data[0].current_position],
+            ["Company Name", result.data[0].company_name],
+            ["Company Email", result.data[0].company_email],
+            ["Company Phone", result.data[0].company_phone],
+            ["Company Website", result.data[0].company_website],
+            ["Company Address", result.data[0].company_address],
+            ["Human Resources *"],
+            ["HR Name", result.data[0].hr_name],
+            ["HR Email", result.data[0].hr_email],
+            ["HR Phone", result.data[0].hr_phone]
+          ];
         })
         .catch(err => {
           console.log(err.response.data.message);
-        });
+      });
     }
   },
   mounted() {

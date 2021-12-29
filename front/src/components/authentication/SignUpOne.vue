@@ -60,10 +60,13 @@ export default {
     signup_one() {
       let name = this.first_name + " " + this.last_name;
       for (let alu of this.name) {
-        if (alu.name.toLowerCase() === name.toLowerCase()) {
-          this.success = true;
-          localStorage.setItem("user", JSON.stringify(alu));
+        if(alu.name != null){
+          if (alu.name.toLowerCase() === name.toLowerCase()) {
+            this.success = true;
+            localStorage.setItem("user", JSON.stringify(alu));
+          }
         }
+
       }
       if (this.success == true) {
         this.$router.push("/signuptwo");

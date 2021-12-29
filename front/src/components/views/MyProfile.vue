@@ -56,7 +56,7 @@
             style="background: #efefef;"
           >
             <template v-slot:activator>
-              <v-list-item-title>Users Detail</v-list-item-title>
+              <v-list-item-title class="sub-txt">Users Detail</v-list-item-title>
             </template>
 
             <v-list-item
@@ -66,7 +66,7 @@
               link
             >
               <v-list-item-title
-                class="ml-16"
+                class="ml-16 sub-txt" 
                 width="auto"
                 v-text="title"
               ></v-list-item-title>
@@ -78,7 +78,6 @@
             </v-list-item>
           </v-list-group>
         </v-list>
-
       </v-card>
     </v-main>
   </div>
@@ -102,15 +101,11 @@
       };
     },
     methods: {
-      details() {
-        this.show_details = !this.show_details;
-      },
       image(e) {
         console.log(e.target.files[0]);
       },
     },
     mounted(){
-      // console.log(JSON.parse(localStorage.getItem("userDetail")))
       this.user = JSON.parse(localStorage.getItem('user'));
       this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
       this.first_name = this.user.first_name;
@@ -165,12 +160,4 @@
       display: none;
     }
   }
-  button{
-    background: rgb(61, 162, 230);
-    border-radius: 10px;
-    width: 200px;
-    height: 35px;
-    color: white;
-  }
-
 </style>
