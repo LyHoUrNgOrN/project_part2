@@ -7,8 +7,6 @@ import signuptwo from "@/components/authentication/SignUpTwo.vue";
 import signupthree from "@/components/authentication/SignUpThree.vue";
 
 import MyProfile from '@/components/views/MyProfile.vue'
-import MyCompany from '@/components/views/MyCompany.vue'
-import ExplorAlumni from '@/components/views/Alumni_Company.vue'
 import Event from '@/components/views/Event.vue'
 import ManageUser from '@/components/views/ManageUser.vue'
 import Warning from '@/components/ui/Warning.vue'
@@ -41,14 +39,6 @@ const routes = [{
       component: MyProfile
     },
     {
-      path: '/company-view',
-      component: MyCompany
-    },
-    {
-      path: '/explor-view',
-      component: ExplorAlumni
-    },
-    {
       path: '/event-view',
       component: Event
     },
@@ -60,6 +50,7 @@ const routes = [{
       path: '/warning',
       component: Warning
     },
+
 
   ]
 

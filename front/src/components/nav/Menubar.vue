@@ -21,27 +21,6 @@
         >
           My Profile
         </v-btn>
-
-        <v-btn
-          active-class="grey-5 white--text"
-          text
-          :to="{ path: '/company-view' }"
-          class="company white--text"
-          v-if="role != 'ERO'"
-        >
-          My Company
-        </v-btn>
-
-        <v-btn
-          active-class="grey-5 white--text"
-          text
-          :to="{ path: '/explor-view' }"
-          class="explor white--text"
-          v-if="role == 'ERO' || role == 'ADMIN'"
-        >
-          Explor Alumni
-        </v-btn>
-
         <v-btn
           active-class="grey-5 white--text"
           text

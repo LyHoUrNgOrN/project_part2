@@ -59,7 +59,7 @@
             <v-list-item
               v-for="([title, name], i) in cruds"
               :key="i"
-              style="background: #fff;cursor : default"
+              style="background: #fff;cursor : default" 
               link
             >
               <v-list-item-title
@@ -67,14 +67,18 @@
                 width="auto"
                 v-text="title"
               ></v-list-item-title>
-
               <v-list-item-title v-text="name"></v-list-item-title>
-              <v-list-item-icon>
-                <v-icon color="dark darken-2" style="cursor : pointer"> mdi-pencil </v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-          </v-list-group>
-        </v-list>
+            </v-list-item>      
+            <!-- test edit -->
+            <v-list-item-icon class="d-flex justify-end">
+              <v-btn 
+              @click="showDialog = true"
+              
+              >Edit your information</v-btn><v-icon color="dark darken-2" style="cursor : pointer" > mdi-pencil </v-icon>
+            </v-list-item-icon>
+          </v-list-group>        
+        </v-list> 
+        <Dialog v-if="showDialog" @cancel="cancel"/>           
       </v-card>
     </v-main>
   </div>
@@ -82,7 +86,11 @@
 
 <script>
 import axios from "@/api/api.js"
+import Dialog from "./dialogEdit.vue"
 export default {
+  components : {
+    Dialog,
+  },
   data() {
     return {
     show_details: true,
@@ -95,6 +103,7 @@ export default {
     isReload : 0,
     province : '',
     cruds: [],
+    showDialog : false,
     };
   },
   methods: {
@@ -104,30 +113,43 @@ export default {
     image(e) {
       console.log(e.target.files[0]);
     },
+    cancel(ifFalse){
+      this.showDialog = ifFalse;
+    },
+    getUserDetail(){
+      axios.get('/user_details/'+ this.user.id).then(res=> {
+      this.userDetail = res.data[0];
+      this.first_name = this.user.first_name;
+      this.last_name = this.user.last_name;
+      this.phone = this.userDetail.phone;
+      this.email = this.user.email;
+      this.province = this.userDetail.province;
+      this.cruds = [
+          ["First name", this.first_name],
+          ["Last name", this.last_name],
+          ["Gender", this.userDetail.gender],
+          ["Date of brith", this.userDetail.date_of_birth],
+          ["Province", this.province],
+          ["Phone", this.phone],
+          ["Email", this.user.email],
+          ["PNC Batch", this.userDetail.batch],
+          ["PNC Major", this.userDetail.major],
+        ];
+    })
+    }
   },
   mounted(){
       // console.log(JSON.parse(localStorage.getItem("userDetail")))
-      this.user = JSON.parse(localStorage.getItem('user'));
-      axios.get('/user_details/'+ this.user.id).then(res=> {
-        this.userDetail = res.data[0];
-        this.first_name = this.user.first_name;
-        this.last_name = this.user.last_name;
-        this.phone = this.userDetail.phone;
-        this.email = this.user.email;
-        this.province = this.userDetail.province;
-        this.cruds = [
-            ["First name", this.first_name],
-            ["Last name", this.last_name],
-            ["Gender", this.userDetail.gender],
-            ["Date of brith", this.userDetail.date_of_birth],
-            ["Province", this.province],
-            ["Phone", this.phone],
-            ["Email", this.user.email],
-            ["PNC Batch", this.userDetail.batch],
-            ["PNC Major", this.userDetail.major],
-          ];
-      })
-
+      if(localStorage.getItem('id') != undefined){
+        axios.get('/user/'+localStorage.getItem('id')).then(res=>{
+          this.user = res.data;
+          localStorage.setItem('user',JSON.stringify(res.data));
+          this.getUserDetail();
+        })
+      }else{
+        this.user = JSON.parse(localStorage.getItem('user'));
+        this.getUserDetail();
+      }
   },
 };
 </script>

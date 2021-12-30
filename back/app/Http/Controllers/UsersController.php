@@ -76,7 +76,17 @@ class UsersController extends Controller
     }
 
 
-
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+        return User::findOrFail($id);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -89,5 +99,37 @@ class UsersController extends Controller
         //
 
 
+    }
+
+        /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            // 'first_name' => ['required', 'string', 'max:255'], 
+            // 'last_name' => ['required', 'string', 'max:255'], 
+            // 'email' => ['required'],
+        ]);
+        // $request->file('profile')->store('public/UserProfile');
+        
+        $user = User::findOrFail($id);
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        // $user->role = $request->role;
+        // $user->password = bcrypt($request->password);
+        // $user->profile = $request->file('profile')->hashName();
+        $user->save();
+        
+        
+        // $token = $user->createToken('mytoken')->plainTextToken;
+        return response()->json(
+            $user,
+            // 'token'=> $token
+        ); 
     }
 }
