@@ -80,40 +80,26 @@ class User_detailController extends Controller
             'date_of_birth' => "required",
             'province' => "required",
             'batch' => "required",
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             'picture' => "nullable",
-=======
->>>>>>> 1b995ee2c362280b95f25d8fd49dd4a653f8990e
-=======
->>>>>>> admin
+
             'major' => "required",
             'gender' => "required"
             
               
         ]);
-<<<<<<< HEAD
-<<<<<<< HEAD
+
                         //move image to storage
         // $request->file('profile')->store('public/profiles');
-=======
-        
->>>>>>> 1b995ee2c362280b95f25d8fd49dd4a653f8990e
-=======
-        
->>>>>>> admin
+
         $User_detail = User_detail::findOrFail($id);
         $User_detail->user_id = $request->user_id;
         $User_detail->phone = $request->phone;
         $User_detail->date_of_birth = $request->date_of_birth;
         $User_detail->province = $request->province;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         // $User_detail->picture = $request->file('picture')->hashName();
-=======
->>>>>>> 1b995ee2c362280b95f25d8fd49dd4a653f8990e
-=======
->>>>>>> admin
+
         $User_detail->batch = $request->batch;
         $User_detail->major = $request->major;
 
@@ -121,17 +107,14 @@ class User_detailController extends Controller
        
         
         $User_detail->save();
-<<<<<<< HEAD
-<<<<<<< HEAD
-        return response()->json($User_detail, 200);
-=======
+
+
 
         return response()->json(['message' => 'updated'], 200);
->>>>>>> 1b995ee2c362280b95f25d8fd49dd4a653f8990e
-=======
 
-        return response()->json(['message' => 'updated'], 200);
->>>>>>> admin
+
+
+
     
     }
 

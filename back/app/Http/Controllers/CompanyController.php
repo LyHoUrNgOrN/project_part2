@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Company;
 
-
 class CompanyController extends Controller
 {
     /**
@@ -17,7 +16,7 @@ class CompanyController extends Controller
     {
         //
         // return Company::with('user')->get();
-        return Company::with(['user', 'user_detail'])->get();
+        return Company::all();
     }
 
     /**
@@ -30,33 +29,31 @@ class CompanyController extends Controller
     {
         //
         $request->validate([
-            'current_position' => "required",
-            'hr_name' => "required",
-            'company_name' => "required",
-            'hr_email' => "required",
-            'company_phone' => "required",
-            'hr_phone' => "required",
-            'company_email' => "required",
-            'company_address' => "required",
-            'company_website' => "required"
-        ]);
+        'current_position' => "required",
+        'hr_name' => "required",
+        'company_name' => "required",
+        'hr_email' => "required",
+        'company_phone' => "required",
+        'hr_phone' => "required",
+        'company_email' => "required",
+        'company_address' => "required",
+        'company_website' => "required"  
+    ]);
 
-        $Companies = new Company();
-        $Companies->user_id = $request->user_id;
-        $Companies->user_detail_id = $request->user_detail_id;
-        $Companies->current_position = $request->current_position;
-        $Companies->hr_name = $request->hr_name;
-        $Companies->company_name = $request->company_name;
-        $Companies->hr_email = $request->hr_email;
-        $Companies->company_phone = $request->company_phone;
-        $Companies->hr_phone = $request->hr_phone;
-        $Companies->company_email = $request->company_email;
-        $Companies->company_address = $request->company_address;
-        $Companies->company_website = $request->company_website;
-        $Companies->save();
+    $Companies = new Company();
+    $Companies->current_position = $request->current_position;
+    $Companies->hr_name = $request->hr_name;
+    $Companies->company_name = $request->company_name;
+    $Companies->hr_email = $request->hr_email;
+    $Companies->company_phone = $request->company_phone;
+    $Companies->hr_phone = $request->hr_phone;
+    $Companies->company_email = $request->company_email;
+    $Companies->company_address = $request->company_address;
+    $Companies->company_website = $request->company_website;
+    $Companies->save();
 
-        return response()->json(['message' => 'create', 'data' => $Companies], 201);
-    }
+    return response()->json(['message' => 'create','data'=>$Companies], 201);
+}
 
     /**
      * Display the specified resource.
@@ -67,9 +64,8 @@ class CompanyController extends Controller
     public function show($id)
     {
         //
-        return Company::where('user_id', 'like', '%' . $id . '%')->get();
+        return Company::where('user_id','like','%'.$id.'%')->get();
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -90,23 +86,23 @@ class CompanyController extends Controller
             'hr_phone' => "required",
             'company_email' => "required",
             'company_address' => "required",
-            'company_website' => "required"
+            'company_website' => "required" 
         ]);
         //move image to storage
         // $request->file('profile')->store('public/profiles');
         $Companies = Company::findOrFail($id);
-
-        $Companies->current_position = $request->current_position;
-        $Companies->hr_name = $request->hr_name;
-        $Companies->company_name = $request->company_name;
-        $Companies->hr_email = $request->hr_email;
-        $Companies->company_phone = $request->company_phone;
-        $Companies->hr_phone = $request->hr_phone;
-        $Companies->company_email = $request->company_email;
-        $Companies->company_address = $request->company_address;
-        $Companies->company_website = $request->company_website;
-        $Companies->save();
-
+        
+            $Companies->current_position = $request->current_position;
+            $Companies->hr_name = $request->hr_name;
+            $Companies->company_name = $request->company_name;
+            $Companies->hr_email = $request->hr_email;
+            $Companies->company_phone = $request->company_phone;
+            $Companies->hr_phone = $request->hr_phone;
+            $Companies->company_email = $request->company_email;
+            $Companies->company_address = $request->company_address;
+            $Companies->company_website = $request->company_website;
+            $Companies->save();
+       
         return response()->json(['message' => 'update'], 200);
     }
 

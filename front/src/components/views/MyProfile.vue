@@ -2,6 +2,7 @@
   <div>
     <v-main>
       <v-card class="mx-auto pa-2 rounded-lg" width="80%">
+
         <v-container fluid class="container" v-if="show_details">
           <div class="profile me-16">
             <img v-if="show_img"
@@ -82,6 +83,7 @@
               </v-dialog>
             </v-row>
           </div>
+          
           <v-card-text>
             <div class="txt">
               <span class="sub-txt">First name</span>
@@ -147,6 +149,7 @@
     </v-main>
   </div>
 </template>
+
 
 <script>
 import axios from "@/api/api.js"
@@ -230,34 +233,40 @@ export default {
 
 
 <style scoped>
-.container,
-.txt {
-  display: flex;
-}
-.sub-txt {
-  font-weight: bolder;
-  width: 250px;
-}
-.txt span {
-  margin: 5px;
-}
-
-@media (max-width: 960px) {
-  .sub-txt {
-    width: 100px;
-  }
-}
-@media (max-width: 600px) {
   .container,
-  .txt,
-  .txt div {
-    display: block;
+  .txt {
+    display: flex;
   }
-  .txt div span {
-    margin: 10px;
+  .sub-txt {
+    font-weight: bolder;
+    width: 250px;
   }
-  .dote {
-    display: none;
+  .txt span {
+    margin: 5px;
   }
-}
+  @media (max-width: 960px) {
+    .sub-txt {
+      width: 100px;
+    }
+  }
+  @media (max-width: 600px) {
+    .container,
+    .txt,
+    .txt div {
+      display: block;
+    }
+    .txt div span {
+      margin: 10px;
+    }
+    .dote {
+      display: none;
+    }
+  }
+  button{
+    background: rgb(61, 162, 230);
+    border-radius: 10px;
+    width: 200px;
+    height: 35px;
+    color: white;
+  }
 </style>

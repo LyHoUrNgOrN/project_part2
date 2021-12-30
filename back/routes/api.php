@@ -8,7 +8,6 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\AluminiController;
 use App\Http\Controllers\CompanyController;
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -63,5 +62,4 @@ Route::post('/companies', [CompanyController::class, 'store']);
 Route::get('/companies/{id}', [CompanyController::class, 'show']);
 Route::put('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
-
 

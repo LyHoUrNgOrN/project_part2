@@ -125,6 +125,7 @@
   </v-data-table>
 </template>
 
+
 <script>
 import axios from "@/api/api.js";
 export default {
