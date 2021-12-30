@@ -18,6 +18,7 @@
           class="profile white--text"
           text
           :to="{ path: '/profile-view' }"
+          
         >
           My Profile
         </v-btn>
@@ -28,6 +29,15 @@
           class="event white--text"
         >
           Event
+        </v-btn>
+        <v-btn
+          active-class="grey-5 white--text"
+          text
+          v-if="role == 'ERO' || role == 'ADMIN'"
+          :to="{ path: '/explor-view' }"
+          class="event white--text"
+        >
+          Explore Alumini
         </v-btn>
 
         <v-btn

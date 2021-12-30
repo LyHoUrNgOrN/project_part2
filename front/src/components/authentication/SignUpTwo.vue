@@ -16,11 +16,6 @@
               Please input your PNC Batch
               <span class="red--text">*</span>
             </label>
-            <!-- </label>
-            <select name="select" id="major" v-model="marjor">
-              <option value="Web">Web</option>
-              <option value="SNA">SNA</option>
-            </select> -->
             <input type="text" placeholder="PNC Batch ..." v-model="batch" required />
           </p>
           <p>
@@ -52,6 +47,7 @@ export default {
   data() {
     return {
       batch:'',
+     
       marjor: '',
     }
   },
@@ -66,6 +62,7 @@ export default {
         localStorage.setItem('path','/signuptwo');
         this.$router.push("/warning");
       }
+      
     }
   },
 };

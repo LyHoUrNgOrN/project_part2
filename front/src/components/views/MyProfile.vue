@@ -4,19 +4,84 @@
       <v-card class="mx-auto pa-2 rounded-lg" width="80%">
         <v-container fluid class="container" v-if="show_details">
           <div class="profile me-16">
-            <img
+            <img v-if="name_img == 'picture.png'"
               src="https://cahsi.utep.edu/wp-content/uploads/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529.png"
               alt=""
               width="190"
             />
-            <input type="file" id="myFileInput" @change="image" hidden />
-            <v-btn
-              rounded
-              color="cyan white--text"
-              width="200"
-              onclick="document.getElementById('myFileInput').click()"
-              >Change Profile</v-btn
-            >
+            <v-img v-else
+              :src="'http://localhost:8000/storage/profiles/'+name_img"
+              alt=""
+              width="190"
+              height="190"
+              style="border : 0.5px solid black"
+              class="rounded-circle"
+            ></v-img>
+            <input type="file" id="myFileInput" @change="changeFile" hidden />
+
+            <v-row justify="center">
+              <v-dialog
+                v-model="dialog"
+                persistent
+                max-width="600px"
+              >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="#44C7F5"
+                  dark
+                  v-bind="attrs"
+                  class="mt-6"
+                  v-on="on"
+                >
+                  Change Profile
+                </v-btn>
+              </template>
+                <v-card>
+                  <v-card-title ripple>
+                    <span 
+                      class="text-h6 ma-auto font-weight-black"
+                      color="#44C7F5"
+                    >Update profile photo 
+                    </span>
+                    <v-icon 
+                      large
+                      @click="dialog = false"
+                    >mdi-close-circle-outline</v-icon>
+                  </v-card-title>
+                  <v-divider width="100%"/>
+                  <v-container>
+      
+                    <img
+                      class="ma-auto pa-5"
+                      :src="imageToDisplay"
+                      alt=""
+                      width="200"
+                    />
+                  </v-container>
+                  <v-divider width="100%"/>
+                  <v-card-actions class="pa-4">
+                    <v-btn
+                      color="#44C7F5"
+                      onclick="document.getElementById('myFileInput').click()"
+                      ><v-icon>mdi-plus</v-icon>Upload Photo
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="#44C7F5"
+                      @click="dialog = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      color="#44C7F5"
+                      @click="updateProfile"
+                    >
+                      Save
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-row>
           </div>
           <v-card-text>
             <div class="txt">
@@ -73,7 +138,6 @@
             <v-list-item-icon class="d-flex justify-end">
               <v-btn 
               @click="showDialog = true"
-              
               >Edit your information</v-btn><v-icon color="dark darken-2" style="cursor : pointer" > mdi-pencil </v-icon>
             </v-list-item-icon>
           </v-list-group>        
@@ -93,25 +157,32 @@ export default {
   },
   data() {
     return {
-    show_details: true,
-    user : [],
-    userDetail : '',
-    first_name : '',
-    last_name : '',
-    phone : '',
-    email : '',
-    isReload : 0,
-    province : '',
-    cruds: [],
-    showDialog : false,
-    };
+      showDialog: false,
+      dialog: false,
+      show_details: true,
+      user : [],
+      userDetail : '',
+      first_name : '',
+      last_name : '',
+      phone : '',
+      email : '',
+      isReload : 0,
+      province : '',
+      cruds: [],
+      name_img:"",
+      imageToDisplay: 'https://cahsi.utep.edu/wp-content/uploads/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529.png',
+      imageFile: null,
+      show_img: true,
+      id: 0,
+      };
   },
   methods: {
     details() {
       this.show_details =!this.show_details;
     },
-    image(e) {
-      console.log(e.target.files[0]);
+    changeFile(e) {
+      this.imageFile = e.target.files[0];
+      this.imageToDisplay = URL.createObjectURL(this.imageFile);
     },
     cancel(ifFalse){
       this.showDialog = ifFalse;
@@ -136,20 +207,58 @@ export default {
           ["PNC Major", this.userDetail.major],
         ];
     })
+    },
+    updateProfile() {
+      this.dialog = false;
+      let profile = new FormData();
+      profile.append('picture', this.imageFile);
+      profile.append('_method', 'PUT');
+      axios.post('/updateProfile/' +this.id, profile).then(res=> {
+        this.name_img =  res.data.img.picture;
+        this.show_img = true
+        this.getAllData();
+      });
+    },
+    getAllData(){
+      this.user = JSON.parse(localStorage.getItem('user'));
+      axios.get('/user_details/'+ this.user.id).then(res=> {
+        this.id = res.data[0].id
+        this.userDetail = res.data[0];
+        this.first_name = this.user.first_name;
+        this.last_name = this.user.last_name;
+        this.phone = this.userDetail.phone;
+        this.email = this.user.email;
+        this.name_img = this.userDetail.picture;
+        if(this.name_img !== this.imageToDisplay){
+          this.show_img = false;
+        }
+        this.province = this.userDetail.province;
+        this.cruds = [
+            ["First name", this.first_name],
+            ["Last name", this.last_name],
+            ["Gender", this.userDetail.gender],
+            ["Date of brith", this.userDetail.date_of_birth],
+            ["Province", this.province],
+            ["Phone", this.phone],
+            ["Email", this.user.email],
+            ["PNC Batch", this.userDetail.batch],
+            ["PNC Major", this.userDetail.major],
+          ];
+      })
     }
   },
   mounted(){
-      // console.log(JSON.parse(localStorage.getItem("userDetail")))
-      if(localStorage.getItem('id') != undefined){
-        axios.get('/user/'+localStorage.getItem('id')).then(res=>{
-          this.user = res.data;
-          localStorage.setItem('user',JSON.stringify(res.data));
+      this.getAllData();
+    if(localStorage.getItem('id') != undefined){
+          axios.get('/user/'+localStorage.getItem('id')).then(res=>{
+            this.user = res.data;
+            localStorage.setItem('user',JSON.stringify(res.data));
+            this.getUserDetail();
+          })
+        }else{
+          this.user = JSON.parse(localStorage.getItem('user'));
           this.getUserDetail();
-        })
-      }else{
-        this.user = JSON.parse(localStorage.getItem('user'));
-        this.getUserDetail();
-      }
+        }
   },
 };
 </script>

@@ -66,8 +66,6 @@ export default {
         phone: '',
         province: '',
         marjor: ''
-
-        
       }
     },
 
