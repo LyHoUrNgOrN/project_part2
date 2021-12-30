@@ -16,7 +16,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return User::with(['user_detail'])->get();
+        return User::with(['user_details','company'])->latest()->get();
     }
 
     /**

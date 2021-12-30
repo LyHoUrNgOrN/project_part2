@@ -36,7 +36,7 @@ const routes = [{
     },
 
     {
-      path: "/my_company",
+      path: "/company-view",
       component: alumnicompany
     },
     {

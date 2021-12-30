@@ -80,26 +80,17 @@ class User_detailController extends Controller
             'date_of_birth' => "required",
             'province' => "required",
             'batch' => "required",
-
-            'picture' => "nullable",
-
             'major' => "required",
             'gender' => "required"
             
               
         ]);
-
-                        //move image to storage
-        // $request->file('profile')->store('public/profiles');
-
+        
         $User_detail = User_detail::findOrFail($id);
         $User_detail->user_id = $request->user_id;
         $User_detail->phone = $request->phone;
         $User_detail->date_of_birth = $request->date_of_birth;
         $User_detail->province = $request->province;
-
-        // $User_detail->picture = $request->file('picture')->hashName();
-
         $User_detail->batch = $request->batch;
         $User_detail->major = $request->major;
 
@@ -108,13 +99,7 @@ class User_detailController extends Controller
         
         $User_detail->save();
 
-
-
-        return response()->json(['message' => 'updated'], 200);
-
-
-
-
+        return response()->json($User_detail, 200);
     
     }
 

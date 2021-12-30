@@ -51,7 +51,6 @@
         >
           Event
         </v-btn>
-
         <v-btn
           active-class="grey-5 white--text"
           text

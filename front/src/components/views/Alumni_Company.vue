@@ -11,7 +11,7 @@
               width="190"
             />
 
-            <input type="file" id="myFileInput" @change="image" hidden />
+            <!-- <input type="file" id="myFileInput" @change="image" hidden /> -->
             <v-btn
               rounded
               color="cyan white--text"
@@ -64,8 +64,13 @@
         <v-row>
           <v-spacer></v-spacer>
           <v-col cols="auto">
-            <v-dialog transition="dialog-top-transition" max-width="600">
-              <template v-slot:default="dialog">
+            <v-dialog transition="dialog-top-transition" max-width="600" v-model="dialog">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn class="white--text" color="#44C7F5" v-bind="attrs" v-on="on">+Add Information</v-btn>
+                <v-btn class="green lighten-1 white--text ml-4">Edit Information</v-btn>
+              </template>
+
+              <template>
                 <v-card>
                   <v-toolbar color="primary" class="name" dark>Companies Information</v-toolbar>
                   <v-card-text>
@@ -145,7 +150,6 @@
                           v-model="hr_phone"
                         ></v-text-field>
                       </v-col>
-                  
 
                       <v-col cols="12">
                         <v-text-field
@@ -177,22 +181,16 @@
                           hide-details="auto"
                           outlined
                           dense
-                          v-model="Company_website"
+                          v-model="company_website"
                         ></v-text-field>
                       </v-col>
                     </v-row>
                   </v-card-text>
                   <v-card-actions class="justify-end">
-                    <v-btn color="cyan white--text" text @click="dialog.value = false">Cancel</v-btn>
-                    <v-btn text @click="dialog.value = false">Save</v-btn>
+                    <v-btn color="cyan white--text" text @click="cancle">Cancel</v-btn>
+                    <v-btn text @click="my_company">Save</v-btn>
                   </v-card-actions>
-                  
                 </v-card>
-              </template>
-
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn class="white--text" color="#44C7F5" v-bind="attrs" v-on="on">+Add Information</v-btn>
-                <v-btn class="green lighten-1 white--text ml-4">Edit Information</v-btn>
               </template>
             </v-dialog>
           </v-col>
@@ -216,10 +214,11 @@ export default {
       hr_email: "",
       company_phone: "",
       hr_phone: "",
-      Company_email: "",
+      company_email: "",
       company_address: "",
-      Company_website: "",
-      infoCompany:[],
+      company_website: "",
+      infoCompany: [],
+  dialog :false,
 
       show_details: true,
       cruds: [
@@ -240,11 +239,33 @@ export default {
     };
   },
   methods: {
-    my_company(){
-      this.infoCompany.push(this.name, this.phone, this.email,this.address, this.website, this.hrname, this.hrphone);
+    cancle(){
+      console.log('ddd');
+      this.dialog = false
+    },
+    my_company() {
+      let info = {
+        current_position: this.current_position,
+        hr_name: this.hr_name,
+        company_name: this.company_name,
+        hr_email: this.hr_email,
+        company_phone: this.company_phone,
+        hr_phone: this.hr_phone,
+        company_email: this.company_email,
+        company_address: this.company_address,
+        company_website: this.company_website
+      };
 
-      console.log(this.infoCompany)
+      axios
+        .post("/companies", info)
+        .then(result => {
+          console.log(result.data.message);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
+
   },
   mounted() {
     // console.log(localStorage.getItem('reload'))

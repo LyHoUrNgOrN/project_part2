@@ -15,6 +15,8 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('CASCADE');
+            $table->foreignId('user_detail_id')->constrained()->onDelete('CASCADE');
             $table->string('current_position');
             $table->string('company_name');
             $table->string('company_phone');

@@ -53,6 +53,8 @@ ul {
   display: flex;
   justify-content: space-between;
 }
+
+
 @media (max-width: 600px) {
   ul {
     display: none;

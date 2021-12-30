@@ -17,7 +17,6 @@
                 placeholder="First name ..."
                 required
               />
-              <!-- <small v-if="emailError != ''" style="color : red">{{emailError}}</small> -->
             </p>
             <p>
               <label for>

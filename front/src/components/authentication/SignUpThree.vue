@@ -29,9 +29,6 @@
               <p>
                 <input type="password" placeholder="Password ..." v-model="password" required />
               </p>
-              <p>
-                <input type="text" placeholder="Current Position ..."  v-model="position" required />
-              </p>
               <div class="gender">
                 <div class="d-flex">
                   <span class="mt-7 me-5">Gender:</span>
