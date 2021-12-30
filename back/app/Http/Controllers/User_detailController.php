@@ -130,6 +130,6 @@ class User_detailController extends Controller
     }
     
     // $edit = User_detail::where('user_id',$id)->get();
-        return response()->json(['message' => 'Successs','img'=>$img], 200);
+        return response()->json(['message' => 'Successs','img'=>$img,'id'=>$id], 200);
     }
 }

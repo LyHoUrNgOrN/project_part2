@@ -164,6 +164,7 @@ export default {
       imageToDisplay: 'https://cahsi.utep.edu/wp-content/uploads/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529.png',
       imageFile: null,
       show_img: true,
+      id: 0,
       };
   },
   methods: {
@@ -175,13 +176,11 @@ export default {
       this.imageToDisplay = URL.createObjectURL(this.imageFile);
     },
     updateProfile() {
-      // let user = JSON.parse(localStorage.getItem("user"));
-      
       this.dialog = false;
       let profile = new FormData();
       profile.append('picture', this.imageFile);
       profile.append('_method', 'PUT');
-      axios.post('/updateProfile/' + this.user.id, profile).then(res=> {
+      axios.post('/updateProfile/' +this.id, profile).then(res=> {
         this.name_img =  res.data.img.picture;
         this.show_img = true
         this.getAllData();
@@ -190,13 +189,13 @@ export default {
     getAllData(){
       this.user = JSON.parse(localStorage.getItem('user'));
       axios.get('/user_details/'+ this.user.id).then(res=> {
+        this.id = res.data[0].id
         this.userDetail = res.data[0];
         this.first_name = this.user.first_name;
         this.last_name = this.user.last_name;
         this.phone = this.userDetail.phone;
         this.email = this.user.email;
         this.name_img = this.userDetail.picture;
-        console.log(this.name_img);
         if(this.name_img !== this.imageToDisplay){
           this.show_img = false;
         }
@@ -216,9 +215,7 @@ export default {
     }
   },
   mounted(){
-      // console.log(JSON.parse(localStorage.getItem("userDetail")))
       this.getAllData();
-
   },
 };
 </script>
