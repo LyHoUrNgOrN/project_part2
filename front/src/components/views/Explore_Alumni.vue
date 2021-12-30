@@ -41,11 +41,9 @@
       </v-toolbar>
     </template>
     <template v-slot:item.profile="{ item }">
-      <span
-      class="red--text"
-      v-if="item.profile === null"
-      >No image</span>
-      <v-img v-else
+      <span class="red--text" v-if="item.profile === null">No image</span>
+      <v-img
+        v-else
         :src="'http://localhost:8000/storage/profiles/' + item.profile"
         width="65"
         height="65"
@@ -70,7 +68,7 @@ export default {
         align: "start",
         sortable: false,
       },
-      { text: "Profile", value: "profile"},
+      { text: "Profile", value: "profile" },
       { text: "First name", value: "first_name" },
       { text: "Last name", value: "last_name" },
       { text: "PNC Batch", value: "pnc_batch" },
@@ -137,13 +135,10 @@ export default {
             }
           });
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch(() => {});
     },
 
     deleteItem(item) {
-      console.log(item);
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;

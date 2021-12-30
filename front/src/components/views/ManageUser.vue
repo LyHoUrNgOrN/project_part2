@@ -35,7 +35,7 @@
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
             </v-card-title>
-            <v-c99ard-text>
+            <v-card-text>
               <v-container>
                 <v-row>
                   <v-col cols="12" md="6">
@@ -86,7 +86,7 @@
                   </v-col>
                 </v-row>
               </v-container>
-            </v-c99ard-text>
+            </v-card-text>
 
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -134,7 +134,6 @@
     </template>
   </v-data-table>
 </template>
-
 
 <script>
 import axios from "@/api/api.js";
@@ -229,9 +228,7 @@ export default {
             }
           });
         })
-        .catch((err) => {
-          console.log(err.response.data.message);
-        });
+        .catch(() => {});
     },
 
     editItem(item) {
@@ -277,13 +274,10 @@ export default {
       };
       axios
         .post("http://127.0.0.1:8000/api/signup", ero)
-        .then((result) => {
+        .then(() => {
           this.initialize();
-          console.log(result);
         })
-        .catch((err) => {
-          console.log(err.response.data.message);
-        });
+        .catch(() => {});
 
       this.close();
     },

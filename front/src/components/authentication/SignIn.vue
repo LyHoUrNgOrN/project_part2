@@ -5,35 +5,44 @@
       <template #signup class="signin">
         <h1 class="text-center ma-3">Sign In Account</h1>
         <form action="#" @submit.prevent>
-          <p>
+          <p class="mt-7">
             <label
               >Please input your email<span class="red--text"> *</span></label
             >
-            <input type="text" placeholder="Email Address" v-model="email" />
-            <small v-if="emailError != ''" style="color: red">{{emailError}}</small>
+            <v-text-field
+              hide-details="auto"
+              outlined
+              dense
+              v-model="email"
+              :rules="emailRules"
+              label="E-mail"
+              class="mt-2 rounded-pill"
+            ></v-text-field>
           </p>
-          <p>
+          <p class="mt-7">
             <label
-              >Please input your password<span class="red--text">*</span
-              ></label
+              >Please input your password<span class="red--text">*</span></label
             >
-            <input
-              type="password"
-              placeholder="Password"
+            <v-text-field
+              hide-details="auto"
+              outlined
+              dense
               v-model="password"
-              minlength="8"
-            />
-            <small v-if="passwordError != ''" style="color: red">{{passwordError}}</small>
+              class="password rounded-pill mt-2"
+              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.required, rules.min, rules.max]"
+              :type="show1 ? 'text' : 'password'"
+              name="input-10-1"
+              label="Password"
+              hint="At least 6 characters"
+              @click:append="show1 = !show1"
+            ></v-text-field>
           </p>
-          <p v-if="messageAlert != ''">
-            <label for="#">{{ messageAlert }}</label>
-          </p>
+
           <p>
-            <button class="next" @click="signIn">Sign In</button>
-            <!-- <input class="next" type="submit" value="Next" click="signIn"/> -->
-          </p>
-          <p>
-            <!-- <a href="">Forget password?</a> -->
+            <v-btn color="cyan white--text mt-3 rounded-pill" width="100%" @click="signIn"
+              >Sign In</v-btn
+            >
           </p>
         </form>
       </template>
@@ -47,15 +56,20 @@ export default {
   $emits: ["login"],
   data() {
     return {
-      messageAlert: "",
-      emailError: "",
-      passwordError: "",
+      show1: false,
       email: "",
       password: "",
+      rules: {
+        required: (value) => !!value || "Password is required.",
+        min: (v) => v.length >= 6 || "Min 6 characters",
+      },
+      emailRules: [
+        (v) => !!v || "E-mail is required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
     };
   },
   methods: {
-    
     signIn() {
       if (this.email !== "" && this.password !== "") {
         event.preventDefault();
@@ -81,14 +95,6 @@ export default {
               this.passwordError = error.response.data.message;
             }
           });
-      } else {
-        
-        if (this.email === "") {
-          this.emailError = "Email should not be empty!";
-        }
-        if (this.passwordError == "") {
-          this.passwordError = "Password should not be empty!";
-        }
       }
     },
   },
