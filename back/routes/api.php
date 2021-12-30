@@ -29,15 +29,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/signup', [UsersController::class, 'signup']);
 Route::delete('/signup/{id}', [UsersController::class, 'destroy']);
 Route::get('/user', [UsersController::class, 'index']);
-<<<<<<< HEAD
+
 Route::get('/user/{id}', [UsersController::class, 'show']);
 Route::put('/user/{id}', [UsersController::class, 'update']);
-=======
+
 Route::get('/signup', [UsersController::class, 'index']);
 
 Route::get('/search',[UsersController::class, 'search']);
 
->>>>>>> 1b995ee2c362280b95f25d8fd49dd4a653f8990e
 
 //User_detail
 Route::get('/user_details', [User_detailController::class, 'index']);
@@ -64,4 +63,5 @@ Route::post('/companies', [CompanyController::class, 'store']);
 Route::get('/companies/{id}', [CompanyController::class, 'show']);
 Route::put('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
+
 
