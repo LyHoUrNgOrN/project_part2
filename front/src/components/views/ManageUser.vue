@@ -35,8 +35,7 @@
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
             </v-card-title>
-
-            <v-card-text>
+            <v-c99ard-text>
               <v-container>
                 <v-row>
                   <v-col cols="12" md="6">
@@ -59,10 +58,6 @@
                       label="Last name"
                     ></v-text-field>
                   </v-col>
-
-
-
-
                   <v-col cols="12">
                     <v-text-field
                       hide-details="auto"
@@ -92,7 +87,7 @@
                 </v-row>
 
               </v-container>
-            </v-card-text>
+            </v-c99ard-text>
 
             <v-card-actions>
               <v-spacer></v-spacer>
