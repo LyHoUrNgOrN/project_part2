@@ -15,7 +15,7 @@
               <input type="text" placeholder="Phone ..." v-model="phone" required />
             </p>
             <p>
-              <input type="text" placeholder="Date of Birth ..." v-model="dateofbirth" required />
+              <input type="date" placeholder="Date of Birth ..." v-model="dateofbirth" required />
             </p>
 
             <p>

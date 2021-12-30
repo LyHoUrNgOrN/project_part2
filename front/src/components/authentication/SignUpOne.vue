@@ -25,8 +25,8 @@
                 <span class="red--text">*</span>
               </label>
               <input
-                v-model="last_name"
                 type="text"
+                v-model="last_name"
                 placeholder="Last name ..."
                 required
               />
@@ -58,8 +58,8 @@ export default {
   },
   methods: {
     signup_one() {
-      let name = this.first_name + " " + this.last_name;
-      console.log(name.toLocaleUpperCase());
+      let name =  this.last_name+ " " +  this.first_name;
+        console.log(name);
         for (let alu of this.name) {
           if (alu.name !== undefined){
             if (alu.name.toLowerCase() === name.toLowerCase()) {
@@ -70,10 +70,11 @@ export default {
         }
         if (this.success == true) {
           this.$router.push("/signuptwo");
-        } else {
+        } 
+        else {
           this.$router.push("/warning");
         }
-    },
+    }
   },
   mounted() {
     localStorage.clear();
