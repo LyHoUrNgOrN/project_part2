@@ -25,6 +25,15 @@
         <v-btn
           active-class="grey-5 white--text"
           text
+          v-if="role != 'ERO'"
+          :to="{ path: 'my_company' }"
+          class="event white--text"
+        >
+          My Company
+        </v-btn>
+        <v-btn
+          active-class="grey-5 white--text"
+          text
           :to="{ path: '/event-view' }"
           class="event white--text"
         >
