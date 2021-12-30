@@ -1,15 +1,12 @@
 <template>
   <div class="all-card">
     <v-card width="50%" class="ma-auto">
-      <div class="image pa-2 pl-5 d-flex">
+      <div class="image pa-2 pl-5">
         <img
           src="https://www.passerellesnumeriques.org/wp-content/uploads/2016/03/pn-logo.png"
           alt=""
-          width="90"
+          width="110"
         />
-        <h3 class="pa-3 pl-2">Passerelles Numeriques Cambodia
-          <p>A Getway for life</p>
-        </h3>
       </div>
       <div class="d-flext mt-3" align="center" justify="space-around">
         <span>
@@ -26,7 +23,7 @@
           <h4 class="cyan--text">Admin</h4>
           <div class="txt">
             <h5 class="sub-txt">Name</h5>
-            <span>: Somnang Chan</span>
+            <span>: XXXXXX</span>
           </div>
           <div class="txt">
             <h5 class="sub-txt">Phone</h5>
@@ -34,12 +31,12 @@
           </div>
           <div class="txt">
             <h5 class="sub-txt">Email</h5>
-            <span>: somnang.chan@admin.passerellesnumeriques.org</span>
+            <span>: XXXXX.XXXXXX@admin.passerellesnumeriques.org</span>
           </div>
           <h4 class="cyan--text">ERO Team</h4>
           <div class="txt">
             <h5 class="sub-txt">Name</h5>
-            <span>: Synich Ly</span>
+            <span>: XXXXXX</span>
           </div>
           <div class="txt">
             <h5 class="sub-txt">Phone</h5>
@@ -47,11 +44,11 @@
           </div>
           <div class="txt">
             <h5 class="sub-txt">Email</h5>
-            <span>: synich.ly@ero.passerellesnumeriques.org</span>
+            <span>: XXXXX.XXXXXX@ero.passerellesnumeriques.org</span>
           </div> 
           <slot></slot>
           <router-link :to="path">
-            <v-btn class="cyan float-end white--text pa-3 rounded-pill"> &#x2B05;Back </v-btn>
+            <v-btn class="cyan float-end white--text pa-2"> &#x2B05;Back </v-btn>
           </router-link>
         </v-card-text>
       </v-container>

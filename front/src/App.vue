@@ -47,9 +47,7 @@ export default {
 #app {
   background: #f1f2f7;
 }
-.active {
-  background: #44c7f5;
-}
+
 ul {
   width: 100%;
   display: flex;

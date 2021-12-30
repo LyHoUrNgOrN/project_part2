@@ -15,7 +15,7 @@
               <input type="text" placeholder="Phone ..." v-model="phone" required />
             </p>
             <p>
-              <input type="text" placeholder="Date of Birth ..." v-model="dateofbirth" required />
+              <input type="date" placeholder="Date of Birth ..." v-model="dateofbirth" required />
             </p>
 
             <p>
@@ -27,7 +27,7 @@
                 <input type="text" class="email" placeholder="Email ..." v-model="email" required />
               </p>
               <p>
-                <input type="text" placeholder="Password ..." v-model="password" required />
+                <input type="password" placeholder="Password ..." v-model="password" required />
               </p>
               <div class="gender">
                 <div class="d-flex">
@@ -78,7 +78,7 @@ export default {
       let userCreate = new FormData();
       userCreate.append('first_name',name[0]);
       userCreate.append('last_name',name[1]);
-      userCreate.append('role','ALUMINI');
+      userCreate.append('role','ALUMNI');
       userCreate.append('email',this.email);
       userCreate.append('password',this.password);
       axios.post('/signup',userCreate).then(res=>{
@@ -165,4 +165,4 @@ export default {
 .signin {
   margin: 10px;
 }
-</style>
+</style>9

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User_detail;
+
 class User_detailController extends Controller
 {
     /**
@@ -31,20 +32,18 @@ class User_detailController extends Controller
             'date_of_birth' => "required",
             'province' => "required",
             'batch' => "required",
-            'picture' => "nullable",
             'major' => "required",
             'current_position' => "required",
             'gender' => "required"  
         ]);
 
-                //move image to storage
-            // $request->file('picture')->store('public/profiles');
-            $User_detail = new User_detail();
-            $User_detail->user_id = $request->user_id;
-            $User_detail->phone = $request->phone;
-            $User_detail->date_of_birth = $request->date_of_birth;
-            $User_detail->province = $request->province;
-            $User_detail->picture = "picture.png";
+
+        $User_detail = new User_detail();
+        $User_detail->user_id = $request->user_id;
+        $User_detail->phone = $request->phone;
+        $User_detail->date_of_birth = $request->date_of_birth;
+        $User_detail->province = $request->province;
+          
             $User_detail->batch = $request->batch;
             $User_detail->major = $request->major;
             $User_detail->current_position = $request->current_position;
@@ -81,20 +80,30 @@ class User_detailController extends Controller
             'date_of_birth' => "required",
             'province' => "required",
             'batch' => "required",
+<<<<<<< HEAD
             'picture' => "nullable",
+=======
+>>>>>>> 1b995ee2c362280b95f25d8fd49dd4a653f8990e
             'major' => "required",
             'gender' => "required"
             
               
         ]);
+<<<<<<< HEAD
                         //move image to storage
         // $request->file('profile')->store('public/profiles');
+=======
+        
+>>>>>>> 1b995ee2c362280b95f25d8fd49dd4a653f8990e
         $User_detail = User_detail::findOrFail($id);
         $User_detail->user_id = $request->user_id;
         $User_detail->phone = $request->phone;
         $User_detail->date_of_birth = $request->date_of_birth;
         $User_detail->province = $request->province;
+<<<<<<< HEAD
         // $User_detail->picture = $request->file('picture')->hashName();
+=======
+>>>>>>> 1b995ee2c362280b95f25d8fd49dd4a653f8990e
         $User_detail->batch = $request->batch;
         $User_detail->major = $request->major;
 
@@ -102,7 +111,12 @@ class User_detailController extends Controller
        
         
         $User_detail->save();
+<<<<<<< HEAD
         return response()->json($User_detail, 200);
+=======
+
+        return response()->json(['message' => 'updated'], 200);
+>>>>>>> 1b995ee2c362280b95f25d8fd49dd4a653f8990e
     
     }
 
@@ -112,8 +126,26 @@ class User_detailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function updateProfile(Request $request, $id)
     {
-        //
+        $request->validate([
+            'picture' => 'image|mimes:jpg,jpeg,png,gif,webp|max:1999',
+        ]);
+
+
+
+                //move image to storage
+                //     $User_detail->picture = $request->file('picture')->hashName();
+                //     User_detail::where('id', $id)->get()->first('picture')->store('public/profiles');
+    
+    $request->file('picture')->store('public/profiles');
+    $img = User_detail::findOrFail($id);
+    if($img) {
+        $img->picture = $request->file('picture')->hashName();
+        $img->save();
+    }
+    
+    // $edit = User_detail::where('user_id',$id)->get();
+        return response()->json(['message' => 'Successs','img'=>$img,'id'=>$id], 200);
     }
 }

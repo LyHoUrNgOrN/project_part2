@@ -5,11 +5,13 @@ import signin from "@/components/authentication/SignIn.vue";
 import signupone from "@/components/authentication/SignUpOne.vue";
 import signuptwo from "@/components/authentication/SignUpTwo.vue";
 import signupthree from "@/components/authentication/SignUpThree.vue";
+import alumnicompany from "@/components/views/Alumni_Company.vue";
 
 import MyProfile from '@/components/views/MyProfile.vue'
 import Event from '@/components/views/Event.vue'
 import ManageUser from '@/components/views/ManageUser.vue'
 import Warning from '@/components/ui/Warning.vue'
+import Explore_Alumni from '@/components/views/Explore_Alumni.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -33,11 +35,15 @@ const routes = [{
       component: signupthree
     },
 
-
+    {
+      path: "/my_company",
+      component: alumnicompany
+    },
     {
       path: '/profile-view',
       component: MyProfile
     },
+
     {
       path: '/event-view',
       component: Event
@@ -45,6 +51,10 @@ const routes = [{
     {
       path: '/manage-view',
       component: ManageUser
+    },
+    {
+      path: '/explor-view',
+      component: Explore_Alumni
     },
     {
       path: '/warning',
