@@ -7,6 +7,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\AluminiController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\SkillController;
 
 
 /*
@@ -62,3 +63,9 @@ Route::get('/companies/{id}', [CompanyController::class, 'show']);
 Route::put('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
 
+//Skill
+Route::get('/skills', [SkillController::class, 'index']);
+Route::post('/skills', [SkillController::class, 'store']);
+Route::get('/skills/{id}', [SkillController::class, 'show']);
+Route::put('/skills/{id}', [SkillController::class, 'update']);
+Route::delete('/skills/{id}', [SkillController::class, 'destroy']);
