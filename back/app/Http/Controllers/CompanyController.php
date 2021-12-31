@@ -15,8 +15,6 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
-        // return Company::with('user')->get();
         return Company::with(['user', 'user_detail'])->get();
     }
 
@@ -28,7 +26,6 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $request->validate([
             'current_position' => "required",
             'hr_name' => "required",
@@ -66,7 +63,6 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        //
         return Company::where('user_id', 'like', '%' . $id . '%')->get();
     }
 
@@ -80,7 +76,6 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         $request->validate([
             'current_position' => "required",
             'hr_name' => "required",
@@ -92,10 +87,8 @@ class CompanyController extends Controller
             'company_address' => "required",
             'company_website' => "required"
         ]);
-        //move image to storage
-        // $request->file('profile')->store('public/profiles');
+        
         $Companies = Company::findOrFail($id);
-
         $Companies->current_position = $request->current_position;
         $Companies->hr_name = $request->hr_name;
         $Companies->company_name = $request->company_name;
@@ -118,7 +111,6 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        //
         return Company::destroy($id);
     }
 }

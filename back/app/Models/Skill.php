@@ -9,8 +9,8 @@ class Skill extends Model
 {
     use HasFactory;
     protected $fillable=['skill_name','skill_detail'];
-    public function User()
+    public function user_skill()
     {
-        return $this->belongsTo(join::class);
+        return $this->belongsTo(User_Skill::class);
     }
 }

@@ -13,7 +13,6 @@ class SkillController extends Controller
      */
     public function index()
     {
-        //
         return Skill::with('user')->get();
         
     }
@@ -26,14 +25,12 @@ class SkillController extends Controller
      */
     public function store(Request $request)
     {
-        
         $request->validate([
             'skill_name' => "required",
             'skill_detail' => "required",
             
         ]);
         $Skill = new Skill();
-        $Skill->user_id = $request->user_id;
         $Skill->skill_name = $request->skill_name;
         $Skill->skill_detail = $request->skill_detail;
         $Skill->save();
@@ -61,14 +58,12 @@ class SkillController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         $request->validate([
             'skill_name' => "required",
             'skill_detail' => "required",
             
         ]);
         $Skill = Skill::findOrFail($id);
-        $Skill->user_id = $request->user_id;
         $Skill->skill_name = $request->skill_name;
         $Skill->skill_detail = $request->skill_detail;
         $Skill->save();
@@ -82,7 +77,6 @@ class SkillController extends Controller
      */
     public function destroy($id)
     {
-        //
         return Skill::destroy($id);
     }
 }

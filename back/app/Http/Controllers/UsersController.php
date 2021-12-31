@@ -35,7 +35,7 @@ class UsersController extends Controller
             'password' => ['required', 'string', 'min:8'],
             
         ]);
-        // $request->file('profile')->store('public/UserProfile');
+        
         
         $user = new User();
         $user->first_name = $request->first_name;
@@ -43,14 +43,11 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->role = $request->role;
         $user->password = bcrypt($request->password);
-        // $user->profile = $request->file('profile')->hashName();
         $user->save();
         
         
-        // $token = $user->createToken('mytoken')->plainTextToken;
         return response()->json([
             'user' => $user,
-            // 'token'=> $token
         ]); 
     }
     public function signin(Request $request)
@@ -62,11 +59,8 @@ class UsersController extends Controller
             return response()->json(['message' => "Email or password in valid. Please contact to Admin!!"], 401);
         }
 
-        // $token = $user->createToken('mytoken')->plainTextToken;
-
         return response()->json([
             'user' => $user,
-            // 'token' => $token
         ]);
         //signout function
     }
@@ -76,17 +70,16 @@ class UsersController extends Controller
         return response()->json(['message'=>'signout']);
     }
 
-        // Explore alumni
-        public function search()
-        {
-            $users = DB::table('users')
-                ->join('companies', 'users.id', '=', 'companies.user_id')
-                ->join('user_details', 'users.id', '=', 'user_details.user_id')
-                // ->join('orders', 'users.id', '=', 'orders.user_id')
-                ->select('companies.*', 'users.first_name', 'users.last_name', 'users.role', 'users.email', 'user_details.*')
-                ->get();
-            return response()->json($users);
-        }
+    // Explore alumni
+    public function search()
+    {
+        $users = DB::table('users')
+            ->join('companies', 'users.id', '=', 'companies.user_id')
+            ->join('user_details', 'users.id', '=', 'user_details.user_id')
+            ->select('companies.*', 'users.first_name', 'users.last_name', 'users.role', 'users.email', 'user_details.*')
+            ->get();
+        return response()->json($users);
+    }
 
     /**
      * Display the specified resource.
@@ -96,7 +89,6 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
         return User::findOrFail($id);
     }
 
@@ -106,12 +98,7 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-
-
-    }
+    
 
         /**
      * Store a newly created resource in storage.
@@ -121,27 +108,16 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            // 'first_name' => ['required', 'string', 'max:255'], 
-            // 'last_name' => ['required', 'string', 'max:255'], 
-            // 'email' => ['required'],
-        ]);
-        // $request->file('profile')->store('public/UserProfile');
-        
         $user = User::findOrFail($id);
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
-        // $user->role = $request->role;
-        // $user->password = bcrypt($request->password);
-        // $user->profile = $request->file('profile')->hashName();
         $user->save();
         
         
         // $token = $user->createToken('mytoken')->plainTextToken;
         return response()->json(
             $user,
-            // 'token'=> $token
         ); 
     }
 }
