@@ -105,11 +105,11 @@
           </v-card-text>
         </v-container>
 
-            <!-- test edit -->
-            <v-list-item-icon class="d-flex justify-end">
-              <v-btn @click="showDialog = true" color="green lighten-1 white--text">Edit your information</v-btn
-              >
-            </v-list-item-icon>
+        <v-list-item-icon class="d-flex justify-end">
+          <v-btn @click="showDialog = true" color="green lighten-1 white--text"
+            >Edit your information</v-btn
+          >
+        </v-list-item-icon>
 
         <v-list>
           <v-list-group
@@ -167,9 +167,10 @@ export default {
       name_img: "",
       imageToDisplay:
         "https://cahsi.utep.edu/wp-content/uploads/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529.png",
+      
       imageFile: null,
       show_img: true,
-      id: 0,
+      editProfileID: 0,
     };
   },
   methods: {
@@ -206,7 +207,7 @@ export default {
       let profile = new FormData();
       profile.append("picture", this.imageFile);
       profile.append("_method", "PUT");
-      axios.post("/updateProfile/" + this.id, profile).then((res) => {
+      axios.post("/updateProfile/" + this.editProfileID, profile).then((res) => {
         this.name_img = res.data.img.picture;
         this.show_img = true;
         this.getAllData();
@@ -215,7 +216,7 @@ export default {
     getAllData() {
       this.user = JSON.parse(localStorage.getItem("user"));
       axios.get("/user_details/" + this.user.id).then((res) => {
-        this.id = res.data[0].id;
+        this.editProfileID = res.data[0].id;
         this.userDetail = res.data[0];
         this.first_name = this.user.first_name;
         this.last_name = this.user.last_name;
@@ -255,8 +256,6 @@ export default {
   },
 };
 </script>
-
-
 <style scoped>
 .container,
 .txt {
