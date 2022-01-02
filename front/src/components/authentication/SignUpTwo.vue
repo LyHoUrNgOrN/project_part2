@@ -10,30 +10,44 @@
       <template #signup>
         <div class="form">
           <form class="mb-10">
-          <h1 class="one text-center">Sign Up Account</h1>
-          <p>
-            <label for>
-              Please input your PNC Batch
-              <span class="red--text">*</span>
-            </label>
-            <input type="text" placeholder="PNC Batch ..." v-model="batch" required />
-          </p>
-          <p>
-            <label for>
-              Please input your PNC Major
-              <span class="red--text">*</span>
-            </label>
-            <select name="select" id="major" v-model="marjor" class="selectMarjor">
-              <option disabled value="">Select Major</option>
-              <option value="Web">WEB</option>
-              <option value="SNA">SNA</option>
-            </select>
-            <!-- <input type="text" placeholder="PNC Major ..." v-model="marjor" required /> -->
-          </p>
-          <p>
-            <button class="next" @click="signupTwo">Next</button>
-            <!-- <input @click="signupTwo" class="next" type="submit" value="Next" /> -->
-          </p>
+            <h1 class="one text-center">Sign Up Account</h1>
+            <p>
+              <label for>
+                Please input your PNC Batch
+                <span class="red--text">*</span>
+              </label>
+              <v-text-field
+                v-model="batch"
+                label="PNC Batch"
+                :rules="[rules.required]"
+                hide-details="auto"
+                outlined
+                class="mt-3 rounded-pill"
+                dense
+              ></v-text-field>
+            </p>
+            <p>
+              <label for>
+                Please input your PNC Major
+                <span class="red--text">*</span>
+              </label>
+              <v-select
+                :items="items"
+                label="PNC Major"
+                dense
+                class="rounded-pill"
+                outlined
+                v-model="major"
+              ></v-select>
+            </p>
+            <p>
+              <v-btn
+                @click="signupTwo"
+                color="cyan white--text mt-3 rounded-pill"
+                width="100%"
+                >Next</v-btn
+              >
+            </p>
           </form>
         </div>
       </template>
@@ -46,24 +60,28 @@
 export default {
   data() {
     return {
-      batch:'',
-     
-      marjor: '',
-    }
+      batch: "",
+      items: ["WEP", "SNA"],
+      rules: {
+        required: (value) => !!value || "Required.",
+      },
+
+      major: "",
+    };
   },
   methods: {
-    signupTwo(){
+    signupTwo() {
+      
       let user = JSON.parse(localStorage.getItem("user"));
-      if(user.batch == this.batch){
-        this.$router.push('/signupthree')
-        user.major = this.marjor;
-        localStorage.setItem("user",JSON.stringify(user));
-      }else{
-        localStorage.setItem('path','/signuptwo');
+      if (user.batch == this.batch) {
+        this.$router.push("/signupthree");
+        user.major = this.major;
+        localStorage.setItem("user", JSON.stringify(user));
+      } else {
+        localStorage.setItem("path", "/signuptwo");
         this.$router.push("/warning");
       }
-      
-    }
+    },
   },
 };
 </script>
@@ -76,7 +94,7 @@ export default {
 .form {
   margin-top: 50px;
 }
-.selectMarjor{
+.selectMarjor {
   width: 100%;
   border: 1px solid #44c7f5;
   padding: 5px;
@@ -117,10 +135,8 @@ export default {
 }
 p input {
   margin-top: 10px;
-  
 }
-.selectMarjor{
+.selectMarjor {
   border-radius: 30px;
-  
 }
 </style>

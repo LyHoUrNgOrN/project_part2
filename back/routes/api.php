@@ -38,7 +38,7 @@ Route::get('/search',[UsersController::class, 'search']);
 
 Route::get('/signup', [UsersController::class, 'index']);
 
-Route::get('/search',[UsersController::class, 'search']);
+
 
 
 //User_detail

@@ -113,24 +113,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .logout{
     margin-left: 5px;
     border-radius: 20px;
     background: #fff;
-    
 }
-
 .image{
   width: 55px;
   height: 55px;
 }
-
-
-
-
-
 .btn {
   margin-left: 18%;
 }
@@ -153,13 +144,3 @@ export default {
   height: 55px;
 }
 </style>
-
-
-
-
-
-
-
-
-
-

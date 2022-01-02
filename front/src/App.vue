@@ -47,6 +47,9 @@ export default {
 #app {
   background: #f1f2f7;
 }
+.v-label--active{
+  color: red;
+}
 
 ul {
   width: 100%;
