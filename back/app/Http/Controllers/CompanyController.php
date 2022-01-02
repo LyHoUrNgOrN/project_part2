@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
-
 class CompanyController extends Controller
 {
     /**
@@ -66,7 +65,7 @@ class CompanyController extends Controller
     public function show($id)
     {
         //
-        return Company::where('user_id', 'like', '%' . $id . '%')->get();
+        return Company::findOrFail($id);
     }
 
 
@@ -106,7 +105,7 @@ class CompanyController extends Controller
         $Companies->company_website = $request->company_website;
         $Companies->save();
 
-        return response()->json(['message' => 'update'], 200);
+        return response()->json(['message' => 'update','data'=>$Companies], 200);
     }
 
     /**

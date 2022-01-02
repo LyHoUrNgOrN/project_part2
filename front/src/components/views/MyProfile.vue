@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-main>
-      <v-card class="mx-auto pa-2 rounded-lg" width="80%">
+      <v-card class="mx-auto pa-2 rounded-lg mt-8" width="80%">
         <v-container fluid class="container">
           <div class="profile me-16">
             <img
@@ -28,7 +28,7 @@
                     color="#44C7F5"
                     dark
                     v-bind="attrs"
-                    class="mt-6"
+                    class="mt-6 rounded-pill"
                     v-on="on"
                   >
                     Change Profile
@@ -105,6 +105,12 @@
           </v-card-text>
         </v-container>
 
+            <!-- test edit -->
+            <v-list-item-icon class="d-flex justify-end">
+              <v-btn @click="showDialog = true" color="green lighten-1 white--text">Edit your information</v-btn
+              >
+            </v-list-item-icon>
+
         <v-list>
           <v-list-group
             :value="false"
@@ -129,13 +135,6 @@
               ></v-list-item-title>
               <v-list-item-title v-text="name"></v-list-item-title>
             </v-list-item>
-            <!-- test edit -->
-            <v-list-item-icon class="d-flex justify-end">
-              <v-btn @click="showDialog = true">Edit your information</v-btn
-              ><v-icon color="dark darken-2" style="cursor: pointer">
-                mdi-pencil
-              </v-icon>
-            </v-list-item-icon>
           </v-list-group>
         </v-list>
         <Dialog v-if="showDialog" @cancel="cancel" />
