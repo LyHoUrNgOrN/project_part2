@@ -4,14 +4,7 @@
       <v-card class="mx-auto pa-2 rounded-lg mt-8" width="80%">
         <v-container fluid class="container">
           <div class="profile me-16">
-            <img
-              v-if="name_img == 'picture.png'"
-              src="https://cahsi.utep.edu/wp-content/uploads/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529.png"
-              alt=""
-              width="190"
-            />
             <v-img
-              v-else
               :src="'http://localhost:8000/storage/profiles/' + name_img"
               alt=""
               width="190"
@@ -209,7 +202,6 @@ export default {
       profile.append("_method", "PUT");
       axios.post("/updateProfile/" + this.editProfileID, profile).then((res) => {
         this.name_img = res.data.img.picture;
-        this.show_img = true;
         this.getAllData();
       });
     },
@@ -223,9 +215,6 @@ export default {
         this.phone = this.userDetail.phone;
         this.email = this.user.email;
         this.name_img = this.userDetail.picture;
-        if (this.name_img !== this.imageToDisplay) {
-          this.show_img = false;
-        }
         this.province = this.userDetail.province;
         this.cruds = [
           ["First name", this.first_name],
