@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-main>
-      <v-card class="mx-auto pa-2 rounded-lg" width="80%">
+    <v-main class="pa-5">
+      <v-card class="mx-auto pa-2 rounded-lg" width="75%">
         <v-container fluid class="container" v-if="show_details">
           <div class="profile me-16">
             <img v-if="name_img == 'picture.png'"
@@ -145,6 +145,29 @@
         <Dialog v-if="showDialog" @cancel="cancel"/>           
       </v-card>
     </v-main>
+    
+    <!-- <v-card class="purple" width="80%">
+        <v-btn
+          fab
+          color="cyan accent-2"
+          bottom
+          left
+          absolute
+          @click="dialog = !dialog"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+    </v-card>
+     -->
+    <div>
+      <v-card
+        class="purple mx-auto"
+        width="75%"
+      >
+        <h1>hello</h1>
+      </v-card>
+      
+    </div>
   </div>
 </template>
 

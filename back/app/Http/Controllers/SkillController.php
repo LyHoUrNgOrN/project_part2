@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Skill;
+
 class SkillController extends Controller
 {
     /**
@@ -27,10 +27,12 @@ class SkillController extends Controller
     {
         $request->validate([
             'skill_name' => "required",
+            'user_id' => "required",
             'skill_detail' => "required",
             
         ]);
         $Skill = new Skill();
+        $Skill->user_id = $request->user_id;
         $Skill->skill_name = $request->skill_name;
         $Skill->skill_detail = $request->skill_detail;
         $Skill->save();
@@ -60,10 +62,12 @@ class SkillController extends Controller
     {
         $request->validate([
             'skill_name' => "required",
+            'user_id' => "required",
             'skill_detail' => "required",
             
         ]);
         $Skill = Skill::findOrFail($id);
+        $Skill->user_id = $request->user_id;
         $Skill->skill_name = $request->skill_name;
         $Skill->skill_detail = $request->skill_detail;
         $Skill->save();

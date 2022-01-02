@@ -196,7 +196,6 @@
           </v-col>
         </v-row>
       </v-card>
-      <h1>Work experince</h1>
     </v-main>
   </div>
 </template>
