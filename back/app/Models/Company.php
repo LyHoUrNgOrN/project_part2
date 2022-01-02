@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class Company extends Model
 {
     use HasFactory;
@@ -19,7 +16,8 @@ class Company extends Model
         'hr_phone',
         'company_email',
         'company_address',
-        'company_website'
+        'company_website',
+        'picture'
     ];
     
     protected $hidden = [
