@@ -13,8 +13,6 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
-        // return Company::with('user')->get();
         return Company::with(['user', 'user_detail'])->get();
     }
 
@@ -55,7 +53,6 @@ class CompanyController extends Controller
 
         return response()->json(['message' => 'create', 'data' => $Companies], 201);
     }
-
     /**
      * Display the specified resource.
      *
@@ -107,6 +104,21 @@ class CompanyController extends Controller
 
         return response()->json(['message' => 'update','data'=>$Companies], 200);
     }
+
+    public function updateProfileCompany(Request $request, $id)
+    {
+        $request->validate([
+            'picture' => 'image|mimes:jpg,jpeg,png,gif,webp|max:1999',
+        ]);
+        $request->file('picture')->store('public/profiles');
+        $img = Company::findOrFail($id);
+        if ($img) {
+            $img->picture = $request->file('picture')->hashName();
+            $img->save();
+        }
+        return response()->json(['message' => 'Successs', 'img' => $img, 'id' => $id], 200);
+    }
+
 
     /**
      * Remove the specified resource from storage.

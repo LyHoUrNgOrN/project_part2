@@ -26,6 +26,7 @@ class CreateCompaniesTable extends Migration
             $table->string('hr_name');
             $table->string('hr_email');
             $table->string('hr_phone');
+            $table->string('picture')->nullable();
             $table->timestamps();
         });
     }

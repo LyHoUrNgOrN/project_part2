@@ -67,3 +67,4 @@ Route::get('/companies/{id}', [CompanyController::class, 'show']);
 Route::put('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
 
+Route::put('/updateProfileCompany/{id}', [CompanyController::class, 'updateProfileCompany']);
