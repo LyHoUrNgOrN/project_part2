@@ -6,38 +6,42 @@
         <div class="form">
           <form action="#" class="mb-10" @submit.prevent>
             <h1 class="one text-center">Sign Up Account</h1>
-            <p>
-              <label for>
+            <p class="mt-5">
+              <label >
                 Please input your first name
                 <span class="red--text">*</span>
               </label>
-              <input
+              <v-text-field
                 v-model="first_name"
-                type="text"
-                placeholder="First name ..."
-                required
-              />
-              <!-- <small v-if="emailError != ''" style="color : red">{{emailError}}</small> -->
+                label="First name"
+                :rules="[rules.required]"
+                hide-details="auto"
+                outlined
+                class="mt-3 rounded-pill"
+                dense
+              ></v-text-field>
             </p>
-            <p>
+            <p class="mt-5">
               <label for>
                 Please input your last name
                 <span class="red--text">*</span>
               </label>
-              <input
+              <v-text-field
+                outlined
+                dense
+                :rules="[rules.required]"
+                hide-details="auto"
                 v-model="last_name"
-                type="text"
-                placeholder="Last name ..."
-                required
-              />
+                label="Last name"
+                class="mt-3 rounded-pill"
+              ></v-text-field>
             </p>
             <p>
-              <input
+              
+              <v-btn
                 @click="signup_one"
-                class="next"
-                type="submit"
-                value="Next"
-              />
+                color="cyan white--text mt-3 rounded-pill" width="100%"
+              >Next</v-btn>
             </p>
           </form>
         </div>
@@ -50,6 +54,10 @@ import axios from "@/api/api.js";
 export default {
   data() {
     return {
+      rules: {
+        required: (value) => !!value || "Required.",
+      },
+
       name: "",
       success: false,
       first_name: "",
@@ -58,26 +66,27 @@ export default {
   },
   methods: {
     signup_one() {
-      let name = this.first_name + " " + this.last_name;
-      name = name.toLowerCase().trim();
-      for (let alu of this.name) {
-        if(alu.name != undefined){
-          if (alu.name.toLowerCase() == name) {
-            this.success = true;
-            localStorage.setItem("user", JSON.stringify(alu));
-          } 
+      let name = this.last_name + " " + this.first_name;
+      if(this.first_name !== "" && this.last_name !== ""){
+        for (let alu of this.name) {
+          if (alu.name !== undefined) {
+            if (alu.name.toLowerCase() === name.toLowerCase()) {
+              this.success = true;
+              localStorage.setItem("user", JSON.stringify(alu));
+            }
+          }
         }
-      }
-      if (this.success == true) {
-        this.$router.push("/signuptwo");
-      } else {
-        this.$router.push("/warning");
+        if (this.success == true) {
+          this.$router.push("/signuptwo");
+        } else {
+          this.$router.push("/warning");
+        }
       }
     },
   },
   mounted() {
     localStorage.clear();
-    localStorage.setItem('path','/signupone');
+    localStorage.setItem("path", "/signupone");
     axios.get("/alumini").then((res) => {
       this.name = res.data;
     });

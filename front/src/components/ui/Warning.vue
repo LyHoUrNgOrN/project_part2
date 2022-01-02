@@ -7,7 +7,7 @@
           alt=""
           width="90"
         />
-        <h3 class="pa-3 pl-2">Passerelles Numeriques Cambodia
+        <h3 class="pa-3">Passerelles Numeriques Cambodia
           <p>A Getway for life</p>
         </h3>
       </div>
@@ -23,7 +23,7 @@
       <v-container fluid v-if="show_details">
         <v-card-text class="pb-10">
           <h3>Please contact to ERO Team or Admin!</h3>
-          <h4 class="cyan--text">Admin</h4>
+          <h4 class="cyan--text mt-3">Admin</h4>
           <div class="txt">
             <h5 class="sub-txt">Name</h5>
             <span>: Somnang Chan</span>
@@ -51,7 +51,7 @@
           </div> 
           <slot></slot>
           <router-link :to="path">
-            <v-btn class="cyan float-end white--text pa-3 rounded-pill"> &#x2B05;Back </v-btn>
+            <v-btn class="cyan float-end white--text rounded"> &#x2B05;Back </v-btn>
           </router-link>
         </v-card-text>
       </v-container>

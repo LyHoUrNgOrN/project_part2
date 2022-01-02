@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User_detail;
 
+
 class User_detailController extends Controller
 {
     /**
@@ -32,7 +33,7 @@ class User_detailController extends Controller
             'batch' => "required",
             'major' => "required",
             'current_position' => "required",
-            'gender' => "required"  
+            'gender' => "required"
         ]);
         $User_detail = new User_detail();
         $User_detail->user_id = $request->user_id;
@@ -45,7 +46,7 @@ class User_detailController extends Controller
         $User_detail->gender = $request->gender;
         $User_detail->save();
 
-        return response()->json(['message' => 'create','data'=>$User_detail], 201);
+        return response()->json(['message' => 'create', 'data' => $User_detail], 201);
     }
 
     /**
@@ -56,7 +57,8 @@ class User_detailController extends Controller
      */
     public function show($id)
     {
-        return User_detail::where('user_id','like','%'.$id.'%')->get();
+        //
+        return User_detail::where('user_id', 'like', '%' . $id . '%')->get();
     }
 
     /**
@@ -75,8 +77,10 @@ class User_detailController extends Controller
             'batch' => "required",
             'major' => "required",
             'gender' => "required"
+
+
         ]);
-        
+
         $User_detail = User_detail::findOrFail($id);
         $User_detail->user_id = $request->user_id;
         $User_detail->phone = $request->phone;
@@ -85,10 +89,11 @@ class User_detailController extends Controller
         $User_detail->batch = $request->batch;
         $User_detail->major = $request->major;
         $User_detail->gender = $request->gender;
+
+
         $User_detail->save();
 
         return response()->json($User_detail, 200);
-    
     }
 
     /**
@@ -104,10 +109,10 @@ class User_detailController extends Controller
         ]);
         $request->file('picture')->store('public/profiles');
         $img = User_detail::findOrFail($id);
-        if($img) {
+        if ($img) {
             $img->picture = $request->file('picture')->hashName();
             $img->save();
         }
-        return response()->json(['message' => 'Successs','img'=>$img,'id'=>$id], 200);
+        return response()->json(['message' => 'Successs', 'img' => $img, 'id' => $id], 200);
     }
 }

@@ -40,13 +40,20 @@
         </v-dialog>
       </v-toolbar>
     </template>
+    <template v-slot:item.profile="{ item }">
+      <span class="red--text" v-if="item.profile === null">No image</span>
+      <v-img
+        v-else
+        :src="'http://localhost:8000/storage/profiles/' + item.profile"
+        width="65"
+        height="65"
+        class="rounded-circle ma-1"
+      ></v-img>
+    </template>
     <template v-slot:item.actions="{ item }">
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-    </template>
-    <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize"> Reset </v-btn>
-    </template>
-  </v-data-table>
+    </template></v-data-table
+  >
 </template>
 
 <script>
@@ -128,13 +135,10 @@ export default {
             }
           });
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch(() => {});
     },
 
     deleteItem(item) {
-      console.log(item);
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
@@ -172,3 +176,4 @@ export default {
   },
 };
 </script>
+

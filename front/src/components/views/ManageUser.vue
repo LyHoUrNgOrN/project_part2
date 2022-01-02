@@ -35,7 +35,7 @@
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
             </v-card-title>
-            <v-c99ard-text>
+            <v-card-text>
               <v-container>
                 <v-row>
                   <v-col cols="12" md="6">
@@ -85,9 +85,8 @@
                     ></v-text-field>
                   </v-col>
                 </v-row>
-
               </v-container>
-            </v-c99ard-text>
+            </v-card-text>
 
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -115,6 +114,17 @@
         </v-dialog>
       </v-toolbar>
     </template>
+    <template v-slot:item.profile="{ item }">
+      <span class="red--text" v-if="item.profile === null">No image</span>
+      <v-img
+        v-else
+        :src="'http://localhost:8000/storage/profiles/' + item.profile"
+        width="65"
+        height="65"
+        class="rounded-circle ma-1"
+      ></v-img>
+    </template>
+
     <template v-slot:item.actions="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
@@ -129,11 +139,9 @@
 import axios from "@/api/api.js";
 export default {
   data: () => ({
-   
     password: "",
     first_name: "",
     last_name: "",
-
     email: "",
 
     show1: false,
@@ -153,20 +161,16 @@ export default {
         align: "start",
         sortable: false,
       },
+      { text: "Profile", value: "profile" },
       { text: "First name", value: "first_name" },
       { text: "Last name", value: "last_name" },
+      { text: "Email", value: "email" },
       { text: "User type", value: "role" },
       { text: "Actions", value: "actions", sortable: false },
     ],
     desserts: [],
     editedIndex: -1,
     editedItem: {
-      first_name: "",
-      last_name: "",
-      role: "",
-      reset_pwd: "",
-    },
-    defaultItem: {
       first_name: "",
       last_name: "",
       role: "",
@@ -187,12 +191,9 @@ export default {
     dialogDelete(val) {
       val || this.closeDelete();
     },
-    
   },
-
-  mounted() {
+  created() {
     this.initialize();
-    
   },
 
   methods: {
@@ -200,11 +201,34 @@ export default {
       axios
         .get("http://127.0.0.1:8000/api/user")
         .then((result) => {
-          this.desserts = result.data
+          this.desserts = [];
+          result.data.forEach((element) => {
+            if (element.role !== "ADMIN") {
+              if (element.user_details === null) {
+                let user = {
+                  profile: null,
+                  first_name: element.first_name,
+                  last_name: element.last_name,
+                  email: element.email,
+                  role: element.role,
+                  reset_pwd: "",
+                };
+                this.desserts.push(user);
+              } else {
+                let user = {
+                  profile: element.user_details.picture,
+                  first_name: element.first_name,
+                  last_name: element.last_name,
+                  email: element.email,
+                  role: element.role,
+                  reset_pwd: "",
+                };
+                this.desserts.push(user);
+              }
+            }
+          });
         })
-        .catch((err) => {
-          console.log(err.response.data.message);
-        });
+        .catch(() => {});
     },
 
     editItem(item) {
@@ -250,18 +274,11 @@ export default {
       };
       axios
         .post("http://127.0.0.1:8000/api/signup", ero)
-        .then((result) => {
-         console.log(result.data);
-         this.initialize()
+        .then(() => {
+          this.initialize();
         })
-        .catch((err) => {
-          console.log(err.response.data.message);
-        });
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      } else {
-        this.desserts.push(this.editedItem);
-      }
+        .catch(() => {});
+
       this.close();
     },
   },

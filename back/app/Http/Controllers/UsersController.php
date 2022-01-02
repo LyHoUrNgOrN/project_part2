@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-// use App\Models\User_detail;
-
 class UsersController extends Controller
 {
     /**
@@ -33,7 +30,6 @@ class UsersController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'role' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8'],
-            
         ]);
         
         
@@ -70,16 +66,6 @@ class UsersController extends Controller
         return response()->json(['message'=>'signout']);
     }
 
-    // Explore alumni
-    public function search()
-    {
-        $users = DB::table('users')
-            ->join('companies', 'users.id', '=', 'companies.user_id')
-            ->join('user_details', 'users.id', '=', 'user_details.user_id')
-            ->select('companies.*', 'users.first_name', 'users.last_name', 'users.role', 'users.email', 'user_details.*')
-            ->get();
-        return response()->json($users);
-    }
 
     /**
      * Display the specified resource.
@@ -108,6 +94,7 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $user = User::findOrFail($id);
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
@@ -115,9 +102,10 @@ class UsersController extends Controller
         $user->save();
         
         
-        // $token = $user->createToken('mytoken')->plainTextToken;
+
         return response()->json(
             $user,
+           
         ); 
     }
 }

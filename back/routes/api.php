@@ -10,7 +10,6 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SkillController;
 // use App\Http\Controllers\User_SkillController;
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,11 +30,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/signup', [UsersController::class, 'signup']);
 Route::delete('/signup/{id}', [UsersController::class, 'destroy']);
 Route::get('/user', [UsersController::class, 'index']);
+
 Route::get('/user/{id}', [UsersController::class, 'show']);
 Route::put('/user/{id}', [UsersController::class, 'update']);
 Route::get('/signup', [UsersController::class, 'index']);
 
 Route::get('/search',[UsersController::class, 'search']);
+
+
+Route::get('/signup', [UsersController::class, 'index']);
+
+
 
 
 //User_detail

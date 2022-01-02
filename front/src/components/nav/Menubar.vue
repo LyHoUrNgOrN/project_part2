@@ -22,15 +22,27 @@
         >
           My Profile
         </v-btn>
+
         <v-btn
           active-class="grey-5 white--text"
           text
-          v-if="role != 'ERO'"
-          :to="{ path: 'my_company' }"
-          class="event white--text"
+          :to="{ path: '/company-view' }"
+          class="company white--text"
+          v-if="role != 'ERO' && role != 'ADMIN'"
         >
           My Company
         </v-btn>
+
+        <v-btn
+          active-class="grey-5 white--text"
+          text
+          :to="{ path: '/explor-view' }"
+          class="explor white--text"
+          v-if="role == 'ERO' || role == 'ADMIN'"
+        >
+          Explor Alumni
+        </v-btn>
+
         <v-btn
           active-class="grey-5 white--text"
           text
@@ -39,16 +51,6 @@
         >
           Event
         </v-btn>
-        <v-btn
-          active-class="grey-5 white--text"
-          text
-          v-if="role == 'ERO' || role == 'ADMIN'"
-          :to="{ path: '/explor-view' }"
-          class="event white--text"
-        >
-          Explore Alumini
-        </v-btn>
-
         <v-btn
           active-class="grey-5 white--text"
           text
@@ -111,24 +113,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .logout{
     margin-left: 5px;
     border-radius: 20px;
     background: #fff;
-    
 }
-
 .image{
   width: 55px;
   height: 55px;
 }
-
-
-
-
-
 .btn {
   margin-left: 18%;
 }
@@ -151,13 +144,3 @@ export default {
   height: 55px;
 }
 </style>
-
-
-
-
-
-
-
-
-
-
