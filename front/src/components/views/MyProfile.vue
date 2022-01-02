@@ -4,14 +4,7 @@
       <v-card class="mx-auto pa-2 rounded-lg mt-8" width="80%">
         <v-container fluid class="container">
           <div class="profile me-16">
-            <img
-              v-if="name_img == null"
-              src="https://cahsi.utep.edu/wp-content/uploads/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529.png"
-              alt=""
-              width="190"
-            />
             <v-img
-              v-else
               :src="'http://localhost:8000/storage/profiles/' + name_img"
               alt=""
               width="190"
@@ -105,11 +98,11 @@
           </v-card-text>
         </v-container>
 
-            <!-- test edit -->
-            <v-list-item-icon class="d-flex justify-end">
-              <v-btn @click="showDialog = true" color="green lighten-1 white--text">Edit your information</v-btn
-              >
-            </v-list-item-icon>
+        <v-list-item-icon class="d-flex justify-end">
+          <v-btn @click="showDialog = true" color="green lighten-1 white--text"
+            >Edit your information</v-btn
+          >
+        </v-list-item-icon>
 
         <v-list>
           <v-list-group
@@ -167,9 +160,10 @@ export default {
       name_img: "",
       imageToDisplay:
         "https://cahsi.utep.edu/wp-content/uploads/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529.png",
+      
       imageFile: null,
       show_img: true,
-      id: 0,
+      editProfileID: 0,
     };
   },
   methods: {
@@ -206,25 +200,21 @@ export default {
       let profile = new FormData();
       profile.append("picture", this.imageFile);
       profile.append("_method", "PUT");
-      axios.post("/updateProfile/" + this.id, profile).then((res) => {
+      axios.post("/updateProfile/" + this.editProfileID, profile).then((res) => {
         this.name_img = res.data.img.picture;
-        this.show_img = true;
         this.getAllData();
       });
     },
     getAllData() {
       this.user = JSON.parse(localStorage.getItem("user"));
       axios.get("/user_details/" + this.user.id).then((res) => {
-        this.id = res.data[0].id;
+        this.editProfileID = res.data[0].id;
         this.userDetail = res.data[0];
         this.first_name = this.user.first_name;
         this.last_name = this.user.last_name;
         this.phone = this.userDetail.phone;
         this.email = this.user.email;
         this.name_img = this.userDetail.picture;
-        if (this.name_img !== this.imageToDisplay) {
-          this.show_img = false;
-        }
         this.province = this.userDetail.province;
         this.cruds = [
           ["First name", this.first_name],
@@ -255,8 +245,6 @@ export default {
   },
 };
 </script>
-
-
 <style scoped>
 .container,
 .txt {

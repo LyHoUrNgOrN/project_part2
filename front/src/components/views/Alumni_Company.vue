@@ -4,21 +4,68 @@
       <v-card class="mx-auto pa-2 rounded-lg mt-8" width="80%">
         <v-container fluid class="d-flex">
           <div class="profile me-16">
-            <img
-              src="https://cahsi.utep.edu/wp-content/uploads/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529.png"
-              alt
+           
+            <v-img
+              :src="'http://localhost:8000/storage/profiles/' + nameImgLogo"
+              alt=""
               width="190"
-            />
+              height="190"
+              style="border: 0.5px solid black"
+              class="rounded-circle"
+            ></v-img>
+            <input type="file" id="myFileInput" @change="changeLogo" hidden />
 
-            <!-- <input type="file" id="myFileInput" @change="image" hidden /> -->
-            <v-btn
-              rounded
-              color="cyan white--text"
-              width="200"
-              onclick="document.getElementById('myFileInput').click()"
-              >Change Logo</v-btn
-            >
+            <v-row justify="center">
+              <v-dialog v-model="dialog_logo" persistent max-width="600px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="#44C7F5"
+                    v-bind="attrs"
+                    class="mt-6 rounded-pill white--text"
+                    v-on="on"
+                    :disabled="edit"
+                  >
+                  Logo company
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title ripple>
+                    <span
+                      class="text-h6 ma-auto font-weight-black"
+                      color="#44C7F5"
+                      >Update profile photo
+                    </span>
+                    <v-icon large @click="dialog_logo = false"
+                      >mdi-close-circle-outline</v-icon
+                    >
+                  </v-card-title>
+                  <v-divider width="100%" />
+                  <v-container>
+                    <img
+                      class="ma-auto pa-5"
+                      :src="imageToDisplayLogo"
+                      alt=""
+                      width="200"
+                    />
+                  </v-container>
+                  <v-divider width="100%" />
+                  <v-card-actions class="pa-4">
+                    <v-btn
+                      color="#44C7F5"
+                      onclick="document.getElementById('myFileInput').click()"
+                      ><v-icon>mdi-plus</v-icon>Upload Photo
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn color="#44C7F5" @click="dialog_logo = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn color="#44C7F5" @click="updateLogo"> Save </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-row>
           </div>
+
           <v-card-text>
             <div class="txt">
               <span class="sub-txt">Current position </span>
@@ -65,6 +112,7 @@
                   class="white--text"
                   color="#44C7F5"
                   v-bind="attrs"
+                  v-on="on"
                   :disabled="add"
                   @click="add_info"
                   >+Add Information</v-btn
@@ -262,6 +310,12 @@ export default {
         (v) => /.+@.+/.test(v) || "E-mail must be valid",
       ],
       dialog: false,
+      dialog_logo: false,
+      imgLogoFile: null,
+      nameImgLogo: "",
+      imageToDisplayLogo:
+        "https://cahsi.utep.edu/wp-content/uploads/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529.png",
+
       rules: [(value) => !!value || "Required."],
       current_position: "",
       company_name: "",
@@ -278,8 +332,7 @@ export default {
       view_company_phone: "Complate company phone",
       userDetail_id: 0,
       user_id: 0,
-      edit_id: 0,
-      disabled: null,
+      editInfoCompanyID: 0,
       btn_save: true,
       add: false,
       edit: true,
@@ -305,6 +358,23 @@ export default {
   },
 
   methods: {
+    changeLogo(e) {
+      this.imgLogoFile = e.target.files[0];
+
+      this.imageToDisplayLogo = URL.createObjectURL(this.imgLogoFile);
+    },
+    updateLogo(){
+      let profile = new FormData();
+      profile.append("picture", this.imgLogoFile);
+      profile.append("_method", "PUT");
+      axios.post("/updateProfileCompany/" + this.editInfoCompanyID, profile).then((res) => {
+        this.nameImgLogo = res.data.img.picture;
+        console.log(res.data);
+       this.dialog_logo =false
+        this.getAllData();
+      });
+
+    },
     editInfoCompany() {
       let info = {
         user_id: this.user_id,
@@ -320,7 +390,7 @@ export default {
         hr_phone: this.hr_phone,
       };
       axios
-        .put("http://127.0.0.1:8000/api/companies/" + this.edit_id, info)
+        .put("http://127.0.0.1:8000/api/companies/" + this.editInfoCompanyID, info)
         .then(() => {
           this.getInFoCompany();
           this.cancle();
@@ -346,9 +416,8 @@ export default {
     },
     eidt_info() {
       this.btn_save = false;
-      console.log(this.edit_id);
       axios
-        .get("http://127.0.0.1:8000/api/companies/" + this.edit_id)
+        .get("http://127.0.0.1:8000/api/companies/" + this.editInfoCompanyID)
         .then((result) => {
           this.user_id = result.data.user_id;
           this.user_detail_id = result.data.user_detail_id;
@@ -361,10 +430,10 @@ export default {
           this.hr_name = result.data.hr_name;
           this.hr_email = result.data.hr_email;
           this.hr_phone = result.data.hr_phone;
-          console.log(result.data);
+         
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+         
         });
       this.dialog = true;
     },
@@ -408,7 +477,7 @@ export default {
       axios
         .get("http://127.0.0.1:8000/api/companies")
         .then((result) => {
-          console.log(result.data);
+          
           result.data.forEach((element) => {
             if (
               element.user_id === user.id &&
@@ -416,7 +485,8 @@ export default {
             ) {
               this.add = true;
               this.edit = false;
-              this.edit_id = element.id;
+              this.editInfoCompanyID = element.id;
+              this.nameImgLogo = element.picture
               this.view_current_position = element.current_position;
               this.view_company_name = element.company_name;
               this.view_company_email = element.company_email;
