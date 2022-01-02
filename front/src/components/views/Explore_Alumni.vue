@@ -110,7 +110,7 @@ export default {
 
         .then((result) => {
           result.data.forEach((element) => {
-            if (element.role === "ALUMNI") {
+            if (element.role == "ALUMNI") {
               if (element.company == null) {
                 let explore = {
                   id: element.id,

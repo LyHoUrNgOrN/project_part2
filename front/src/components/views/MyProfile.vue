@@ -5,7 +5,7 @@
         <v-container fluid class="container">
           <div class="profile me-16">
             <img
-              v-if="name_img == 'picture.png'"
+              v-if="name_img == null"
               src="https://cahsi.utep.edu/wp-content/uploads/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529.png"
               alt=""
               width="190"
