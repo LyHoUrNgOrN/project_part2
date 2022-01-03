@@ -43,9 +43,10 @@
 
           <p>
             <v-btn
-              color="cyan white--text mt-3 rounded-pill"
+              color="cyan white--text mt-3 rounded"
               width="100%"
               @click="signIn"
+              :disabled="btn_signin_disabled"
             >
               <button type="submit">Sign In</button>
             </v-btn>
@@ -67,6 +68,7 @@ export default {
     return {
       show1: false,
       alert: false,
+      btn_signin_disabled: true,
       email: "",
       password: "",
      txt_err_email:"",
@@ -83,10 +85,16 @@ export default {
   },
   watch:{
     email(){
-      return this.txt_err_email = ""
+      if (this.email !== "" && this.password !== ""){
+        this.btn_signin_disabled = false
+      }else{this.btn_signin_disabled = true}
+       this.txt_err_email = ""
     },
     password(){
-      return this.txt_err_pwd = ""
+      if (this.email !== "" && this.password !== ""){
+        this.btn_signin_disabled = false
+      }else{this.btn_signin_disabled = true}
+       this.txt_err_pwd = ""
     }
   },
   methods: {

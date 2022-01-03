@@ -26,7 +26,7 @@
                 dense
               ></v-text-field>
             </p>
-            <p>
+            <p class="mt-5">
               <label for>
                 Please input your PNC Major
                 <span class="red--text">*</span>
@@ -35,7 +35,7 @@
                 :items="items"
                 label="PNC Major"
                 dense
-                class="rounded-pill"
+                class="rounded-pill mt-2"
                 outlined
                 v-model="major"
               ></v-select>
@@ -43,7 +43,8 @@
             <p>
               <v-btn
                 @click="signupTwo"
-                color="cyan white--text mt-3 rounded-pill"
+                :disabled="btn_signin_disabled"
+                color="cyan white--text rounded"
                 width="100%"
                 ><button type="sumbit">Next</button></v-btn
               >
@@ -60,18 +61,34 @@
 export default {
   data() {
     return {
+      btn_signin_disabled: true,
+      major: "",
       batch: "",
       items: ["WEP", "SNA"],
       rules: {
         required: (value) => !!value || "Required.",
       },
-
-      major: "",
     };
   },
+  watch: {
+    major() {
+      if (this.major !== "" && this.batch !== "") {
+        this.btn_signin_disabled = false;
+      } else {
+        this.btn_signin_disabled = true;
+      }
+    },
+    batch() {
+      if (this.major !== "" && this.batch !== "") {
+        this.btn_signin_disabled = false;
+      } else {
+        this.btn_signin_disabled = true;
+      }
+    },
+  },
+
   methods: {
     signupTwo() {
-      
       let user = JSON.parse(localStorage.getItem("user"));
       if (user.batch == this.batch) {
         this.$router.push("/signupthree");

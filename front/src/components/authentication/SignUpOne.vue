@@ -4,10 +4,10 @@
       <router-link to="/signin" class="btn">Sign In</router-link>
       <template #signup>
         <div class="form">
-          <form  class="mb-10" @submit.prevent>
+          <form class="mb-10" @submit.prevent>
             <h1 class="one text-center">Sign Up Account</h1>
             <p class="mt-5">
-              <label >
+              <label>
                 Please input your first name
                 <span class="red--text">*</span>
               </label>
@@ -37,11 +37,13 @@
               ></v-text-field>
             </p>
             <p>
-              
               <v-btn
                 @click="signup_one"
-                color="cyan white--text mt-3 rounded-pill" width="100%"
-              ><button type="submit">Next</button></v-btn>
+                :disabled="btn_signin_disabled"
+                color="cyan white--text mt-3 rounded-pill"
+                width="100%"
+                ><button type="submit">Next</button></v-btn
+              >
             </p>
           </form>
         </div>
@@ -54,6 +56,7 @@ import axios from "@/api/api.js";
 export default {
   data() {
     return {
+      btn_signin_disabled: true,
       rules: {
         required: (value) => !!value || "Required.",
       },
@@ -64,10 +67,26 @@ export default {
       last_name: "",
     };
   },
+  watch: {
+    first_name() {
+      if (this.first_name !== "" && this.last_name !== "") {
+        this.btn_signin_disabled = false;
+      } else {
+        this.btn_signin_disabled = true;
+      }
+    },
+    last_name() {
+      if (this.first_name !== "" && this.last_name !== "") {
+        this.btn_signin_disabled = false;
+      } else {
+        this.btn_signin_disabled = true;
+      }
+    },
+  },
   methods: {
     signup_one() {
       let name = this.last_name + " " + this.first_name;
-      if(this.first_name !== "" && this.last_name !== ""){
+      if (this.first_name !== "" && this.last_name !== "") {
         for (let alu of this.name) {
           if (alu.name !== undefined) {
             if (alu.name.toLowerCase() === name.toLowerCase()) {

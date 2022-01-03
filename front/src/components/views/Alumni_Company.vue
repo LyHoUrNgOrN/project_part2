@@ -130,7 +130,7 @@
                     >Companies Information</v-toolbar
                   >
                   <v-card-text>
-                    <v-row>
+                    <v-row class="mt-2">
                       <v-col cols="6">
                         <p>Companies<span class="red--text">*</span></p>
                         <v-text-field
@@ -144,7 +144,7 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="6">
-                        <p>Companies<span class="red--text">*</span></p>
+                        <p>Human resources<span class="red--text">*</span></p>
                         <v-text-field
                           class="rounded-pill"
                           label="HR name ..."
