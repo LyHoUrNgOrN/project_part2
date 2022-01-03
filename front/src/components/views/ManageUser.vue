@@ -19,7 +19,6 @@
           outlined
           dense
         ></v-text-field>
-
         <v-spacer></v-spacer>
         <v-dialog
           v-model="dialog"
@@ -40,6 +39,7 @@
                 <v-row>
                   <v-col cols="12" md="6">
                     <v-text-field
+                    class="rounded-pill"
                       v-model="first_name"
                       label="First name"
                       :rules="[rules.required]"
@@ -50,6 +50,7 @@
                   </v-col>
                   <v-col cols="12" md="6">
                     <v-text-field
+                    class="rounded-pill"
                       outlined
                       dense
                       :rules="[rules.required]"
@@ -60,6 +61,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
+                    class="rounded-pill"
                       hide-details="auto"
                       outlined
                       dense
@@ -82,11 +84,11 @@
                   <!-- Test Change Role -->
                   <v-col cols="12">
                     <v-text-field
+                    class="rounded-pill"
                       hide-details="auto"
                       outlined
                       dense
                       v-model="password"
-                      class="password rounded"
                       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                       :rules="[rules.required, rules.min, rules.max]"
                       :type="show1 ? 'text' : 'password'"

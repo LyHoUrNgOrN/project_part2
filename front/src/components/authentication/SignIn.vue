@@ -18,6 +18,7 @@
               label="E-mail"
               class="mt-2 rounded-pill"
             ></v-text-field>
+            <small class="red--text">{{txt_err_email}}</small>
           </p>
           <p class="mt-7">
             <label
@@ -37,13 +38,22 @@
               hint="At least 6 characters"
               @click:append="show1 = !show1"
             ></v-text-field>
+            <small class="red--text">{{txt_err_pwd}}</small>
           </p>
 
           <p>
-            <v-btn color="cyan white--text mt-3 rounded-pill" width="100%" @click="signIn"
-              >Sign In</v-btn
+            <v-btn
+              color="cyan white--text mt-3 rounded"
+              width="100%"
+              @click="signIn"
+              :disabled="btn_signin_disabled"
             >
+              <button type="submit">Sign In</button>
+            </v-btn>
           </p>
+          <v-alert type="error" :value="alert">
+            Email or password wrong!</v-alert
+          >
         </form>
       </template>
     </Base-form>
@@ -57,8 +67,12 @@ export default {
   data() {
     return {
       show1: false,
+      alert: false,
+      btn_signin_disabled: true,
       email: "",
       password: "",
+     txt_err_email:"",
+     txt_err_pwd:"",
       rules: {
         required: (value) => !!value || "Password is required.",
         min: (v) => v.length >= 6 || "Min 6 characters",
@@ -68,6 +82,20 @@ export default {
         (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
     };
+  },
+  watch:{
+    email(){
+      if (this.email !== "" && this.password !== ""){
+        this.btn_signin_disabled = false
+      }else{this.btn_signin_disabled = true}
+       this.txt_err_email = ""
+    },
+    password(){
+      if (this.email !== "" && this.password !== ""){
+        this.btn_signin_disabled = false
+      }else{this.btn_signin_disabled = true}
+       this.txt_err_pwd = ""
+    }
   },
   methods: {
     signIn() {
@@ -85,22 +113,35 @@ export default {
             localStorage.setItem("id", user.id);
             localStorage.setItem("user", JSON.stringify(user));
             this.$emit("login", true);
-            axios.get("/user_details/" + user.id).then((res) => {
-              localStorage.setItem("userDetail", JSON.stringify(res.data[0]));
-              this.$router.push("/profile-view");
-            }).catch((err) => {
-              this.message = err.response.data.message;
-            });
-            
+            axios
+              .get("/user_details/" + user.id)
+              .then((res) => {
+                localStorage.setItem("userDetail", JSON.stringify(res.data[0]));
+                this.$router.push("/profile-view");
+              })
+              .catch((err) => {
+                this.message = err.response.data.message;
+              });
           })
           .catch((error) => {
-            if (error.response) {
-              this.passwordError = error.response.data.message;
+            if (error.response.status === 401) {
+              if (error.response.data.email_err !== "") {
+                this.txt_err_email = error.response.data.email_err
+              }
+              if(error.response.data.password_err !== ""){
+                this.txt_err_pwd = error.response.data.password_err
+              }
             }
+            console.log(error.response);
           });
       }
     },
   },
+  // created() {
+  //   setTimeout(() => {
+  //     this.alert = false;
+  //   }, 5000);
+  // },
 };
 </script>
 

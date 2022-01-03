@@ -9,7 +9,7 @@
       <router-link to="/signin" class="btn signin">Sign In</router-link>
       <template #signup>
         <div class="form">
-          <form action @submit.prevent>
+          <form @submit.prevent>
             <h1 class="one text-center mt-3">Sign Up Account</h1>
             <v-text-field
               v-model="phone"
@@ -28,7 +28,6 @@
               outlined
               class="rounded-pill"
             ></v-text-field>
-
             <v-select
               :items="allProvinces"
               label=" Select Province "
@@ -48,6 +47,7 @@
                 label="E-mail"
                 class="rounded-pill"
               ></v-text-field>
+              <small class="red--text">{{ email_err }}</small>
 
               <v-text-field
                 hide-details="auto"
@@ -86,9 +86,10 @@
               <p>
                 <v-btn
                   @click="signUpThree"
-                  color="cyan white--text mt-3 rounded-pill"
+                  :disabled="btn_signin_disabled"
+                  color="cyan white--text mt-3 rounded"
                   width="100%"
-                  >Sign up</v-btn
+                  ><button type="submit">Sign up</button></v-btn
                 >
               </p>
             </div>
@@ -109,6 +110,7 @@ export default {
   emits: ["login"],
   data() {
     return {
+      btn_signin_disabled: true,
       phone: "",
       id: "",
       allProvinces: [],
@@ -117,11 +119,10 @@ export default {
       email: "",
       password: "",
       gender: "",
-
+      email_err: "",
       activePicker: null,
       date: null,
       menu: false,
-
       show: false,
       phoneErr: [(v) => !!v || "Phone is required"],
       rules: {
@@ -134,6 +135,91 @@ export default {
     };
   },
   watch: {
+    phone() {
+      if (
+        this.phone !== "" &&
+        this.dateofbirth !== "" &&
+        this.province !== "" &&
+        this.password !== "" &&
+        this.gender !== "" &&
+        this.email !== ""
+      ) {
+        this.btn_signin_disabled = false;
+      } else {
+        this.btn_signin_disabled = true;
+      }
+    },
+    dateofbirth() {
+      if (
+        this.phone !== "" &&
+        this.dateofbirth !== "" &&
+        this.province !== "" &&
+        this.password !== "" &&
+        this.gender !== "" &&
+        this.email !== ""
+      ) {
+        this.btn_signin_disabled = false;
+      } else {
+        this.btn_signin_disabled = true;
+      }
+    },
+    province() {
+      if (
+        this.phone !== "" &&
+        this.dateofbirth !== "" &&
+        this.province !== "" &&
+        this.password !== "" &&
+        this.gender !== "" &&
+        this.email !== ""
+      ) {
+        this.btn_signin_disabled = false;
+      } else {
+        this.btn_signin_disabled = true;
+      }
+    },
+    password() {
+      if (
+        this.phone !== "" &&
+        this.dateofbirth !== "" &&
+        this.province !== "" &&
+        this.password !== "" &&
+        this.gender !== "" &&
+        this.email !== ""
+      ) {
+        this.btn_signin_disabled = false;
+      } else {
+        this.btn_signin_disabled = true;
+      }
+    },
+    gender() {
+      if (
+        this.phone !== "" &&
+        this.dateofbirth !== "" &&
+        this.province !== "" &&
+        this.password !== "" &&
+        this.gender !== "" &&
+        this.email !== ""
+      ) {
+        this.btn_signin_disabled = false;
+      } else {
+        this.btn_signin_disabled = true;
+      }
+    },
+    email() {
+      if (
+        this.phone !== "" &&
+        this.dateofbirth !== "" &&
+        this.province !== "" &&
+        this.password !== "" &&
+        this.gender !== "" &&
+        this.email !== ""
+      ) {
+        this.btn_signin_disabled = false;
+      } else {
+        this.btn_signin_disabled = true;
+      }
+      this.email_err = "";
+    },
     menu(val) {
       val && setTimeout(() => (this.activePicker = "YEAR"));
     },
@@ -153,27 +239,34 @@ export default {
       userCreate.append("role", "ALUMNI");
       userCreate.append("email", this.email);
       userCreate.append("password", this.password);
-      axios.post("/signup", userCreate).then((res) => {
-        localStorage.setItem("user", JSON.stringify(res.data.user));
-        localStorage.setItem("id", res.data.user.id);
-        localStorage.setItem("role", res.data.user.role.toUpperCase());
-        let userDetail = new FormData();
-        userDetail.append("user_id", localStorage.getItem("id"));
-        userDetail.append("phone", this.phone);
-        userDetail.append("date_of_birth", this.dateofbirth);
-        userDetail.append("province", this.province);
-        userDetail.append("batch", user.batch);
-        userDetail.append("major", user.major);
-        // userDetail.append('picture',null);
-        userDetail.append("current_position", "NONE");
-        userDetail.append("gender", this.gender);
-        axios.post("/user_details", userDetail).then((res) => {
-          localStorage.setItem("login", true);
-          localStorage.setItem("userDetail", JSON.stringify(res.data.data));
-          this.$emit("login", true);
-          this.$router.push("/profile-view");
+      axios
+        .post("/signup", userCreate)
+        .then((res) => {
+          localStorage.setItem("user", JSON.stringify(res.data.user));
+          localStorage.setItem("id", res.data.user.id);
+          localStorage.setItem("role", res.data.user.role.toUpperCase());
+          let userDetail = new FormData();
+          userDetail.append("user_id", localStorage.getItem("id"));
+          userDetail.append("phone", this.phone);
+          userDetail.append("date_of_birth", this.dateofbirth);
+          userDetail.append("province", this.province);
+          userDetail.append("batch", user.batch);
+          userDetail.append("major", user.major);
+          // userDetail.append('picture',null);
+          userDetail.append("current_position", "NONE");
+          userDetail.append("gender", this.gender);
+          axios.post("/user_details", userDetail).then((res) => {
+            localStorage.setItem("login", true);
+            localStorage.setItem("userDetail", JSON.stringify(res.data.data));
+            this.$emit("login", true);
+            this.$router.push("/profile-view");
+          });
+        })
+        .catch((err) => {
+          if (err.response.status === 422) {
+            this.email_err = err.response.data.errors.email[0];
+          }
         });
-      });
     },
   },
   mounted() {
