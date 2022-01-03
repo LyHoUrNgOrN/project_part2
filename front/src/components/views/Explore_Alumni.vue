@@ -8,7 +8,7 @@
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>My CRUD</v-toolbar-title>
+        <v-toolbar-title>Search ALumni</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-text-field
           v-model="search"
@@ -19,6 +19,14 @@
           outlined
           dense
         ></v-text-field>
+        <v-spacer></v-spacer>
+        <h4 class="text-right">
+          Alumnies : 
+          <span class="red--text">
+            {{countAlumni}}
+          </span>
+          
+        </h4>
         <v-spacer></v-spacer>
 
         <v-dialog v-model="dialogDelete" max-width="500px">
@@ -60,6 +68,7 @@
 import axios from "@/api/api.js";
 export default {
   data: () => ({
+    countAlumni : 0,
     search: "",
     dialog: false,
     dialogDelete: false,
@@ -134,6 +143,7 @@ export default {
               }
             }
           });
+          this.countAlumni = this.desserts.length;
         })
         .catch(() => {});
     },

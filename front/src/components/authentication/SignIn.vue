@@ -87,8 +87,11 @@ export default {
             this.$emit("login", true);
             axios.get("/user_details/" + user.id).then((res) => {
               localStorage.setItem("userDetail", JSON.stringify(res.data[0]));
+              this.$router.push("/profile-view");
+            }).catch((err) => {
+              this.message = err.response.data.message;
             });
-            this.$router.push("/profile-view");
+            
           })
           .catch((error) => {
             if (error.response) {
