@@ -1,10 +1,15 @@
 <template>
-  <v-dialog persistent width="600" v-model="dialog" class="overlay">
-    <v-card>
+  <v-dialog
+    transition="dialog-top-transition"
+    max-width="550px"
+    v-model="dialog"
+  >
+    <v-card class="p">
       <h2 id="edit">Do you want to update?</h2>
-      <row>
-        <v-col cols="12" md="12">
+      <v-row class="card">
+        <v-col cols="6">
           <v-text-field
+            class="rounded-pill"
             type="text"
             placeholder="firstName"
             v-model="firstname"
@@ -13,8 +18,9 @@
             dense
           />
         </v-col>
-        <v-col cols="12" md="12">
+        <v-col cols="6">
           <v-text-field
+            class="rounded-pill"
             type="text"
             placeholder="lastName"
             v-model="lastname"
@@ -23,9 +29,10 @@
             dense
           />
         </v-col>
-        
-        <v-col cols="12" md="12">
+
+        <v-col cols="6">
           <v-text-field
+            class="rounded-pill"
             type="text"
             placeholder="Date of Birth ..."
             v-model="date_of_birth"
@@ -34,8 +41,9 @@
             dense
           />
         </v-col>
-        <v-col cols="12" md="12">
+        <v-col cols="6">
           <v-select
+            class="rounded-pill"
             type="text"
             :items="allProvinces"
             placeholder="allProvinces"
@@ -45,8 +53,9 @@
             outlined
           />
         </v-col>
-        <v-col cols="12" md="12">
+        <v-col cols="6">
           <v-text-field
+            class="rounded-pill"
             type="text"
             placeholder="Phone ..."
             v-model="phone"
@@ -55,8 +64,9 @@
             dense
           />
         </v-col>
-        <v-col cols="12" md="12">
+        <v-col cols="6">
           <v-text-field
+            class="rounded-pill"
             type="text"
             placeholder="PNC Batch ..."
             v-model="pnc_batch"
@@ -65,8 +75,52 @@
             dense
           />
         </v-col>
-        <v-col cols="12" md="12">
+        <v-col cols="6">
+          <label for>
+            Select Your PNC Major
+            <span class="red--text">*</span>
+          </label>
+          <select
+            class="rounded-pill"
+            name="select"
+            id="major"
+            v-model="marjor"
+          >
+            <option disabled value="">Select Major</option>
+            <option value="Web">WEB</option>
+            <option value="SNA">SNA</option>
+          </select>
+        </v-col>
+        <v-col cols="6">
+          <v-card-text>
+            <div class="gender">
+              <div class="d-flex">
+                <span class="mt-7 me-5">Gender:</span>
+                <v-radio-group v-model="gender">
+                  <div class="d-flex">
+                    <v-radio
+                      class="mt-2 me-3"
+                      label="Male"
+                      color="#44c7f5"
+                      value="Male"
+                    >
+                    </v-radio>
+                    <v-radio
+                      class=""
+                      label="Female"
+                      color="#44c7f5"
+                      value="Female"
+                    ></v-radio>
+                  </div>
+                </v-radio-group>
+              </div>
+            </div>
+          </v-card-text>
+        </v-col>
+        <v-col cols="12" >
+          <div class="email">
           <v-text-field
+            class="rounded-pill"
             type="text"
             placeholder="Email"
             v-model="email"
@@ -74,37 +128,10 @@
             outlined
             dense
           />
+          </div>
         </v-col>
-        <v-card-text>
-          <label for>
-            Please input your PNC Major
-            <span class="red--text">*</span>
-          </label>
-          <select
-            name="select"
-            id="major"
-            v-model="marjor"
-            class="selectMarjor"
-          >
-            <option disabled value="">Select Major</option>
-            <option value="Web">WEB</option>
-            <option value="SNA">SNA</option>
-          </select>
-        </v-card-text>
-        <v-card-text>
-        <div class="d-flex">
-          <span class="mt-7 me-3 mr-30">Gender:</span>
-          <v-radio-group v-model="gender">
-            <div class="d-flex">
-              <v-radio class="mt-2" label="Male" color="#44c7f5" value="Male"></v-radio>
-              <v-radio class="mt-0" label="Female" color="#44c7f5" value="Female"></v-radio>
-            </div>
-          </v-radio-group>
-        </div>
-        </v-card-text>
-      </row>
+      </v-row>
       <v-divider></v-divider>
-
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn @click="cancel" color="primary " text>Cancel</v-btn>
@@ -202,49 +229,27 @@ export default {
 </script>
 
 <style scoped>
-/* .overlay {
-  position: fixed;
-  background: #fff;
-  top: 5%;
-  left: 35%;
-  width: 35%;
-  z-index: 100;
-  border-radius: 10px;
-  box-shadow: rgba(50, 74, 85, 0.26) 0px 2px 4px 0px,
-    rgba(70, 97, 109, 0.178) 0px 2px 16px 0px;
-} */
 h2 {
   text-align: center;
   padding: 10px;
   color: #fff;
   background: rgb(108, 185, 226);
 }
-/* h3 {
-  text-align: center;
-  padding: 10px;
-  color: #fff;
-  background: rgb(108, 185, 226);
-} */
-/* input[type="text"],
-input[type="email"] input[type="select"] {
-  width: 100%;
-  margin-top: 2%;
-  padding: 5px;
-  outline: none;
-  border: 1px solid rgb(194, 193, 193);
-  border-radius: 5px;
-} */
 select {
-  width: 30%;
-  margin-left: 2%;
+  width: 31%;
   padding: 2px;
   outline: none;
   border: 1px solid rgb(194, 193, 193);
-  border-radius: 5px;
+  
 }
-
-/* .v-select {
-  margin-top: 2%;
-} */
-
+.gender{
+  margin-top: -40px;
+  margin-right:5px;
+}
+.card{
+  margin: auto;
+}
+.email{
+  margin-top: -45px;
+}
 </style>

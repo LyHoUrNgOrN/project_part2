@@ -28,7 +28,6 @@
               outlined
               class="rounded-pill"
             ></v-text-field>
-
             <v-select
               :items="allProvinces"
               label=" Select Province "
