@@ -94,17 +94,14 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
-
-
+        $isDelete = User::destroy($id);
+        if($isDelete){
+            return response()->json(["message"=>"quited"],201);
+        }
+        return response()->json(["message"=>"quit_error"],404);
     }
 
-        /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         
@@ -113,12 +110,25 @@ class UsersController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->save();
-        
-        
-
         return response()->json(
-            $user,
-           
+            $user, 
+        ); 
+    }
+
+
+
+    public function updatePassword(Request $request, $id)
+    {
+        
+        $user = User::findOrFail($id);
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->role = $request->role;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save();
+        return response()->json(
+            $user, 
         ); 
     }
 }

@@ -33,6 +33,7 @@ Route::get('/user', [UsersController::class, 'index']);
 Route::get('/user/{id}', [UsersController::class, 'show']);
 Route::put('/user/{id}', [UsersController::class, 'update']);
 Route::get('/signup', [UsersController::class, 'index']);
+Route::put('/updateUser/{id}', [UsersController::class, 'updatePassword']);
 
 Route::get('/search',[UsersController::class, 'search']);
 

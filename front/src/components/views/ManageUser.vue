@@ -68,6 +68,18 @@
                       label="E-mail"
                     ></v-text-field>
                   </v-col>
+                  <!-- Test change role -->
+                  <v-col cols="12">
+                    <v-select
+                      hide-details="auto"
+                      :items="items"
+                      label="Role"
+                      dense
+                      outlined
+                      v-model="role"
+                    ></v-select>
+                  </v-col>
+                  <!-- Test Change Role -->
                   <v-col cols="12">
                     <v-text-field
                       hide-details="auto"
@@ -91,7 +103,9 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-              <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+
+              <v-btn v-if="dialog && !isUpdate" color="blue darken-1" text @click="save"> Save </v-btn>
+              <v-btn v-if="isUpdate && dialog" color="blue darken-1" text @click="update"> Update </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -126,7 +140,7 @@
     </template>
 
     <template v-slot:item.actions="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil {{item}} </v-icon>
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template>
     <template v-slot:no-data>
@@ -140,10 +154,16 @@ import axios from "@/api/api.js";
 export default {
   data: () => ({
     password: "",
+    isUpdate : false,
     first_name: "",
     last_name: "",
     email: "",
-
+    role : "",
+    items : [
+      "ADMIN",
+      "ALUMNI",
+      "ERO"
+    ],
     show1: false,
     search: "",
     dialog: false,
@@ -169,6 +189,7 @@ export default {
       { text: "Actions", value: "actions", sortable: false },
     ],
     desserts: [],
+    updateId : '',
     editedIndex: -1,
     editedItem: {
       first_name: "",
@@ -207,6 +228,7 @@ export default {
               if (element.user_details === null) {
                 let user = {
                   profile: null,
+                  id : element.id,
                   first_name: element.first_name,
                   last_name: element.last_name,
                   email: element.email,
@@ -216,6 +238,7 @@ export default {
                 this.desserts.push(user);
               } else {
                 let user = {
+                  id : element.id,
                   profile: element.user_details.picture,
                   first_name: element.first_name,
                   last_name: element.last_name,
@@ -230,26 +253,57 @@ export default {
         })
         .catch(() => {});
     },
-
+    update() {
+      let user = {
+        id : this.updateId,
+        first_name: this.first_name,
+        last_name: this.last_name,
+        role: this.role,
+        email: this.email,
+        password: this.password,
+      };
+      console.log(this.role);
+      axios
+        .put("http://127.0.0.1:8000/api/updateUser/" + user.id , user)
+        .then(() => {
+          this.first_name= "";
+          this.last_name= "";
+          this.role= "";
+          this.email = "";
+          this.password= "";
+          this.initialize();
+        })
+        .catch(() => {});
+      this.close();
+    },
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedItem= this.desserts[this.editedIndex];
+      this.first_name= this.editedItem.first_name,
+      this.updateId= this.editedItem.id,
+      this.last_name= this.editedItem.last_name,
+      this.role= this.editedItem.role,
+      this.email= this.editedItem.email,
+      this.isUpdate = true;
       this.dialog = true;
     },
 
     deleteItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedItem = this.desserts[this.editedIndex];
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1);
+      axios.delete('/signup/' + this.editedItem.id).then(() => {
+        this.initialize();
+      })
       this.closeDelete();
     },
 
     close() {
       this.dialog = false;
+      this.isUpdate = false;
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
