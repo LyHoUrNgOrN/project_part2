@@ -1,3 +1,6 @@
+
+
+
 import Vue from "vue";
 import VueRouter from "vue-router";
 
@@ -5,13 +8,13 @@ import signin from "@/components/authentication/SignIn.vue";
 import signupone from "@/components/authentication/SignUpOne.vue";
 import signuptwo from "@/components/authentication/SignUpTwo.vue";
 import signupthree from "@/components/authentication/SignUpThree.vue";
-import alumnicompany from "@/components/views/Alumni_Company.vue";
 
 import MyProfile from '@/components/views/MyProfile.vue'
+import ExplorAlumni from '@/components/views/Alumni_Company.vue'
 import Event from '@/components/views/Event.vue'
 import ManageUser from '@/components/views/ManageUser.vue'
 import Warning from '@/components/ui/Warning.vue'
-import Explore_Alumni from '@/components/views/Explore_Alumni.vue'
+// import Alumni_Company from '@/comments/views/Alumni_Company.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -34,16 +37,14 @@ const routes = [{
       path: "/signupthree",
       component: signupthree
     },
-
-    {
-      path: "/company-view",
-      component: alumnicompany
-    },
     {
       path: '/profile-view',
       component: MyProfile
     },
-
+    {
+      path: '/explor-view',
+      component: ExplorAlumni
+    },
     {
       path: '/event-view',
       component: Event
@@ -53,12 +54,12 @@ const routes = [{
       component: ManageUser
     },
     {
-      path: '/explor-view',
-      component: Explore_Alumni
-    },
-    {
       path: '/warning',
       component: Warning
+    },
+    {
+      path: '/company-view',
+      component: ExplorAlumni
     },
 
 
