@@ -4,7 +4,7 @@
       <router-link to="/signin" class="btn">Sign In</router-link>
       <template #signup>
         <div class="form">
-          <form action="#" class="mb-10" @submit.prevent>
+          <form  class="mb-10" @submit.prevent>
             <h1 class="one text-center">Sign Up Account</h1>
             <p class="mt-5">
               <label >
@@ -41,7 +41,7 @@
               <v-btn
                 @click="signup_one"
                 color="cyan white--text mt-3 rounded-pill" width="100%"
-              >Next</v-btn>
+              ><button type="submit">Next</button></v-btn>
             </p>
           </form>
         </div>

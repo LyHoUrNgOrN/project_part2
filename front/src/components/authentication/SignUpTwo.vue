@@ -45,7 +45,7 @@
                 @click="signupTwo"
                 color="cyan white--text mt-3 rounded-pill"
                 width="100%"
-                >Next</v-btn
+                ><button type="sumbit">Next</button></v-btn
               >
             </p>
           </form>

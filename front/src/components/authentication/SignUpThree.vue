@@ -9,7 +9,7 @@
       <router-link to="/signin" class="btn signin">Sign In</router-link>
       <template #signup>
         <div class="form">
-          <form action @submit.prevent>
+          <form  @submit.prevent>
             <h1 class="one text-center mt-3">Sign Up Account</h1>
             <v-text-field
               v-model="phone"
@@ -88,7 +88,7 @@
                   @click="signUpThree"
                   color="cyan white--text mt-3 rounded-pill"
                   width="100%"
-                  >Sign up</v-btn
+                  ><button type="submit">Sign up</button></v-btn
                 >
               </p>
             </div>

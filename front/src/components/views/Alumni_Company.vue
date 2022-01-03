@@ -4,7 +4,6 @@
       <v-card class="mx-auto pa-2 rounded-lg mt-8" width="80%">
         <v-container fluid class="d-flex">
           <div class="profile me-16">
-           
             <v-img
               :src="'http://localhost:8000/storage/profiles/' + nameImgLogo"
               alt=""
@@ -25,7 +24,7 @@
                     v-on="on"
                     :disabled="edit"
                   >
-                  Logo company
+                    Logo company
                   </v-btn>
                 </template>
                 <v-card>
@@ -363,17 +362,18 @@ export default {
 
       this.imageToDisplayLogo = URL.createObjectURL(this.imgLogoFile);
     },
-    updateLogo(){
+    updateLogo() {
       let profile = new FormData();
       profile.append("picture", this.imgLogoFile);
       profile.append("_method", "PUT");
-      axios.post("/updateProfileCompany/" + this.editInfoCompanyID, profile).then((res) => {
-        this.nameImgLogo = res.data.img.picture;
-        console.log(res.data);
-       this.dialog_logo =false
-        this.getAllData();
-      });
-
+      axios
+        .post("/updateProfileCompany/" + this.editInfoCompanyID, profile)
+        .then((res) => {
+          this.nameImgLogo = res.data.img.picture;
+          console.log(res.data);
+          this.dialog_logo = false;
+          this.getAllData();
+        });
     },
     editInfoCompany() {
       let info = {
@@ -389,11 +389,14 @@ export default {
         hr_email: this.hr_email,
         hr_phone: this.hr_phone,
       };
+      this.cancle();
       axios
-        .put("http://127.0.0.1:8000/api/companies/" + this.editInfoCompanyID, info)
+        .put(
+          "http://127.0.0.1:8000/api/companies/" + this.editInfoCompanyID,
+          info
+        )
         .then(() => {
           this.getInFoCompany();
-          this.cancle();
         })
         .catch((err) => {
           console.log(err);
@@ -430,11 +433,8 @@ export default {
           this.hr_name = result.data.hr_name;
           this.hr_email = result.data.hr_email;
           this.hr_phone = result.data.hr_phone;
-         
         })
-        .catch(() => {
-         
-        });
+        .catch(() => {});
       this.dialog = true;
     },
     cancle() {
@@ -477,7 +477,6 @@ export default {
       axios
         .get("http://127.0.0.1:8000/api/companies")
         .then((result) => {
-          
           result.data.forEach((element) => {
             if (
               element.user_id === user.id &&
@@ -486,7 +485,7 @@ export default {
               this.add = true;
               this.edit = false;
               this.editInfoCompanyID = element.id;
-              this.nameImgLogo = element.picture
+              this.nameImgLogo = element.picture;
               this.view_current_position = element.current_position;
               this.view_company_name = element.company_name;
               this.view_company_email = element.company_email;

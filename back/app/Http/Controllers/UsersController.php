@@ -52,18 +52,34 @@ class UsersController extends Controller
     public function signin(Request $request)
     {
         // singin function
+        $email_err = "";
+        $password_err = "";
+        $status = 200;
         $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)){
-            return response()->json(['message' => "Email or password in valid. Please contact to Admin!!"], 401);
+        if (!$user){
+            $email_err = "Wrong your email!";
+            $status = 401;
         }
+        else if(!Hash::check($request->password, $user->password)){
+            $password_err = "Wrong your password!";
+            $status = 401;
+
+        }
+       
+        
+        // if (!$user && !Hash::check($request->password, $user->password)){
+        //     $password_err = "Wrong your password!";
+        //     $email_err = "Wrong your email!";
+            
+        // }
 
         // $token = $user->createToken('mytoken')->plainTextToken;
 
         return response()->json([
             'user' => $user,
-            // 'token' => $token
-        ]);
+            'email_err'=>$email_err,
+            'password_err'=>$password_err
+        ],$status);
         //signout function
     }
     public function signout(Request $request)
