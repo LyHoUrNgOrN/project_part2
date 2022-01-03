@@ -2,43 +2,80 @@
   <v-dialog persistent width="600" v-model="dialog" class="overlay">
     <v-card>
       <h2 id="edit">Do you want to update?</h2>
-      <v-card-text>
-        <input type="text" placeholder="firstName" v-model="firstname" />
-        <input type="text" placeholder="lastName" v-model="lastname" />
-        <div class="d-flex">
-          <span class="mt-7 me-5">Gender:</span>
-          <v-radio-group v-model="gender">
-            <div class="d-flex">
-              <v-radio label="Male" color="#44c7f5" value="Male"></v-radio>
-              <v-radio label="Female" color="#44c7f5" value="Female"></v-radio>
-            </div>
-          </v-radio-group>
-        </div>
-        <p>
-          <input
+      <row>
+        <v-col cols="12" md="12">
+          <v-text-field
+            type="text"
+            placeholder="firstName"
+            v-model="firstname"
+            hide-details="auto"
+            outlined
+            dense
+          />
+        </v-col>
+        <v-col cols="12" md="12">
+          <v-text-field
+            type="text"
+            placeholder="lastName"
+            v-model="lastname"
+            hide-details="auto"
+            outlined
+            dense
+          />
+        </v-col>
+        
+        <v-col cols="12" md="12">
+          <v-text-field
             type="text"
             placeholder="Date of Birth ..."
             v-model="date_of_birth"
-            required
+            hide-details="auto"
+            outlined
+            dense
           />
+        </v-col>
+        <v-col cols="12" md="12">
           <v-select
+            type="text"
             :items="allProvinces"
-            label=" Select Province "
-            class="select"
+            placeholder="allProvinces"
             v-model="province"
+            hide-details="auto"
             dense
             outlined
-          ></v-select>
-          <input type="text" placeholder="Phone ..." v-model="phone" required />
-          <input
+          />
+        </v-col>
+        <v-col cols="12" md="12">
+          <v-text-field
+            type="text"
+            placeholder="Phone ..."
+            v-model="phone"
+            hide-details="auto"
+            outlined
+            dense
+          />
+        </v-col>
+        <v-col cols="12" md="12">
+          <v-text-field
             type="text"
             placeholder="PNC Batch ..."
             v-model="pnc_batch"
-            required
+            hide-details="auto"
+            outlined
+            dense
           />
-          <input type="text" placeholder="Email" v-model="email" required />
-        </p>
-        <p>
+        </v-col>
+        <v-col cols="12" md="12">
+          <v-text-field
+            type="text"
+            placeholder="Email"
+            v-model="email"
+            hide-details="auto"
+            outlined
+            dense
+          />
+        </v-col>
+        <v-card-text>
           <label for>
             Please input your PNC Major
             <span class="red--text">*</span>
@@ -53,8 +90,19 @@
             <option value="Web">WEB</option>
             <option value="SNA">SNA</option>
           </select>
-        </p>
-      </v-card-text>
+        </v-card-text>
+        <v-card-text>
+        <div class="d-flex">
+          <span class="mt-7 me-3 mr-30">Gender:</span>
+          <v-radio-group v-model="gender">
+            <div class="d-flex">
+              <v-radio class="mt-2" label="Male" color="#44c7f5" value="Male"></v-radio>
+              <v-radio class="mt-0" label="Female" color="#44c7f5" value="Female"></v-radio>
+            </div>
+          </v-radio-group>
+        </div>
+        </v-card-text>
+      </row>
       <v-divider></v-divider>
 
       <v-card-actions>
@@ -154,7 +202,7 @@ export default {
 </script>
 
 <style scoped>
-.overlay {
+/* .overlay {
   position: fixed;
   background: #fff;
   top: 5%;
@@ -164,20 +212,20 @@ export default {
   border-radius: 10px;
   box-shadow: rgba(50, 74, 85, 0.26) 0px 2px 4px 0px,
     rgba(70, 97, 109, 0.178) 0px 2px 16px 0px;
-}
+} */
 h2 {
   text-align: center;
   padding: 10px;
   color: #fff;
   background: rgb(108, 185, 226);
 }
-h3 {
+/* h3 {
   text-align: center;
   padding: 10px;
   color: #fff;
   background: rgb(108, 185, 226);
-}
-input[type="text"],
+} */
+/* input[type="text"],
 input[type="email"] input[type="select"] {
   width: 100%;
   margin-top: 2%;
@@ -185,7 +233,7 @@ input[type="email"] input[type="select"] {
   outline: none;
   border: 1px solid rgb(194, 193, 193);
   border-radius: 5px;
-}
+} */
 select {
   width: 30%;
   margin-left: 2%;
@@ -195,7 +243,8 @@ select {
   border-radius: 5px;
 }
 
-.v-select {
+/* .v-select {
   margin-top: 2%;
-}
+} */
+
 </style>
