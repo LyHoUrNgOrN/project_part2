@@ -13,8 +13,9 @@
             <h1 class="one text-center mt-3">Sign Up Account</h1>
             <v-text-field
               v-model="phone"
+              type="number"
               label="Phone"
-              :rules="phoneErr"
+              :rules="[rulesphone.required, rulesphone.min, rulesphone.max]"
               hide-details="auto"
               outlined
               class="my-4 rounded-pill"
@@ -64,25 +65,22 @@
                 @click:append="show = !show"
               ></v-text-field>
 
-              
               <v-radio-group v-model="gender" row>
-              
-                <v-radio label="Male" color="#44c7f5" value="Male" ></v-radio>
+                <v-radio label="Male" color="#44c7f5" value="Male"></v-radio>
                 <v-radio
                   label="Female"
                   color="#44c7f5"
                   value="Female"
                 ></v-radio>
               </v-radio-group>
-     
 
-                <v-btn
-                  @click="signUpThree"
-                  :disabled="btn_signin_disabled"
-                  color="cyan white--text mt-3 rounded"
-                  width="100%"
-                  ><button type="submit">Sign up</button></v-btn
-                >
+              <v-btn
+                @click="signUpThree"
+                :disabled="btn_signin_disabled"
+                color="cyan white--text mt-3 rounded"
+                width="100%"
+                ><button type="submit">Sign up</button></v-btn
+              >
             </div>
           </form>
         </div>
@@ -104,6 +102,7 @@ export default {
       btn_signin_disabled: true,
       phone: "",
       id: "",
+      oldUser: "",
       allProvinces: [],
       dateofbirth: "",
       province: "",
@@ -119,6 +118,13 @@ export default {
       rules: {
         required: (value) => !!value || "Password is required.",
       },
+      rulesphone: {
+        required: (value) => !!value || "Required.",
+        min: (v) =>
+          (v.length >= 9) ||
+          "should be the real phone number",
+      },
+
       emailRules: [
         (v) => !!v || "E-mail is required",
         (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
@@ -225,15 +231,15 @@ export default {
       let user = JSON.parse(localStorage.getItem("user"));
       let name = user.name.split(" ");
       let userCreate = new FormData();
-      userCreate.append("first_name", name[1]);
-      userCreate.append("last_name", name[0]);
+      userCreate.append("first_name", name[0]);
+      userCreate.append("last_name", name[1]);
       userCreate.append("role", "ALUMNI");
       userCreate.append("email", this.email);
       userCreate.append("password", this.password);
       axios
         .post("/signup", userCreate)
         .then((res) => {
-          localStorage.setItem("user", JSON.stringify(res.data.user));
+          this.oldUser = res.data.user;
           localStorage.setItem("id", res.data.user.id);
           localStorage.setItem("role", res.data.user.role.toUpperCase());
           let userDetail = new FormData();
@@ -247,6 +253,7 @@ export default {
           userDetail.append("current_position", "NONE");
           userDetail.append("gender", this.gender);
           axios.post("/user_details", userDetail).then((res) => {
+            localStorage.setItem("user", JSON.stringify(this.oldUser));
             localStorage.setItem("login", true);
             localStorage.setItem("userDetail", JSON.stringify(res.data.data));
             this.$emit("login", true);
