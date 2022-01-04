@@ -112,7 +112,7 @@
                 <span class="sub-txt">Name</span>
                 <div>
                   <span v-if="hr_name != null" class="dote">:</span><span> {{ hr_name }}</span>
-                  <span v-if="hr_name == null" class="dote">:</span><span> Not complete yet</span>
+                  <span v-if="hr_name == null" class="dote red--text">:</span><span> Not complete yet</span>
                 </div>
               </div>
               <div class="txt">
@@ -211,14 +211,11 @@ export default {
   mounted() {
     //  if(localStorage.getItem('showUserDetailId') != undefined){
         axios.get('/user/'+ localStorage.getItem('showUserDetailId')).then(res=>{
+            console.log(res.data);
           this.user = res.data;
-          axios.get('/user_details/'+ localStorage.getItem('showUserDetailId')).then(rest=>{
-            this.userDetail = rest.data[0];
-            axios.get('/company/'+ localStorage.getItem('showUserDetailId')).then(result=>{
-              this.company = result.data[0];
-              this.getInfo();
-            })
-          })
+          this.userDetail = res.data.user_details;
+          this.company = res.data.company;
+          this.getInfo();
         })
 
     //  }
