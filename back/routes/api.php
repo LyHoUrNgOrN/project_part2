@@ -8,6 +8,8 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\AluminiController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SkillController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\Event_JoinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,10 +72,30 @@ Route::put('/companies/{id}', [CompanyController::class, 'update']);
 Route::get('/company/{id}', [CompanyController::class, 'showCompany']);
 Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
 
+
+//events
+Route::get('/events', [EventController::class, 'index']);
+Route::post('/events', [EventController::class, 'store']);
+Route::get('/events/{id}', [EventController::class, 'show']);
+Route::put('/events/{id}', [EventController::class, 'update']);
+Route::delete('/events/{id}', [EventController::class, 'destroy']);
 Route::put('/updateProfileCompany/{id}', [CompanyController::class, 'updateProfileCompany']);
+
+
+
+//eventjoins
+Route::get('/eventjoins', [Event_JoinController::class, 'index']);
+Route::post('/eventjoins', [Event_JoinController::class, 'store']);
+Route::get('/eventjoins/{id}', [Event_JoinController::class, 'show']);
+Route::put('/eventjoins/{id}', [Event_JoinController::class, 'update']);
+Route::delete('/eventjoins/{id}', [Event_JoinController::class, 'destroy']);
+
 //Skill
 Route::get('/skills', [SkillController::class, 'index']);
 Route::post('/skills', [SkillController::class, 'store']);
 Route::get('/skills/{id}', [SkillController::class, 'show']);
 Route::put('/skills/{id}', [SkillController::class, 'update']);
 Route::delete('/skills/{id}', [SkillController::class, 'destroy']);
+
+
+

@@ -19,9 +19,9 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     color="#44C7F5"
-                    dark
                     v-bind="attrs"
-                    class="mt-6 rounded-pill"
+                    :disabled="btn_disabled"
+                    class="mt-6 rounded-pill white--text"
                     v-on="on"
                   >
                     Change Profile
@@ -297,7 +297,7 @@ export default {
     return {
       detail: null,
       add_info: false,
-      btn_disabled_ero_or_admin: true,
+      btn_disabled: true,
       role: "",
       dialog_eidt: false,
       dialog: false,
@@ -354,6 +354,7 @@ export default {
         last_name: this.last_name,
         email: this.email,
       };
+
       let user_detail = {
         user_id: this.editUserID,
         phone: this.phone,
@@ -387,7 +388,7 @@ export default {
       axios
         .get("/user/" + this.editUserID)
         .then((result) => {
-          // this.editProfileID = result.data.id;
+          this.editProfileID = result.data.user_details.id;
           this.first_name = result.data.first_name;
           this.last_name = result.data.last_name;
           this.email = result.data.email;
@@ -448,9 +449,11 @@ export default {
                 ["PNC Major", "PNC Major not yet to complete"],
               ];
             } else {
+              this.btn_disabled = false
               this.detail = element.user_details;
               this.editUserID = element.id;
               this.editProfileID = element.user_details.id;
+             console.log(this.editUserID, this.editProfileID);
               this.name_img = element.user_details.picture;
               this.first_name = element.first_name;
               this.last_name = element.last_name;

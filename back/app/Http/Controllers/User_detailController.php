@@ -28,14 +28,14 @@ class User_detailController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'phone' => "required",
-            'date_of_birth' => "required",
-            'province' => "required",
-            'batch' => "required",
-            'major' => "required",
-            'current_position' => "required",
-            'gender' => "required"
+        $request->validate([ 
+            'phone' => ["required", 'string', 'min:9'],
+            'date_of_birth' => ["required"],
+            'province' => ["required"],
+            'batch' => ["required"],
+            'major' => ["required"],
+            'current_position' => ["required"],
+            'gender' => ["required"]
         ]);
 
 
