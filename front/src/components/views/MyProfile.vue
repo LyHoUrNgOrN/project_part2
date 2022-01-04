@@ -66,21 +66,15 @@
           </div>
           <v-card-text>
             <div class="txt">
-              <span class="sub-txt">First name</span>
+              <span class="sub-txt"> First name</span>
               <div>
-                <span class="dote">:</span> <span> {{ first_name }}</span>
+                <span class="dote">:</span><span> {{ first_name }}</span>
               </div>
             </div>
             <div class="txt">
               <span class="sub-txt">Last name</span>
               <div>
-                <span class="dote">:</span><span> {{ last_name }}</span>
-              </div>
-            </div>
-            <div class="txt">
-              <span class="sub-txt">Phone</span>
-              <div>
-                <span class="dote">:</span><span> {{ phone }}</span>
+                <span class="dote">:</span> <span> {{ last_name }}</span>
               </div>
             </div>
             <div class="txt">
@@ -90,14 +84,27 @@
               </div>
             </div>
             <div class="txt">
+              <span class="sub-txt">Phone</span>
+              <div>
+                <span class="dote">:</span
+                ><span
+                  >{{ detail == null ? "Phone not yet to complete" : phone }}
+                </span>
+              </div>
+            </div>
+            <div class="txt">
               <span class="sub-txt">Province</span>
               <div>
-                <span class="dote">:</span><span> {{ province }}</span>
+                <span class="dote">:</span
+                ><span>
+                  {{
+                    detail == null ? "Province not yet to complete" : province
+                  }}</span
+                >
               </div>
             </div>
           </v-card-text>
         </v-container>
-
         <v-col cols="auto">
           <v-dialog
             transition="dialog-top-transition"
@@ -115,7 +122,6 @@
                 >
               </v-list-item-icon>
             </template>
-
             <template>
               <v-card>
                 <v-toolbar color="primary" dark>
@@ -147,7 +153,6 @@
                         dense
                       />
                     </v-col>
-
                     <v-col cols="6">
                       <v-text-field
                         class="rounded-pill"
@@ -239,15 +244,21 @@
                 </v-card-text>
                 <v-card-actions class="justify-end">
                   <v-btn text @click="cancel">Cancel</v-btn>
-                  <v-btn text @click="edit_info_alumni" color="success"
+                  <v-btn
+                    text
+                    @click="edit_info_alumni"
+                    color="success"
+                    v-if="detail !== null"
                     >Update</v-btn
+                  >
+                  <v-btn text @click="add_info_ero_admin" color="success" v-else
+                    >Save</v-btn
                   >
                 </v-card-actions>
               </v-card>
             </template>
           </v-dialog>
         </v-col>
-
         <v-list>
           <v-list-group
             :value="false"
@@ -284,6 +295,10 @@ import axios from "@/api/api.js";
 export default {
   data() {
     return {
+      detail: null,
+      add_info: false,
+      btn_disabled_ero_or_admin: true,
+      role: "",
       dialog_eidt: false,
       dialog: false,
       rules: [(value) => !!value || "Required."],
@@ -312,6 +327,26 @@ export default {
     };
   },
   methods: {
+    add_info_ero_admin() {
+      this.cancel();
+      let add_info_user = {
+        user_id: this.editUserID,
+        phone: this.phone,
+        date_of_birth: this.date_of_birth,
+        province: this.province,
+        batch: this.batch,
+        major: this.major,
+        gender: this.gender,
+        current_position: "NONE",
+      };
+      axios
+        .post("/user_details/", add_info_user)
+        .then((res) => {
+          console.log(res.data);
+          this.getAllData();
+        })
+        .catch(() => {});
+    },
     edit_info_alumni() {
       this.cancel();
       let user = {
@@ -348,7 +383,7 @@ export default {
     },
     get_data_edit() {
       axios
-        .get("/user/" + this.eidtUserID)
+        .get("/user/" + this.editUserID)
         .then((result) => {
           this.first_name = result.data.first_name;
           this.last_name = result.data.last_name;
@@ -372,27 +407,7 @@ export default {
     cancel() {
       this.dialog_eidt = false;
     },
-    getUserDetail() {
-      axios.get("/user/" + this.user.id).then((res) => {
-        this.userDetail = res.data[0];
-        this.first_name = this.user.first_name;
-        this.last_name = this.user.last_name;
-        this.phone = this.userDetail.phone;
-        this.email = this.user.email;
-        this.province = this.userDetail.province;
-        this.cruds = [
-          ["First name", this.first_name],
-          ["Last name", this.last_name],
-          ["Gender", this.userDetail.gender],
-          ["Date of brith", this.userDetail.date_of_birth],
-          ["Province", this.province],
-          ["Phone", this.phone],
-          ["Email", this.user.email],
-          ["PNC Batch", this.userDetail.batch],
-          ["PNC Major", this.userDetail.major],
-        ];
-      });
-    },
+
     updateProfile() {
       this.dialog = false;
       let profile = new FormData();
@@ -406,27 +421,53 @@ export default {
         });
     },
     getAllData() {
-      this.user = JSON.parse(localStorage.getItem("user"));
-      axios.get("/user/" + this.user.id).then((res) => {
-        this.eidtUserID = res.data.id;
-        this.editProfileID = res.data.user_details.id;
-        this.name_img = res.data.user_details.picture;
-        this.first_name = res.data.first_name;
-        this.last_name = res.data.last_name;
-        this.email = res.data.email;
-        this.phone = res.data.user_details.phone;
-        this.province = res.data.user_details.province;
-        this.cruds = [
-          ["First name", res.data.first_name],
-          ["Last name", res.data.last_name],
-          ["Email", res.data.email],
-          ["Gender", res.data.user_details.gender],
-          ["Date of brith", res.data.user_details.date_of_birth],
-          ["Province", res.data.user_details.province],
-          ["Phone", res.data.user_details.phone],
-          ["PNC Batch", res.data.user_details.batch],
-          ["PNC Major", res.data.user_details.major],
-        ];
+      let user = JSON.parse(localStorage.getItem("user"));
+
+      axios.get("/user/").then((res) => {
+        res.data.forEach((element) => {
+          if (user.email === element.email) {
+            if (element.user_details === null && element.company === null) {
+              this.editUserID = element.id;
+              this.detail = element.company;
+              this.role = element.role;
+              this.first_name = element.first_name;
+              this.last_name = element.last_name;
+              this.email = element.email;
+              this.cruds = [
+                ["First name", element.first_name],
+                ["Last name", element.last_name],
+                ["Email", element.email],
+                ["Gender", "Gender not yet to complete"],
+                ["Date of brith", "Date of brith not yet to complete"],
+                ["Province", "Province not yet to complete"],
+                ["Phone", "Phone not yet to complete"],
+                ["PNC Batch", "PNC Batch not yet to complete"],
+                ["PNC Major", "PNC Major not yet to complete"],
+              ];
+            } else {
+              this.detail = element.user_details;
+              this.editUserID = element.id;
+              this.editProfileID = element.user_details.id;
+              this.name_img = element.user_details.picture;
+              this.first_name = element.first_name;
+              this.last_name = element.last_name;
+              this.email = element.email;
+              this.phone = element.user_details.phone;
+              this.province = element.user_details.province;
+              this.cruds = [
+                ["First name", element.first_name],
+                ["Last name", element.last_name],
+                ["Email", element.email],
+                ["Gender", element.user_details.gender],
+                ["Date of brith", element.user_details.date_of_birth],
+                ["Province", element.user_details.province],
+                ["Phone", element.user_details.phone],
+                ["PNC Batch", element.user_details.batch],
+                ["PNC Major", element.user_details.major],
+              ];
+            }
+          }
+        });
       });
     },
   },

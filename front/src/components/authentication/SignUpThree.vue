@@ -225,8 +225,8 @@ export default {
       let user = JSON.parse(localStorage.getItem("user"));
       let name = user.name.split(" ");
       let userCreate = new FormData();
-      userCreate.append("first_name", name[0]);
-      userCreate.append("last_name", name[1]);
+      userCreate.append("first_name", name[1]);
+      userCreate.append("last_name", name[0]);
       userCreate.append("role", "ALUMNI");
       userCreate.append("email", this.email);
       userCreate.append("password", this.password);
