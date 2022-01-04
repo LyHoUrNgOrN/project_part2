@@ -211,7 +211,6 @@ export default {
   mounted() {
     //  if(localStorage.getItem('showUserDetailId') != undefined){
         axios.get('/user/'+ localStorage.getItem('showUserDetailId')).then(res=>{
-            console.log(res.data);
           this.user = res.data;
           this.userDetail = res.data.user_details;
           this.company = res.data.company;

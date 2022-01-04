@@ -3,7 +3,6 @@
     :headers="headers"
     :items="desserts"
     :search="search"
-    @click:row="detail"
     sort-by="calories"
     class="elevation-1"
   >
@@ -37,7 +36,7 @@
             >
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete"
+              <v-btn color="red darken-1" text @click="closeDelete"
                 >Cancel</v-btn
               >
               <v-btn color="blue darken-1" text @click="deleteItemConfirm"
@@ -60,6 +59,7 @@
       ></v-img>
     </template>
     <template v-slot:item.actions="{ item }">
+      <v-icon color="gray" left @click="detail(item)">mdi mdi-alert-box</v-icon>
       <v-icon color="red" small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template></v-data-table
   >
@@ -125,18 +125,32 @@ export default {
 
         .then((result) => {
           result.data.forEach((element) => {
-            if (element.role == "ALUMNI") {
+            if (element.role === "ALUMNI") {
+              console.log(element.role);
               if (element.company == null) {
-                let explore = {
-                  id: element.id,
-                  profile: element.user_details.picture,
-                  first_name: element.first_name,
-                  last_name: element.last_name,
-                  pnc_batch: element.user_details.batch,
-                  current_position: "Alumni not yet complete!",
-                  company: "Alumni not yet complete!",
-                };
-                this.desserts.push(explore);
+                if(element.user_details == null){
+                  let explore = {
+                    id: element.id,
+                    profile: null,
+                    first_name: element.first_name,
+                    last_name: element.last_name,
+                    pnc_batch: "Alumni not yet complete",
+                    current_position: "Alumni not yet complete!",
+                    company: "Alumni not yet complete!",
+                  };
+                  this.desserts.push(explore);
+                }else{
+                  let explore = {
+                    id: element.id,
+                    profile: element.user_details.picture,
+                    first_name: element.first_name,
+                    last_name: element.last_name,
+                    pnc_batch: element.user_details.batch,
+                    current_position: "Alumni not yet complete!",
+                    company: "Alumni not yet complete!",
+                  };
+                  this.desserts.push(explore);
+                }
               } else {
                 let explore = {
                   id: element.id,

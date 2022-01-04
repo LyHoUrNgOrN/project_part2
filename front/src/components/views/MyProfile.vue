@@ -366,16 +366,17 @@ export default {
       axios
         .put("/user/" + this.editUserID, user)
         .then(() => {
-          this.getAllData();
-        })
-        .catch((err) => {
-          console.log(err.response.data.message);
-        });
+          if(this.editProfileID != null){
+            axios
+            .put("/user_details/" + this.editProfileID, user_detail)
+            .then(() => {
+              this.getAllData();
+            })
+            .catch((err) => {
+              console.log(err.response.data.message);
+            });
+          }
 
-      axios
-        .put("/user_details/" + this.editProfileID, user_detail)
-        .then(() => {
-          this.getAllData();
         })
         .catch((err) => {
           console.log(err.response.data.message);
@@ -385,6 +386,7 @@ export default {
       axios
         .get("/user/" + this.editUserID)
         .then((result) => {
+          // this.editProfileID = result.data.id;
           this.first_name = result.data.first_name;
           this.last_name = result.data.last_name;
           this.email = result.data.email;

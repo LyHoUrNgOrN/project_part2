@@ -134,7 +134,7 @@
       <v-divider></v-divider>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn @click="cancel" color="primary " text>Cancel</v-btn>
+        <v-btn @click="cancel"  color="danger" text>Cancel</v-btn>
         <v-btn @click="Update" color="success" text>Update</v-btn>
       </v-card-actions>
     </v-card>

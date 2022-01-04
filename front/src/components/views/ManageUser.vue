@@ -3,7 +3,6 @@
     :headers="headers"
     :items="desserts"
     :search="search"
-    @click:row="detail"
     sort-by="calories"
     class="elevation-1"
   >
@@ -118,7 +117,7 @@
             >
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete"
+              <v-btn color="red darken-1" text @click="closeDelete"
                 >Cancel</v-btn
               >
               <v-btn color="blue darken-1" text @click="deleteItemConfirm"
@@ -142,6 +141,7 @@
     </template>
 
     <template v-slot:item.actions="{ item }">
+      <v-icon color="gray" left @click="detail(item)">mdi mdi-alert-box</v-icon>
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil {{item}} </v-icon>
       <v-icon color="red" small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template>
@@ -264,7 +264,6 @@ export default {
         email: this.email,
         password: this.password,
       };
-      console.log(this.role);
       axios
         .put("http://127.0.0.1:8000/api/updateUser/" + user.id , user)
         .then(() => {
