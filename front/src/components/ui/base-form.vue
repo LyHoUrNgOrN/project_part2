@@ -4,7 +4,7 @@
       <div class="col-left">
         <div class="login-text">
           <slot name="back"></slot>
-          <h1 class="mt-3">Welcome</h1>
+          <h1>Welcome</h1>
           <img
             src="https://www.passerellesnumeriques.org/wp-content/uploads/2016/03/pn-logo.png"
             alt="logo PNC"

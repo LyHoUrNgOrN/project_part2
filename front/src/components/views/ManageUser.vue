@@ -69,7 +69,7 @@
                       label="E-mail"
                     ></v-text-field>
                   </v-col>
-                  <!-- Test change role -->
+
                   <v-col cols="12">
                     <v-select
                       hide-details="auto"
@@ -80,7 +80,7 @@
                       v-model="role"
                     ></v-select>
                   </v-col>
-                  <!-- Test Change Role -->
+
                   <v-col cols="12">
                     <v-text-field
                       hide-details="auto"
@@ -110,6 +110,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+        
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5"

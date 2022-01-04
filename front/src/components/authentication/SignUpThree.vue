@@ -63,27 +63,19 @@
                 hint="At least 6 characters"
                 @click:append="show = !show"
               ></v-text-field>
-              <div class="gender">
-                <div class="d-flex">
-                  <span class="mt-7 me-5">Gender:</span>
-                  <v-radio-group v-model="gender">
-                    <div class="d-flex">
-                      <v-radio
-                        label="Male"
-                        class="mt-2 me-3"
-                        color="#44c7f5"
-                        value="Male"
-                      ></v-radio>
-                      <v-radio
-                        label="Female"
-                        color="#44c7f5"
-                        value="Female"
-                      ></v-radio>
-                    </div>
-                  </v-radio-group>
-                </div>
-              </div>
-              <p>
+
+              
+              <v-radio-group v-model="gender" row>
+              
+                <v-radio label="Male" color="#44c7f5" value="Male" ></v-radio>
+                <v-radio
+                  label="Female"
+                  color="#44c7f5"
+                  value="Female"
+                ></v-radio>
+              </v-radio-group>
+     
+
                 <v-btn
                   @click="signUpThree"
                   :disabled="btn_signin_disabled"
@@ -91,7 +83,6 @@
                   width="100%"
                   ><button type="submit">Sign up</button></v-btn
                 >
-              </p>
             </div>
           </form>
         </div>
