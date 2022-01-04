@@ -6,6 +6,7 @@ Vue.use(Vuetify);
 export default new Vuetify({
   primary: colors.grey.lighten5,
   secondary: '#424242',
+  danger : '#ffebee',
   accent: '#82B1FF',
   error: '#FF5252',
   info: '#2196F3',

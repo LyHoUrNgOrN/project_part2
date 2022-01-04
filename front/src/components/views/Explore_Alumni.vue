@@ -36,7 +36,7 @@
             >
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete"
+              <v-btn color="red darken-1" text @click="closeDelete"
                 >Cancel</v-btn
               >
               <v-btn color="blue darken-1" text @click="deleteItemConfirm"
