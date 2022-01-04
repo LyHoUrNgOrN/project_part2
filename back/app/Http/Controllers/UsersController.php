@@ -76,7 +76,7 @@ class UsersController extends Controller
         // $token = $user->createToken('mytoken')->plainTextToken;
 
         return response()->json([
-            'user' => $user,
+            'user' => $this->index(),
             'email_err'=>$email_err,
             'password_err'=>$password_err
         ],$status);
@@ -99,7 +99,7 @@ class UsersController extends Controller
     public function show($id)
     {
         //
-        return User::findOrFail($id);
+        return User::with(['user_details','company'])->findOrFail($id);
     }
 
     /**

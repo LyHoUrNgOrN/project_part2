@@ -18,7 +18,7 @@
               label="E-mail"
               class="mt-2 rounded-pill"
             ></v-text-field>
-            <small class="red--text">{{txt_err_email}}</small>
+            <small class="red--text">{{ txt_err_email }}</small>
           </p>
           <p class="mt-7">
             <label
@@ -38,7 +38,7 @@
               hint="At least 6 characters"
               @click:append="show1 = !show1"
             ></v-text-field>
-            <small class="red--text">{{txt_err_pwd}}</small>
+            <small class="red--text">{{ txt_err_pwd }}</small>
           </p>
 
           <p>
@@ -71,8 +71,8 @@ export default {
       btn_signin_disabled: true,
       email: "",
       password: "",
-     txt_err_email:"",
-     txt_err_pwd:"",
+      txt_err_email: "",
+      txt_err_pwd: "",
       rules: {
         required: (value) => !!value || "Password is required.",
         min: (v) => v.length >= 6 || "Min 6 characters",
@@ -83,19 +83,23 @@ export default {
       ],
     };
   },
-  watch:{
-    email(){
-      if (this.email !== "" && this.password !== ""){
-        this.btn_signin_disabled = false
-      }else{this.btn_signin_disabled = true}
-       this.txt_err_email = ""
+  watch: {
+    email() {
+      if (this.email !== "" && this.password !== "") {
+        this.btn_signin_disabled = false;
+      } else {
+        this.btn_signin_disabled = true;
+      }
+      this.txt_err_email = "";
     },
-    password(){
-      if (this.email !== "" && this.password !== ""){
-        this.btn_signin_disabled = false
-      }else{this.btn_signin_disabled = true}
-       this.txt_err_pwd = ""
-    }
+    password() {
+      if (this.email !== "" && this.password !== "") {
+        this.btn_signin_disabled = false;
+      } else {
+        this.btn_signin_disabled = true;
+      }
+      this.txt_err_pwd = "";
+    },
   },
   methods: {
     signIn() {
@@ -108,31 +112,30 @@ export default {
         axios
           .post("/signin", user)
           .then((res) => {
-            let user = res.data.user;
-            localStorage.setItem("role", user.role);
-            localStorage.setItem("id", user.id);
-            localStorage.setItem("user", JSON.stringify(user));
-            this.$emit("login", true);
-            axios
-              .get("/user_details/" + user.id)
-              .then((res) => {
-                localStorage.setItem("userDetail", JSON.stringify(res.data[0]));
+            res.data.user.forEach((element) => {
+              if (element.email === this.email) {
+                localStorage.setItem("role", element.role);
+                localStorage.setItem("id", element.id);
+                localStorage.setItem("user", JSON.stringify(element));
+                localStorage.setItem(
+                  "userDetail",
+                  JSON.stringify(element.user_details)
+                );
+                this.$emit("login", true);
                 this.$router.push("/profile-view");
-              })
-              .catch((err) => {
-                this.message = err.response.data.message;
-              });
+              }
+            });
           })
           .catch((error) => {
             if (error.response.status === 401) {
               if (error.response.data.email_err !== "") {
-                this.txt_err_email = error.response.data.email_err
+                this.txt_err_email = error.response.data.email_err;
               }
-              if(error.response.data.password_err !== ""){
-                this.txt_err_pwd = error.response.data.password_err
+              if (error.response.data.password_err !== "") {
+                this.txt_err_pwd = error.response.data.password_err;
               }
             }
-            console.log(error.response);
+            console.log(error.response.status);
           });
       }
     },
