@@ -19,9 +19,9 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     color="#44C7F5"
-                    dark
                     v-bind="attrs"
-                    class="mt-6 rounded-pill"
+                    :disabled="btn_disabled"
+                    class="mt-6 rounded-pill white--text"
                     v-on="on"
                   >
                     Change Profile
@@ -297,7 +297,7 @@ export default {
     return {
       detail: null,
       add_info: false,
-      btn_disabled_ero_or_admin: true,
+      btn_disabled: true,
       role: "",
       dialog_eidt: false,
       dialog: false,
@@ -447,6 +447,7 @@ export default {
                 ["PNC Major", "PNC Major not yet to complete"],
               ];
             } else {
+              this.btn_disabled = false
               this.detail = element.user_details;
               this.editUserID = element.id;
               this.editProfileID = element.user_details.id;

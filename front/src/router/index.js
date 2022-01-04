@@ -16,7 +16,7 @@ import detail_alumni from '@/components/views/Alumni_detail.vue'
 Vue.use(VueRouter)
 
 const routes = [{
-      path: "/",
+      path: "/",  
       component: signin
     },
     {
