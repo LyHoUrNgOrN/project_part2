@@ -9,7 +9,7 @@
                         src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
                         height="200px"
                     >
-                        <v-card-title>Title Event ...</v-card-title>
+                    <v-card-title>Title Event ...</v-card-title>
                     </v-img>
 
                     <v-card-subtitle
