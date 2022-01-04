@@ -145,9 +145,9 @@
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil {{item}} </v-icon>
       <v-icon color="red" small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template>
-    <template v-slot:no-data>
+    <!-- <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
-    </template>
+    </template> -->
   </v-data-table>
 </template>
 
@@ -303,9 +303,9 @@ export default {
 
     deleteItemConfirm() {
       axios.delete('/signup/' + this.editedItem.id).then(() => {
+        this.closeDelete();
         this.initialize();
       })
-      this.closeDelete();
     },
 
     close() {
@@ -329,7 +329,7 @@ export default {
       let ero = {
         first_name: this.first_name,
         last_name: this.last_name,
-        role: "ERO",
+        role: this.role,
         email: this.email,
         password: this.password,
       };

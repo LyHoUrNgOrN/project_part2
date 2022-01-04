@@ -120,13 +120,13 @@ export default {
       this.$router.push('/detail-alumni')
     },
     initialize() {
+      this.desserts = [];
       axios
         .get("http://127.0.0.1:8000/api/user")
 
         .then((result) => {
           result.data.forEach((element) => {
             if (element.role === "ALUMNI") {
-              console.log(element.role);
               if (element.company == null) {
                 if(element.user_details == null){
                   let explore = {
@@ -177,10 +177,11 @@ export default {
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1);
-      this.closeDelete();
+      axios.delete('/signup/' + this.editedItem.id).then(() => {
+        this.dialogDelete = false;
+        this.initialize();
+      })
     },
-
     close() {
       this.dialog = false;
       this.$nextTick(() => {

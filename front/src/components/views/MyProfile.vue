@@ -355,7 +355,7 @@ export default {
         email: this.email,
       };
       let user_detail = {
-        user_id: this.eidtUserID,
+        user_id: this.editUserID,
         phone: this.phone,
         batch: this.batch,
         major: this.major,
@@ -363,6 +363,7 @@ export default {
         gender: this.gender,
         province: this.province,
       };
+      console.log(this.editUserID);
       axios
         .put("/user/" + this.editUserID, user)
         .then(() => {

@@ -370,7 +370,6 @@ export default {
         .post("/updateProfileCompany/" + this.editInfoCompanyID, profile)
         .then((res) => {
           this.nameImgLogo = res.data.img.picture;
-          console.log(res.data);
           this.dialog_logo = false;
           this.getAllData();
         });
