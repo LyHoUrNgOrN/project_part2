@@ -3,6 +3,7 @@
     :headers="headers"
     :items="desserts"
     :search="search"
+    @click:row="detail"
     sort-by="calories"
     class="elevation-1"
   >
@@ -141,7 +142,7 @@
 
     <template v-slot:item.actions="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil {{item}} </v-icon>
-      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      <v-icon color="red" small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template>
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
@@ -275,6 +276,12 @@ export default {
         })
         .catch(() => {});
       this.close();
+    },
+    detail(e){
+      localStorage.setItem('showUserDetailId',e.id);
+      localStorage.setItem('path','/manage-view');
+      // localStorage.setItem('userDetailId', e.user_details);
+      this.$router.push('/detail-alumni')
     },
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);

@@ -131,4 +131,11 @@ class CompanyController extends Controller
         //
         return Company::destroy($id);
     }
+
+
+    public function showCompany($id)
+    {
+        //
+        return Company::where('user_id', 'like', '%' . $id . '%')->get();
+    }
 }

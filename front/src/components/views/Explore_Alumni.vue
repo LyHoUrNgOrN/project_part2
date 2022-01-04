@@ -3,6 +3,7 @@
     :headers="headers"
     :items="desserts"
     :search="search"
+    @click:row="detail"
     sort-by="calories"
     class="elevation-1"
   >
@@ -59,7 +60,7 @@
       ></v-img>
     </template>
     <template v-slot:item.actions="{ item }">
-      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      <v-icon color="red" small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template></v-data-table
   >
 </template>
@@ -88,6 +89,7 @@ export default {
     desserts: [],
     defaultItem: {
       id: 0,
+      user_details: 0,
       profile: "",
       first_name: "",
       last_name: "",
@@ -111,6 +113,12 @@ export default {
   },
 
   methods: {
+    detail(e){
+      localStorage.setItem('showUserDetailId',e.id);
+      // localStorage.setItem('userDetailId', e.user_details);
+      localStorage.setItem('path','/explor-view');
+      this.$router.push('/detail-alumni')
+    },
     initialize() {
       axios
         .get("http://127.0.0.1:8000/api/user")

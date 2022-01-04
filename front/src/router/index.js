@@ -12,6 +12,7 @@ import Event from '@/components/views/Event.vue'
 import ManageUser from '@/components/views/ManageUser.vue'
 import Warning from '@/components/ui/Warning.vue'
 import Explore_Alumni from '@/components/views/Explore_Alumni.vue'
+import detail_alumni from '@/components/views/Alumni_detail.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -59,6 +60,10 @@ const routes = [{
     {
       path: '/warning',
       component: Warning
+    },
+    {
+      path: '/detail-alumni',
+      component: detail_alumni,
     },
 
 
