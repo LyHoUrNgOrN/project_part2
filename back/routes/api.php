@@ -34,10 +34,7 @@ Route::get('/user', [UsersController::class, 'index']);
 Route::get('/user/{id}', [UsersController::class, 'show']);
 Route::put('/user/{id}', [UsersController::class, 'update']);
 Route::get('/signup', [UsersController::class, 'index']);
-
 Route::get('/search',[UsersController::class, 'search']);
-
-
 Route::get('/signup', [UsersController::class, 'index']);
 
 
@@ -69,10 +66,11 @@ Route::get('/companies/{id}', [CompanyController::class, 'show']);
 Route::put('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
 
-//Skill
+// Skills
 Route::get('/skills', [SkillController::class, 'index']);
 Route::post('/skills', [SkillController::class, 'store']);
 Route::get('/skills/{id}', [SkillController::class, 'show']);
 Route::put('/skills/{id}', [SkillController::class, 'update']);
 Route::delete('/skills/{id}', [SkillController::class, 'destroy']);
 
+Route::put('/updateProfileCompany/{id}', [CompanyController::class, 'updateProfileCompany']);

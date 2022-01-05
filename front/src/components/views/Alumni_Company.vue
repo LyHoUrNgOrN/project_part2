@@ -2,7 +2,7 @@
   <div>
     <v-main>
       <v-card class="mx-auto pa-2 rounded-lg mt-8" width="80%">
-        <v-container fluid class="d-flex">
+        <v-container fluid class="d-flex ml-5">
           <div class="profile me-16">
            
             <v-img
@@ -109,7 +109,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="white--text"
+                  class="white--text rounded-pill"
                   color="#44C7F5"
                   v-bind="attrs"
                   v-on="on"
@@ -118,7 +118,7 @@
                   >+Add Information</v-btn
                 >
                 <v-btn
-                  class="green lighten-1 white--text ma-4"
+                  class="green lighten-1 white--text ma-4 rounded-pill"
                   @click="eidt_info"
                   :disabled="edit"
                   >Edit Information</v-btn
@@ -360,7 +360,6 @@ export default {
   methods: {
     changeLogo(e) {
       this.imgLogoFile = e.target.files[0];
-
       this.imageToDisplayLogo = URL.createObjectURL(this.imgLogoFile);
     },
     updateLogo(){
@@ -477,7 +476,6 @@ export default {
       axios
         .get("http://127.0.0.1:8000/api/companies")
         .then((result) => {
-          
           result.data.forEach((element) => {
             if (
               element.user_id === user.id &&
@@ -523,9 +521,14 @@ export default {
   display: flex;
 }
 .sub-txt {
-  font-weight: bolder;
-  width: 250px;
+  font-weight: bold;
+  font-size: 2ch;
+  width: 200px;
 }
+.v-card{
+  border: 3px solid #BDBDBD;
+}
+
 .txt span {
   margin: 5px;
 }
