@@ -364,6 +364,7 @@ export default {
         gender: this.gender,
         province: this.province,
       };
+      console.log(this.editUserID);
       axios
         .put("/user/" + this.editUserID, user)
         .then(() => {
