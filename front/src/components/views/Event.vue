@@ -1,109 +1,42 @@
 <template>
-    <div class="la">
-        <v-container>
-            <v-row>
-                <v-col cols="6">
-                    <v-card class="mx-auto" id="lp" max-width="545">
-                    <v-img
-                        class="white--text align-end"
-                        src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                        height="200px"
-                    >
-                    <v-card-title>Title Event ...</v-card-title>
-                    </v-img>
+  <div class="la">
+    <v-container>
+      <v-row>
+        <v-col cols="12" md="6" sm="6">
+          <v-card class="mx-auto" max-width="545">
+            <v-img
+              class="white--text align-end"
+              src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+              height="200px"
+            >
+              <v-card-title>Title Event ...</v-card-title>
+            </v-img>
+            <v-card-subtitle class="pb-0 float-right cyan--text h3">
+              Phnom Penh
+            </v-card-subtitle>
 
-                    <v-card-subtitle
-                        class="blue--text"
-                        id="name"
-                    > Phnom Penh </v-card-subtitle>
-                    <v-card-subtitle  class="black--text" id="start1"> Start Date </v-card-subtitle>
-                    <input type="datetime-local" id="dateTime" name="dateTime" value="2017-08-28T13:01" />
-                    <v-card-subtitle class="black--text" id="start1" > End Date </v-card-subtitle>
-                    <input type="datetime-local" id="dateTime" name="dateTime" value="2017-08-28T13:01" /><br><br><hr>
+            <div>
+              <v-card-text class="text--primary mt-3">
+                <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis voluptatibus sunt cumque minus sed voluptate porro ex at nulla. Dolore obcaecati non aut temporibus sapiente dolor sit quos earum esse!
+                </div>
 
-                    <v-card-actions>
-                        <v-btn color="blue" text>Description</v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn icon @click="show = !show">
-                            <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-                        </v-btn>
-                    </v-card-actions>
+              </v-card-text>
 
-                    <v-expand-transition>
-                        <div v-show="show">
-                            <v-card-text>
-                                I'm a thing. But, like most politicians, he promised more than he could deliver. 
-                                You won't have time for sleeping, soldier, not with all the bed making you'll be doing. 
-                                Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! 
-                                You're going to do his laundry? I've got to find a way to escape.
-                            </v-card-text>
-                        </div>
-                    </v-expand-transition>
-                    </v-card>
-                </v-col>
-
-                <v-col cols="6">
-                    <v-card class="mx-auto" max-width="545">
-                    <v-img
-                        class="white--text align-end"
-                        src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                        height="200px"
-                    >
-                    <v-card-title>Title Event ...</v-card-title>
-                    </v-img>
-
-                    <v-card-subtitle class="blue--text" id="name"> Phnom Penh </v-card-subtitle>
-                    <v-card-subtitle class="black--text" id="start1" > Start Date </v-card-subtitle>
-                    <input type="datetime-local" id="dateTime" name="dateTime" value="2017-08-28T13:01" />
-                    <v-card-subtitle class="black--text" id="start1" > End Date </v-card-subtitle>
-                    <input type="datetime-local" id="dateTime" name="dateTime" value="2017-08-28T13:01" /><br><br> <hr>
-
-                    <v-card-actions>
-                        <v-btn color="blue" text >Description</v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn icon @click="show = !show">
-                           <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-                        </v-btn>
-                    </v-card-actions>
-
-                    <v-expand-transition>
-                        <div v-show="show">
-                            <v-card-text>
-                                I'm a thing. But, like most politicians, he promised more than he could deliver. 
-                                You won't have time for sleeping, soldier, not with all the bed making you'll be doing. 
-                                Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! 
-                                You're going to do his laundry? I've got to find a way to escape.
-                            </v-card-text>
-                        </div>
-                    </v-expand-transition>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-container>
-    </div>
+              <v-card-actions>
+                <v-btn color="blue" text>Description</v-btn>
+              </v-card-actions>
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
-    export default {
-        data: () => ({
-        show: false,
-        }),
-    }
+export default {};
 </script>
 
 <style scoped>
-    #name{
-        margin-left: 75%;
-        font-size: 17px;
-    }
-    .la{
-    margin-top: 20px; 
-    }
-    #start1{
-        font-size: 17px;
-    }
-    #dateTime{
-        margin-left: 15px;
-    }
-
 </style>
