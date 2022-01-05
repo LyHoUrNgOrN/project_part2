@@ -1,5 +1,5 @@
 <template>
-  <div class="la">
+  <div>
     <v-container>
       <v-row>
         <v-col cols="12" md="6" sm="6">
@@ -11,21 +11,38 @@
             >
               <v-card-title>Title Event ...</v-card-title>
             </v-img>
-            <v-card-subtitle class="pb-0 float-right cyan--text h3">
-              Phnom Penh
-            </v-card-subtitle>
+            <div class="float-right d-f">
+              <v-card-subtitle class="pb-0 cyan--text h3">
+                Phnom Penh
+              </v-card-subtitle>
+            </div>
 
             <div>
               <v-card-text class="text--primary mt-3">
+                <v-text
+                  ><div class="red--text">
+                    <span class="event_start">Start</span>
+                    <span class="date ml-2">Mon, 27/11/2021 3:00 PM</span>
+                  </div></v-text
+                >
+                <v-text
+                  ><div class="red--text">
+                    <span class="event_end"> End </span
+                    ><span class="date ml-2">Mon, 27/11/2021 4:00 PM</span>
+                  </div></v-text
+                >
+
                 <div>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis voluptatibus sunt cumque minus sed voluptate porro ex at nulla. Dolore obcaecati non aut temporibus sapiente dolor sit quos earum esse!
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Facilis voluptatibus sunt cumque minus sed voluptate porro ex
+                  at nulla. Dolore obcaecati non aut temporibus sapiente dolor
+                  sit quos earum esse!
                 </div>
 
+                <v-btn color="blue" class="mt-3 white--text" small
+                  >Contact</v-btn
+                >
               </v-card-text>
-
-              <v-card-actions>
-                <v-btn color="blue" text>Description</v-btn>
-              </v-card-actions>
             </div>
           </v-card>
         </v-col>
@@ -37,6 +54,5 @@
 <script>
 export default {};
 </script>
-
 <style scoped>
 </style>
