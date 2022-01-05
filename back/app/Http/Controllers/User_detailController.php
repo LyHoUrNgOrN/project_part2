@@ -15,7 +15,6 @@ class User_detailController extends Controller
      */
     public function index()
     {
-        //
         return User_detail::with('user')->get();
     }
 
@@ -37,14 +36,11 @@ class User_detailController extends Controller
             'current_position' => ["required"],
             'gender' => ["required"]
         ]);
-
-
         $User_detail = new User_detail();
         $User_detail->user_id = $request->user_id;
         $User_detail->phone = $request->phone;
         $User_detail->date_of_birth = $request->date_of_birth;
         $User_detail->province = $request->province;
-
         $User_detail->batch = $request->batch;
         $User_detail->major = $request->major;
         $User_detail->current_position = $request->current_position;
@@ -75,7 +71,6 @@ class User_detailController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         $request->validate([
             'phone' => "required",
             'date_of_birth' => "required",
@@ -94,7 +89,6 @@ class User_detailController extends Controller
         $User_detail->province = $request->province;
         $User_detail->batch = $request->batch;
         $User_detail->major = $request->major;
-
         $User_detail->gender = $request->gender;
 
 

@@ -13,7 +13,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return User::with(['user_details','company'])->latest()->get();
+        return User::with(['user_details','company', 'skill'])->latest()->get();
     }
 
     /**
@@ -31,7 +31,7 @@ class UsersController extends Controller
             'role' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8'],
         ]);
-        // $request->file('profile')->store('public/UserProfile');
+        
         
         $user = new User();
         $user->first_name = $request->first_name;
@@ -39,14 +39,11 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->role = $request->role;
         $user->password = bcrypt($request->password);
-        // $user->profile = $request->file('profile')->hashName();
         $user->save();
         
         
-        // $token = $user->createToken('mytoken')->plainTextToken;
         return response()->json([
             'user' => $user,
-            // 'token'=> $token
         ]); 
     }
     public function signin(Request $request)
@@ -73,8 +70,6 @@ class UsersController extends Controller
             
         // }
 
-        // $token = $user->createToken('mytoken')->plainTextToken;
-
         return response()->json([
             'user' => $this->index(),
             'email_err'=>$email_err,
@@ -87,7 +82,6 @@ class UsersController extends Controller
         auth()->user()->tokens()->delete();
         return response()->json(['message'=>'signout']);
     }
-
 
 
     /**

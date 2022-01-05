@@ -32,6 +32,7 @@
                 <span class="red--text">*</span>
               </label>
               <v-select
+              :rules="[rules.required]"
                 :items="items"
                 label="PNC Major"
                 dense

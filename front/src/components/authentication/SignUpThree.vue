@@ -24,12 +24,14 @@
             <v-text-field
               dense
               type="date"
+              :rules="[rulesphone.required]"
               v-model="dateofbirth"
               required
               outlined
               class="rounded-pill"
             ></v-text-field>
             <v-select
+            :rules="[rulesphone.required]"
               :items="allProvinces"
               label=" Select Province "
               class="mb-8 rounded-pill"

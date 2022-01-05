@@ -46,14 +46,6 @@
         <v-btn
           active-class="grey-5 white--text"
           text
-          :to="{ path: '/event-view' }"
-          class="event white--text"
-        >
-          Event
-        </v-btn>
-        <v-btn
-          active-class="grey-5 white--text"
-          text
           v-if="role == 'ADMIN'"
           :to="{ path: '/manage-view' }"
           class="manage white--text"

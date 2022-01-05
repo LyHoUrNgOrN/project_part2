@@ -2,7 +2,7 @@
   <div>
     <v-main>
       <v-card class="mx-auto pa-2 rounded-lg mt-8" width="80%">
-        <v-container fluid class="d-flex">
+        <v-container fluid class="d-flex ml-5">
           <div class="profile me-16">
             <v-img
               :src="'http://localhost:8000/storage/profiles/' + nameImgLogo"
@@ -35,7 +35,7 @@
                       >Update profile photo
                     </span>
                     <v-icon large @click="dialog_logo = false"
-                      >mdi-close-circle-outline</v-icon
+                      >mdi-window-close</v-icon
                     >
                   </v-card-title>
                   <v-divider width="100%" />
@@ -52,13 +52,12 @@
                     <v-btn
                       color="#44C7F5"
                       onclick="document.getElementById('myFileInput').click()"
+                      class="white--text"
                       ><v-icon>mdi-plus</v-icon>Upload Photo
                     </v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn color="#44C7F5" @click="dialog_logo = false">
-                      Cancel
-                    </v-btn>
-                    <v-btn color="#44C7F5" @click="updateLogo"> Save </v-btn>
+                   
+                    <v-btn color="#44C7F5" @click="updateLogo" class="white--text"> Save </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -108,7 +107,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  class="white--text"
+                  class="white--text rounded-pill"
                   color="#44C7F5"
                   v-bind="attrs"
                   v-on="on"
@@ -117,7 +116,7 @@
                   >+Add Information</v-btn
                 >
                 <v-btn
-                  class="green lighten-1 white--text ma-4"
+                  class="green lighten-1 white--text ma-4 rounded-pill"
                   @click="eidt_info"
                   :disabled="edit"
                   >Edit Information</v-btn
@@ -237,7 +236,7 @@
                     </v-row>
                   </v-card-text>
                   <v-card-actions class="justify-end">
-                    <v-btn text @click="cancle">Cancel</v-btn>
+                    <v-btn color="red lighten-4" @click="cancle">Cancel</v-btn>
                     <v-btn
                       v-if="btn_save"
                       color="blue white--text"
@@ -359,7 +358,6 @@ export default {
   methods: {
     changeLogo(e) {
       this.imgLogoFile = e.target.files[0];
-
       this.imageToDisplayLogo = URL.createObjectURL(this.imgLogoFile);
     },
     updateLogo() {
@@ -397,8 +395,8 @@ export default {
         .then(() => {
           this.getInFoCompany();
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+         
         });
     },
     add_info() {
@@ -521,9 +519,11 @@ export default {
   display: flex;
 }
 .sub-txt {
-  font-weight: bolder;
-  width: 250px;
+  font-weight: bold;
+  font-size: 2ch;
+  width: 200px;
 }
+
 .txt span {
   margin: 5px;
 }

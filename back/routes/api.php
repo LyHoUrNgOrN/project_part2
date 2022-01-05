@@ -10,6 +10,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\Event_JoinController;
+// use App\Http\Controllers\User_SkillController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,8 +39,6 @@ Route::get('/signup', [UsersController::class, 'index']);
 Route::put('/updateUser/{id}', [UsersController::class, 'updatePassword']);
 
 Route::get('/search',[UsersController::class, 'search']);
-
-
 Route::get('/signup', [UsersController::class, 'index']);
 
 
@@ -71,6 +70,7 @@ Route::get('/companies/{id}', [CompanyController::class, 'show']);
 Route::put('/companies/{id}', [CompanyController::class, 'update']);
 Route::get('/company/{id}', [CompanyController::class, 'showCompany']);
 Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
+Route::put('/updateProfileCompany/{id}', [CompanyController::class, 'updateProfileCompany']);
 
 
 //events
@@ -79,7 +79,6 @@ Route::post('/events', [EventController::class, 'store']);
 Route::get('/events/{id}', [EventController::class, 'show']);
 Route::put('/events/{id}', [EventController::class, 'update']);
 Route::delete('/events/{id}', [EventController::class, 'destroy']);
-Route::put('/updateProfileCompany/{id}', [CompanyController::class, 'updateProfileCompany']);
 
 
 
@@ -96,6 +95,4 @@ Route::post('/skills', [SkillController::class, 'store']);
 Route::get('/skills/{id}', [SkillController::class, 'show']);
 Route::put('/skills/{id}', [SkillController::class, 'update']);
 Route::delete('/skills/{id}', [SkillController::class, 'destroy']);
-
-
 

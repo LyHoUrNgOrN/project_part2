@@ -13,7 +13,7 @@
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Search by name type ..."
+          label="Search all information..."
           single-line
           hide-details
           outlined
@@ -24,7 +24,7 @@
         <v-dialog
           v-model="dialog"
           transition="dialog-top-transition"
-          max-width="550px"
+          max-width="500px"
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
@@ -38,7 +38,7 @@
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col cols="12" md="6">
+                  <v-col cols="6">
                     <v-text-field
                       v-model="first_name"
                       label="First name"
@@ -46,10 +46,12 @@
                       hide-details="auto"
                       outlined
                       dense
+                      class="rounded-pill"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" md="6">
+                  <v-col cols="6">
                     <v-text-field
+                      class="rounded-pill"
                       outlined
                       dense
                       :rules="[rules.required]"
@@ -60,6 +62,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
+                      class="rounded-pill"
                       hide-details="auto"
                       outlined
                       dense
@@ -74,7 +77,9 @@
                       hide-details="auto"
                       :items="items"
                       label="Role"
+                       :rules="[rules.required]"
                       dense
+                      class="rounded-pill"
                       outlined
                       v-model="role"
                     ></v-select>
@@ -86,7 +91,7 @@
                       outlined
                       dense
                       v-model="password"
-                      class="password rounded"
+                      class="password rounded-pill"
                       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                       :rules="[rules.required, rules.min, rules.max]"
                       :type="show1 ? 'text' : 'password'"
@@ -102,14 +107,28 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
+              <v-btn color="red lighten-4" class="red--text" @click="close"> Cancel </v-btn>
 
-              <v-btn v-if="dialog && !isUpdate" color="blue darken-1" text @click="save"> Save </v-btn>
-              <v-btn v-if="isUpdate && dialog" color="blue darken-1" text @click="update"> Update </v-btn>
+              <v-btn
+                v-if="dialog && !isUpdate"
+                color="blue darken-1 white--text"
+                
+                @click="save"
+              >
+                Save
+              </v-btn>
+              <v-btn
+                v-if="isUpdate && dialog"
+                color="blue darken-1"
+               class="white--text"
+                @click="update"
+              >
+                Update
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
-        
+
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5"
@@ -117,7 +136,7 @@
             >
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="red darken-1" text @click="closeDelete"
+              <v-btn class="red--text" text @click="closeDelete"
                 >Cancel</v-btn
               >
               <v-btn color="blue darken-1" text @click="deleteItemConfirm"
@@ -141,9 +160,49 @@
     </template>
 
     <template v-slot:item.actions="{ item }">
-      <v-icon color="gray" left @click="detail(item)">mdi mdi-alert-box</v-icon>
-      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil {{item}} </v-icon>
-      <v-icon color="red" small @click="deleteItem(item)"> mdi-delete </v-icon>
+      <v-tooltip top>
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon
+            color="gray"
+            v-bind="attrs"
+            v-on="on"
+            left
+            :id="item"
+            @click="detail(item)"
+            >mdi-tooltip-text</v-icon
+          >
+        </template>
+        <span>User details</span>
+      </v-tooltip>
+      <v-tooltip top>
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon
+            small
+            class="mr-2"
+            v-bind="attrs"
+            v-on="on"
+            @click="editItem(item)"
+          >
+            mdi-pencil {{ item }}
+          </v-icon>
+        </template>
+        <span>Edit user</span>
+      </v-tooltip>
+
+      <v-tooltip top>
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon
+            color="red"
+            v-bind="attrs"
+            v-on="on"
+            small
+            @click="deleteItem(item)"
+          >
+            mdi-delete
+          </v-icon>
+        </template>
+        <span>Delete user</span>
+      </v-tooltip>
     </template>
     <!-- <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
@@ -156,16 +215,12 @@ import axios from "@/api/api.js";
 export default {
   data: () => ({
     password: "",
-    isUpdate : false,
+    isUpdate: false,
     first_name: "",
     last_name: "",
     email: "",
-    role : "",
-    items : [
-      "ADMIN",
-      "ALUMNI",
-      "ERO"
-    ],
+    role: "",
+    items: ["ADMIN", "ALUMNI", "ERO"],
     show1: false,
     search: "",
     dialog: false,
@@ -191,7 +246,7 @@ export default {
       { text: "Actions", value: "actions", sortable: false },
     ],
     desserts: [],
-    updateId : '',
+    updateId: "",
     editedIndex: -1,
     editedItem: {
       first_name: "",
@@ -230,7 +285,7 @@ export default {
               if (element.user_details === null) {
                 let user = {
                   profile: null,
-                  id : element.id,
+                  id: element.id,
                   first_name: element.first_name,
                   last_name: element.last_name,
                   email: element.email,
@@ -240,7 +295,7 @@ export default {
                 this.desserts.push(user);
               } else {
                 let user = {
-                  id : element.id,
+                  id: element.id,
                   profile: element.user_details.picture,
                   first_name: element.first_name,
                   last_name: element.last_name,
@@ -257,7 +312,7 @@ export default {
     },
     update() {
       let user = {
-        id : this.updateId,
+        id: this.updateId,
         first_name: this.first_name,
         last_name: this.last_name,
         role: this.role,
@@ -265,33 +320,33 @@ export default {
         password: this.password,
       };
       axios
-        .put("http://127.0.0.1:8000/api/updateUser/" + user.id , user)
+        .put("http://127.0.0.1:8000/api/updateUser/" + user.id, user)
         .then(() => {
-          this.first_name= "";
-          this.last_name= "";
-          this.role= "";
+          this.first_name = "";
+          this.last_name = "";
+          this.role = "";
           this.email = "";
-          this.password= "";
+          this.password = "";
           this.initialize();
         })
         .catch(() => {});
       this.close();
     },
-    detail(e){
-      localStorage.setItem('showUserDetailId',e.id);
-      localStorage.setItem('path','/manage-view');
+    detail(e) {
+      localStorage.setItem("showUserDetailId", e.id);
+      localStorage.setItem("path", "/manage-view");
       // localStorage.setItem('userDetailId', e.user_details);
-      this.$router.push('/detail-alumni')
+      this.$router.push("/detail-alumni");
     },
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem= this.desserts[this.editedIndex];
-      this.first_name= this.editedItem.first_name,
-      this.updateId= this.editedItem.id,
-      this.last_name= this.editedItem.last_name,
-      this.role= this.editedItem.role,
-      this.email= this.editedItem.email,
-      this.isUpdate = true;
+      this.editedItem = this.desserts[this.editedIndex];
+      (this.first_name = this.editedItem.first_name),
+        (this.updateId = this.editedItem.id),
+        (this.last_name = this.editedItem.last_name),
+        (this.role = this.editedItem.role),
+        (this.email = this.editedItem.email),
+        (this.isUpdate = true);
       this.dialog = true;
     },
 
@@ -302,10 +357,10 @@ export default {
     },
 
     deleteItemConfirm() {
-      axios.delete('/signup/' + this.editedItem.id).then(() => {
+      axios.delete("/signup/" + this.editedItem.id).then(() => {
         this.closeDelete();
         this.initialize();
-      })
+      });
     },
 
     close() {
@@ -336,6 +391,11 @@ export default {
       axios
         .post("http://127.0.0.1:8000/api/signup", ero)
         .then(() => {
+          this.first_name = ""
+          this.last_name = ""
+          this.email = ""
+          this.password = ""
+          this.role = ""
           this.initialize();
         })
         .catch(() => {});

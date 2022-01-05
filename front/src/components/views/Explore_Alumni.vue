@@ -8,12 +8,12 @@
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Search ALumni</v-toolbar-title>
+        <v-toolbar-title class="cyan--text">Alumni</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Search"
+          label="Search all information..."
           single-line
           hide-details
           outlined
@@ -21,22 +21,21 @@
         ></v-text-field>
         <v-spacer></v-spacer>
         <h4 class="text-right">
-          Alumnies : 
+          Alumnies :
           <span class="red--text">
-            {{countAlumni}}
+            {{ countAlumni }}
           </span>
-          
         </h4>
         <v-spacer></v-spacer>
 
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5"
-              >Are you sure you want to delete this item?</v-card-title
+              >Are you sure you want to delete this user?</v-card-title
             >
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="red darken-1" text @click="closeDelete"
+              <v-btn class="red--text" text @click="closeDelete"
                 >Cancel</v-btn
               >
               <v-btn color="blue darken-1" text @click="deleteItemConfirm"
@@ -59,8 +58,34 @@
       ></v-img>
     </template>
     <template v-slot:item.actions="{ item }">
-      <v-icon color="gray" left @click="detail(item)">mdi mdi-alert-box</v-icon>
-      <v-icon color="red" small @click="deleteItem(item)"> mdi-delete </v-icon>
+      <v-tooltip top>
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon
+            color="gray"
+            v-bind="attrs"
+            v-on="on"
+            left
+            @click="detail(item)"
+            >mdi-tooltip-text</v-icon
+          >
+        </template>
+        <span>User details</span>
+      </v-tooltip>
+
+      <v-tooltip top>
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon
+            color="red"
+            v-bind="attrs"
+            v-on="on"
+            small
+            @click="deleteItem(item)"
+          >
+            mdi-delete
+          </v-icon>
+        </template>
+        <span>Delete user</span>
+      </v-tooltip>
     </template></v-data-table
   >
 </template>
@@ -69,7 +94,7 @@
 import axios from "@/api/api.js";
 export default {
   data: () => ({
-    countAlumni : 0,
+    countAlumni: 0,
     search: "",
     dialog: false,
     dialogDelete: false,
@@ -113,11 +138,11 @@ export default {
   },
 
   methods: {
-    detail(e){
-      localStorage.setItem('showUserDetailId',e.id);
+    detail(e) {
+      localStorage.setItem("showUserDetailId", e.id);
       // localStorage.setItem('userDetailId', e.user_details);
-      localStorage.setItem('path','/explor-view');
-      this.$router.push('/detail-alumni')
+      localStorage.setItem("path", "/explor-view");
+      this.$router.push("/detail-alumni");
     },
     initialize() {
       this.desserts = [];
@@ -128,7 +153,7 @@ export default {
           result.data.forEach((element) => {
             if (element.role === "ALUMNI") {
               if (element.company == null) {
-                if(element.user_details == null){
+                if (element.user_details == null) {
                   let explore = {
                     id: element.id,
                     profile: null,
@@ -139,7 +164,7 @@ export default {
                     company: "Alumni not yet complete!",
                   };
                   this.desserts.push(explore);
-                }else{
+                } else {
                   let explore = {
                     id: element.id,
                     profile: element.user_details.picture,
@@ -177,10 +202,10 @@ export default {
     },
 
     deleteItemConfirm() {
-      axios.delete('/signup/' + this.editedItem.id).then(() => {
+      axios.delete("/signup/" + this.editedItem.id).then(() => {
         this.dialogDelete = false;
         this.initialize();
-      })
+      });
     },
     close() {
       this.dialog = false;

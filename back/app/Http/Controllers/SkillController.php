@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Skill;
+
 class SkillController extends Controller
 {
     /**
@@ -13,7 +13,6 @@ class SkillController extends Controller
      */
     public function index()
     {
-        //
         return Skill::with('user')->get();
         
     }
@@ -26,16 +25,15 @@ class SkillController extends Controller
      */
     public function store(Request $request)
     {
-        
         $request->validate([
             'skill_name' => "required",
-            'skill_detail' => "required",
+            'user_id' => "required",
+            
             
         ]);
         $Skill = new Skill();
         $Skill->user_id = $request->user_id;
         $Skill->skill_name = $request->skill_name;
-        $Skill->skill_detail = $request->skill_detail;
         $Skill->save();
         return response()->json(['message' => 'create','data'=>$Skill], 201);
     }
@@ -49,7 +47,7 @@ class SkillController extends Controller
     public function show($id)
     {
         
-        return Skill::findOrFail($id);
+        return Skill::where('user_id', 'like', '%' . $id . '%')->get();
     }
 
     /**
@@ -61,16 +59,14 @@ class SkillController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         $request->validate([
             'skill_name' => "required",
-            'skill_detail' => "required",
+            'user_id' => "required",
             
         ]);
         $Skill = Skill::findOrFail($id);
         $Skill->user_id = $request->user_id;
         $Skill->skill_name = $request->skill_name;
-        $Skill->skill_detail = $request->skill_detail;
         $Skill->save();
         return response()->json(['message' => 'update','data'=>$Skill], 200);
     }
@@ -82,7 +78,6 @@ class SkillController extends Controller
      */
     public function destroy($id)
     {
-        //
         return Skill::destroy($id);
     }
 }

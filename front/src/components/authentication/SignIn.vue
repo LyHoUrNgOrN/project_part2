@@ -135,7 +135,6 @@ export default {
                 this.txt_err_pwd = error.response.data.password_err;
               }
             }
-            console.log(error.response.status);
           });
       }
     },

@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-main>
-      <v-card class="mx-auto pa-2 rounded-lg mt-8" width="80%">
-        <v-container fluid class="container">
+      <v-card class="mx-auto pa-2 rounded-lg mt-5" width="80%">
+        <v-container fluid class="container mx-auto ml-10">
           <div class="profile me-16">
             <v-img
               :src="'http://localhost:8000/storage/profiles/' + name_img"
@@ -34,8 +34,10 @@
                       color="#44C7F5"
                       >Update profile photo
                     </span>
-                    <v-icon large @click="dialog = false"
-                      >mdi-close-circle-outline</v-icon
+                    <v-icon
+                      class="float-right text-h4 pa-1"
+                      @click="dialog = false"
+                      >mdi-window-close</v-icon
                     >
                   </v-card-title>
                   <v-divider width="100%" />
@@ -50,15 +52,19 @@
                   <v-divider width="100%" />
                   <v-card-actions class="pa-4">
                     <v-btn
+                      class="rounded white--text"
                       color="#44C7F5"
                       onclick="document.getElementById('myFileInput').click()"
                       ><v-icon>mdi-plus</v-icon>Upload Photo
                     </v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn color="#44C7F5" @click="dialog = false">
-                      Cancel
+                    <v-btn
+                      class="rounded white--text"
+                      color="#44C7F5"
+                      @click="updateProfile"
+                    >
+                      Save
                     </v-btn>
-                    <v-btn color="#44C7F5" @click="updateProfile"> Save </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -108,7 +114,7 @@
         <v-col cols="auto">
           <v-dialog
             transition="dialog-top-transition"
-            max-width="600"
+            max-width="600px"
             v-model="dialog_eidt"
           >
             <template v-slot:activator="{ on, attrs }">
@@ -128,7 +134,7 @@
                   <h2>Do you want to update?</h2>
                 </v-toolbar>
                 <v-card-text>
-                  <v-row class="card mt-5">
+                  <v-row class="card mt-2">
                     <v-col cols="6">
                       <v-text-field
                         class="rounded-pill"
@@ -170,6 +176,7 @@
                         :items="allProvinces"
                         label=" Select Province "
                         class="rounded-pill"
+                        :rules="rules"
                         v-model="province"
                         dense
                         hide-details="auto"
@@ -179,8 +186,8 @@
                     <v-col cols="6">
                       <v-text-field
                         class="rounded-pill"
-                        type="text"
-                        placeholder="Phone ..."
+                        label="Phone "
+                        :rules="rules"
                         v-model="phone"
                         hide-details="auto"
                         outlined
@@ -190,9 +197,9 @@
                     <v-col cols="6">
                       <v-text-field
                         class="rounded-pill"
-                        type="text"
-                        placeholder="PNC Batch ..."
+                        label="PNC Batch "
                         v-model="batch"
+                        :rules="rules"
                         hide-details="auto"
                         outlined
                         dense
@@ -201,7 +208,7 @@
                     <v-col cols="12">
                       <label for>
                         Please input your PNC Major
-                        <span class="red--text">*</span>
+                        <!-- <span class="red--text">*</span> -->
                       </label>
                       <v-select
                         :items="items"
@@ -209,6 +216,7 @@
                         dense
                         class="rounded-pill mt-2"
                         outlined
+                        :rules="rules"
                         hide-details="auto"
                         v-model="major"
                       ></v-select>
@@ -218,8 +226,8 @@
                       <div class="email">
                         <v-text-field
                           class="rounded-pill"
-                          type="text"
-                          placeholder="Email"
+                          :rules="emailRules"
+                          label="Email "
                           v-model="email"
                           hide-details="auto"
                           outlined
@@ -229,7 +237,7 @@
                     </v-col>
                     <div class="gender">
                       <v-radio-group v-model="gender" row hide-details="auto">
-                        <span class="mr-3">Gender:</span>
+                        <span class="mr-2">Gender:</span>
                         <v-radio label="Male" color="#44c7f5" value="Male">
                         </v-radio>
                         <v-radio
@@ -243,15 +251,15 @@
                   </v-row>
                 </v-card-text>
                 <v-card-actions class="justify-end">
-                  <v-btn text @click="cancel">Cancel</v-btn>
+                  <v-btn color="red lighten-4" @click="cancel" class="red--text">Cancel</v-btn>
                   <v-btn
-                    text
+                    
                     @click="edit_info_alumni"
                     color="success"
                     v-if="detail !== null"
                     >Update</v-btn
                   >
-                  <v-btn text @click="add_info_ero_admin" color="success" v-else
+                  <v-btn @click="add_info_ero_admin" color="primary" v-else
                     >Save</v-btn
                   >
                 </v-card-actions>
@@ -286,6 +294,104 @@
           </v-list-group>
         </v-list>
       </v-card>
+
+      <v-card
+        class="mx-auto pa-5 mt-8"
+        width="80%"
+        v-if="user.role !== 'ADMIN' && user.role !== 'ERO'"
+      >
+        <div class="d-flex justify-space-between">
+          <v-card-title class="text-h4 cyan--text ml-10">Skill</v-card-title>
+          <v-dialog v-model="dialogSkill" persistent max-width="600px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                class="mr-5"
+                v-bind="attrs"
+                small
+                fab
+                color="#44C7F5"
+                v-on="on"
+              >
+                <v-icon color="#ffffff"> mdi-plus </v-icon>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title ripple>
+                <span class="text-h6 ma-auto font-weight-black" color="#44C7F5"
+                  >Add New Skill
+                </span>
+                <v-icon large @click="cancelSkill(false)"
+                  >mdi-window-close</v-icon
+                >
+              </v-card-title>
+              <v-divider width="100%" />
+              <v-text-field
+                hide-details="auto"
+                outlined
+                dense
+                :rules="rules"
+                label="Skill Name..."
+                class="mt-2 rounded-pill pa-10"
+                v-model="newSkillName"
+              ></v-text-field>
+              <v-divider width="100%" />
+              <v-card-actions class="pa-2 justify-end">
+                <v-btn
+                  v-if="openBtn == 'update'"
+                  class="rounded white--text mt-2 mr-4"
+                  color="#44C7F5"
+                  @click="confirmUpdate"
+                  >Update</v-btn
+                >
+                <v-btn
+                  v-else
+                  class="rounded white--text mt-2 mr-4"
+                  color="#44C7F5"
+                  @click="creatNewSkill"
+                >
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
+
+        <div class="ml-12">
+          <v-chip
+            v-for="(skill, index) in skills"
+            :key="index"
+            color="#000000"
+            class="ma-2 mt-3 pa-4"
+            outlined
+            >{{ skill.skill_name }}
+            <v-icon class="iconSkillEdit ml-2" @click="updateSkill(skill)"
+              >mdi-border-color</v-icon
+            >
+
+            <v-dialog v-model="dialogDelete" max-width="500px">
+              <v-card>
+                <v-card-title class="text-h5"
+                  >Are you sure you want to delete this skill?</v-card-title
+                >
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="red lighten-4" text @click="closeDelete"
+                    >Cancel</v-btn
+                  >
+                  <v-btn color="blue darken-1" text @click="deleteSkill(skill)"
+                    >OK</v-btn
+                  >
+                  <v-spacer></v-spacer>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+            <v-icon class="iconSkillDelete ml-1" @click="deleteItemConfirm"
+              >mdi-close-circle</v-icon
+            >
+          </v-chip>
+        </div>
+      </v-card>
     </v-main>
   </div>
 </template>
@@ -301,7 +407,19 @@ export default {
       role: "",
       dialog_eidt: false,
       dialog: false,
+      emailRules: [
+        (v) => !!v || "E-mail is required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
       rules: [(value) => !!value || "Required."],
+      skill_id: 0,
+      skill_name: "",
+      skillEdit: "",
+      openBtn: "",
+      skills: [],
+      newSkillName: "",
+      showDialog: false,
+      dialogSkill: false,
       user: [],
       userDetail: "",
       first_name: "",
@@ -324,9 +442,19 @@ export default {
       imageFile: null,
       editProfileID: 0,
       editUserID: 0,
+      btn_save: true,
+      user_id: 0,
+      id: 0,
+      dialogDelete:false,
     };
   },
   methods: {
+    closeDelete(){
+      this.dialogDelete = false
+    },
+    deleteItemConfirm(){
+      this.dialogDelete = true
+    },
     add_info_ero_admin() {
       this.cancel();
       let add_info_user = {
@@ -341,8 +469,7 @@ export default {
       };
       axios
         .post("/user_details/", add_info_user)
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
           this.getAllData();
         })
         .catch(() => {});
@@ -364,24 +491,23 @@ export default {
         gender: this.gender,
         province: this.province,
       };
-      console.log(this.editUserID);
+
       axios
         .put("/user/" + this.editUserID, user)
         .then(() => {
-          if(this.editProfileID != null){
+          if (this.editProfileID != null) {
             axios
-            .put("/user_details/" + this.editProfileID, user_detail)
-            .then(() => {
-              this.getAllData();
-            })
-            .catch((err) => {
-              console.log(err.response.data.message);
-            });
+              .put("/user_details/" + this.editProfileID, user_detail)
+              .then(() => {
+                this.getAllData();
+              })
+              .catch(() => {
+               
+              });
           }
-
         })
-        .catch((err) => {
-          console.log(err.response.data.message);
+        .catch(() => {
+        
         });
     },
     get_data_edit() {
@@ -400,16 +526,101 @@ export default {
           this.gender = result.data.user_details.gender;
           this.province = result.data.user_details.province;
         })
-        .catch((err) => {
-          console.log(err.response.data.message);
+        .catch(() => {
+         
         });
     },
+
+    getAllSkill() {
+      this.dialogSkill = false;
+      this.user = JSON.parse(localStorage.getItem("user"));
+      axios.get("/skills/" + this.user.id).then((res) => {
+        this.skills = res.data;
+      });
+    },
+    saveSkill() {
+      this.openBtn = "create";
+      this.dialogSkill = true;
+      this.creatNewSkill();
+    },
+
+    creatNewSkill() {
+      let newSkill = {
+        user_id: JSON.parse(localStorage.getItem("user")).id,
+        skill_name: this.newSkillName,
+      };
+      axios.post("/skills/", newSkill).then((res) => {
+        this.skill = res.data;
+        this.getAllSkill();
+      });
+      this.dialogSkill = false;
+      this.newSkillName = "";
+    },
+    deleteSkill(skill) {
+      this.closeDelete()
+      axios.delete("/skills/" + skill.id).then(() => {
+        this.newSkillName = "";
+        this.getAllSkill();
+      });
+    },
+    updateSkill(skill) {
+      this.openBtn = "update";
+      axios.get("/skills/" + skill.user_id).then((res) => {
+        for (let getSkill of res.data) {
+          if (skill.id === getSkill.id) {
+            this.dialogSkill = true;
+            this.skillEdit = getSkill;
+            this.newSkillName = this.skillEdit.skill_name;
+          }
+        }
+      });
+    },
+    confirmUpdate() {
+      let updateSkill = {
+        user_id: this.skillEdit.user_id,
+        skill_name: this.newSkillName,
+      };
+      axios.put("/skills/" + this.skillEdit.id, updateSkill).then(() => {
+        this.newSkillName = "";
+        this.getAllSkill();
+        this.openBtn = "";
+      });
+    },
+
     changeFile(e) {
       this.imageFile = e.target.files[0];
       this.imageToDisplay = URL.createObjectURL(this.imageFile);
     },
     cancel() {
       this.dialog_eidt = false;
+    },
+
+    cancelSkill(ifFalse) {
+      this.showDialog = ifFalse;
+      this.dialogSkill = ifFalse;
+      this.newSkillName = "";
+      this.openBtn = "create";
+    },
+    getUserDetail() {
+      axios.get("/user_details/" + this.user.id).then((res) => {
+        this.userDetail = res.data[0];
+        this.first_name = this.user.first_name;
+        this.last_name = this.user.last_name;
+        this.phone = this.userDetail.phone;
+        this.email = this.user.email;
+        this.province = this.userDetail.province;
+        this.cruds = [
+          ["First name", this.first_name],
+          ["Last name", this.last_name],
+          ["Gender", this.userDetail.gender],
+          ["Date of brith", this.userDetail.date_of_birth],
+          ["Province", this.province],
+          ["Phone", this.phone],
+          ["Email", this.user.email],
+          ["PNC Batch", this.userDetail.batch],
+          ["PNC Major", this.userDetail.major],
+        ];
+      });
     },
 
     updateProfile() {
@@ -449,11 +660,11 @@ export default {
                 ["PNC Major", "PNC Major not yet to complete"],
               ];
             } else {
-              this.btn_disabled = false
+              this.btn_disabled = false;
               this.detail = element.user_details;
               this.editUserID = element.id;
               this.editProfileID = element.user_details.id;
-             console.log(this.editUserID, this.editProfileID);
+            
               this.name_img = element.user_details.picture;
               this.first_name = element.first_name;
               this.last_name = element.last_name;
@@ -477,6 +688,7 @@ export default {
       });
     },
   },
+
   mounted() {
     this.user = JSON.parse(localStorage.getItem("user"));
     this.editUserID = this.user.id;
@@ -486,6 +698,17 @@ export default {
       }
     });
     this.getAllData();
+    this.getAllSkill();
+    if (localStorage.getItem("id") != undefined) {
+      axios.get("/user/" + localStorage.getItem("id")).then((res) => {
+        this.user = res.data;
+        localStorage.setItem("user", JSON.stringify(res.data));
+        this.getUserDetail();
+      });
+    } else {
+      this.user = JSON.parse(localStorage.getItem("user"));
+      this.getUserDetail();
+    }
   },
 };
 </script>
@@ -495,11 +718,25 @@ export default {
   display: flex;
 }
 .sub-txt {
-  font-weight: bolder;
-  width: 250px;
+  font-weight: bold;
+  font-size: 2ch;
+  width: 200px;
 }
 .txt span {
   margin: 5px;
+}
+
+.dote {
+  font-weight: bold;
+  font-size: 2ch;
+}
+.v-icon.iconSkillEdit {
+  /* font-size: 20px; */
+  color: #66bb6a;
+}
+.v-icon.iconSkillDelete {
+  font-size: 20px;
+  color: red;
 }
 
 @media (max-width: 960px) {
